@@ -1,0 +1,279 @@
+# Classification of surgical difficulty in extracting impacted third molars
+
+**Authors:** H. Yuasa,*† T. Kawai,† M. Sugiura‡
+
+*Department of Oral and Maxillofacial Surgery, Central Hospital of Tokai Medical Institute, Aichi; †Department of Oral and Maxillofacial Surgery, Nagoya City Jyohoku Municipal Hospital, Nagoya; ‡Second Department of Oral and Maxillofacial Surgery, School of Dentistry, Aich-Gakuin University, Nagoya, Japan
+
+**Published in:** British Journal of Oral and Maxillofacial Surgery (2002) 40, 26–31
+© 2002 The British Association of Oral and Maxillofacial Surgeons
+doi: 10.1054/bjom.2001.0684, available online at http://www.idealibrary.com
+
+---
+
+## SUMMARY
+
+Few studies have attempted to analyse preoperative factors that complicate the surgical removal of impacted mandibular third molars. We studied this problem in two steps. We found that difficulty in extraction is associated with depth (depth is deep occlusal level: level C), ramus relationship/space available (ramus relationship/space available is no space: class 3), width of root (the width of the middle root is thicker than that of the neck and the roots do not separate, incomplete roots excluded: bulbous), or a combination of these factors. The index was tested in 20 patients whose extractions were difficult, and 24 in whom they were not. The new index has an odds ratio (relative risk) of 62.3 (95% confidence interval, 9.3–415.9), a sensitivity of 0.85 and a specificity of 0.92. We consider that the new index is superior to the conventional Pederson's index. © 2002 The British Association of Oral and Maxillofacial Surgeons
+
+---
+
+## INTRODUCTION
+
+Although the removal of impacted mandibular third molars is a common procedure, in some cases it can be difficult. It is hard to evaluate factors that complicate removal of impacted third molars because of the large variation among patients and the difficulty of creating a study design. The tooth is easily categorized radiographically; however, few studies have attempted to analyse preoperative factors that complicate the operation.¹,²
+
+Pederson proposed a difficulty index for the removal of impacted mandibular third molars (Table 1).²,³ The total scores by which difficulty is judged are based mainly on local anatomy and radiographs. However, the index did not match the actual clinical stage, and it has never been validated or widely accepted.
+
+This study aimed to establish a simple index that can be used preoperatively to predict the degree of difficulty associated with removal of impacted mandibular third molars. A questionnaire was sent to maxillofacial surgeons in which they were asked to identify factors that they thought may influence surgical difficulty. The factors identified by most of the respondents were useful and a classification was made for each factor. A difficulty index was developed by analysing the relative risk of difficulty of the factors in two groups of patients. Then, for accuracy, we compared our index with Pederson's index.
+
+### Table 1 Difficulty index for removal of impacted mandibular third molars, as described by Pederson³
+
+| Classification | Value |
+|----------------|-------|
+| **Spatial relationship** | |
+| Mesioangular | 1 |
+| Horizontal/transverse | 2 |
+| Vertical | 3 |
+| Distoangular | 4 |
+| **Depth** | |
+| Level A: high occlusal level | 1 |
+| Level B: medium occlusal level | 2 |
+| Level C: deep occlusal level | 3 |
+| **Ramus relationship/space available** | |
+| Class 1: sufficient space | 1 |
+| Class 2: reduced space | 2 |
+| Class 3: no space | 3 |
+| **Difficulty index** | |
+| Very difficult | 7–10 |
+| Moderately difficult | 5–6* |
+| Slightly difficult | 3–4 |
+
+*In the original index, moderately difficult was graded as 5–7.
+
+---
+
+## PATIENTS AND METHODS
+
+### Preliminary study
+
+In an attempt to classify difficulty in extracting impacted mandibular teeth, anonymous questionnaires were sent to 40 surgeons. We received 36 replies (33 male and 3 female respondents, aged 25–44 years). The questionnaire listed 23 factors that could influence difficulty in extraction (Table 2), and they were divided into two categories: anatomical and non-anatomical. The anatomical factors were based on radiographic and clinical findings. A free answer column was also provided. The relative importance of each factor was scored according to a Likert-type method for weighting as follows: 1, no relation; 2, virtually no relation; 3, weak relation; 4, relation; 5, strong relation. Non-anatomical factors and the content of the free answer column were not used in the construction of the index.⁴⁻⁶
+
+Table 2 shows the mean (SD) for each factor. Nine factors with mean scores over 4 (relation) were selected for further examination: depth, ramus relationship/space available, spatial relationship, abnormal root curvature, width of root, number of roots, proximity to mandibular canal, lack of periodontal membrane space and relative horizontal position of the third molar. The vomiting reflex is unknown before extraction, so was excluded from the examination. The last six factors were not listed in Pederson's index, and the validity of all of these factors was investigated in the second study.
+
+### Table 2 Factors contributing to difficult extraction: responses to questionnaire from specialists
+
+| Factor | Mean (SD) |
+|--------|-----------|
+| **Anatomical factors** | |
+| Depth | 4.7 (1.4) |
+| Abnormal root curvature | 4.6 (1.7) |
+| Width of root | 4.6 (1.7) |
+| Number of roots | 4.6 (1.9) |
+| Ramus relationship/space available | 4.3 (1.6) |
+| Proximity to mandibular canal | 4.3 (2.5) |
+| Periodontal membrane space (lack) | 4.2 (2.2) |
+| Spatial relationship | 4.3 (1.4) |
+| Relative horizontal position of the third molar | 4.1 (2.6) |
+| Position of tongue | 3.4 (3.1) |
+| Length of both angles of mouth | 3.2 (3.4) |
+| Cleft palate | 3.2 (3.8) |
+| Angle class I/II/III malocclusion | 2.6 (4.0) |
+| Length of mandibular ramus | 2.6 (1.7) |
+| Prominence of gonial angle | 2.3 (1.7) |
+| Side of operation | 2.2 (1.4) |
+| **Non-anatomical factors** | |
+| Vomiting reflex | 4.5 (3.3) |
+| Maximal mouth opening | 4.0 (1.0) |
+| Age | 3.9 (0.9) |
+| Anaesthesia | 3.8 (3.0) |
+| History of pericoronitis | 2.9 (1.0) |
+| Weight | 2.3 (1.0) |
+| Sex | 2.1 (1.0) |
+| **Free answer (number of respondents)** | |
+| Orthodontics | 4 |
+| Ability of assistant | 3 |
+
+### Subjects
+
+Outpatients who had impacted mandibular third molars extracted between April and October 1997 at the Second Department of Oral and Maxillofacial Surgery, School of Dentistry, Aichi-Gakuin University (Nagoya, Japan) were randomly enrolled in this study. All procedures were done according to a standardized protocol with the patient under local anaesthesia. The lower third molar was removed in only one of these procedures. A mucoperiosteal marginal soft tissue flap was used, with or without a lateral releasing incision, depending on the surgical indication. The flap was reflected, the contiguous bone was removed with a round burr, and a fissure burr in a high-speed handpiece was used to section the teeth. Constant irrigation with cool sterile physiological saline solution was used with the burr. A 4-0 silk suture was used to close the wound.
+
+### Methods
+
+Before operation, a single radiologist classified each factor into several categories on rotational panoramic tomography. To make up categories, we referred to the Pell and Pederson reports for some factors,²,³,⁷,⁸ or tentatively categorized some factors (Table 3; Fig. 1).
+
+After extraction, the surgeon assigned each case to either the difficult group (20 patients in whom the extraction was difficult) or the control group (24 patients in whom the extraction was easy or normal). A patient was put in the difficult group if the extraction time was 30 minutes or more or if the surgeon thought that it was a difficult case. All of the surgeons had at least 5 years' experience in oral and maxillofacial surgery.
+
+The difficult group included 8 men and 12 women (mean age 27.5 years, range 17–49), and the control group included 6 males and 18 females (mean age 26.0 years, range 17–55). The buccal or lingual positioning of the tooth was added to the doctor's information. The radiologist and the surgeons were not allowed to contact each other.
+
+The relationship between the factors and clinical difficulty in extraction were analysed. We calculated the odds ratio (relative risk) of each factor for difficulty. The most significant factors were selected as an index for difficulty using two statistical analyses. After confirmation of the effectiveness of the index by practical analysis, two methods were examined for their sensitivity, reliability and specificity with regard to difficult extractions.
+
+### Clinical or radiographic factors
+
+On radiography, the relevant factors are depth, ramus relationship/space available, spatial relationship, proximity to mandibular canal, abnormal root curvature, width of root, number of roots and periodontal membrane space, and, clinically, relative horizontal position of the third molar.
+
+Depth was defined by Pell and Gregory as: level A, high occlusal level; level B, medium occlusal level; or level C, deep occlusal level.⁷,⁸ Ramus relationship/space available was defined as: class 1, sufficient space; class 2, reduced space; or class 3, no space. Spatial relationship was classified by Pell and Gregory as vertical, horizontal, inverted, mesioangular, or distoangular.⁷,⁸ Proximity to the mandibular canal was classified as distant or close. Abnormal root curvature was classified as straight, curved, or incomplete. Root width is defined as: thin, where the width of the middle root is thinner than the width of the neck; bulbous, the width of the middle root is thicker than the width of the neck and the roots do not separate; or thick (multiple roots), the width of the middle root is thicker than the width of the neck and the roots separately. The number of roots was classified as singular, multiple, or incomplete. The periodontal membrane space was classified as all, part, or nil. The relative horizontal position of the third molar was classified as buccal deflection, centre, lingual deflection, or no observation.
+
+**Fig. 1** Bulbous root. A<B: the width of the middle root (B) is thicker than the width of the neck (A) and the roots do not separate.
+
+### Statistical analysis
+
+All data were analysed using the SAS version 6.12 procedure (SAS Institute Inc.). To examine factors identified by doctors, an odds ratio (relative risk) for difficulty was created for each factor by univariate analysis. To introduce the index for difficult extraction, multivariate analyses were made by logistic models against categories in each factor that had an odds ratio of ≥2.0 on univariate analysis. The effectiveness of an index was confirmed by the Tree method. The odds ratio, sensitivity and specificity in our index and in Pederson's index were calculated separately to compare the effectiveness of each method.
+
+### Table 3 Univariate analysis (data are number of patients)
+
+| Factor | Difficult group (n=20) | Control group (n=24) | Odds ratio | 95% CI |
+|--------|------------------------|----------------------|------------|--------|
+| **Depth** | | | | |
+| Level A (high) | 6 | 14 | 1.0 | |
+| Level B (medium) | 9 | 10 | 2.10* | 0.56–7.88 |
+| Level C (deep) | 5 | 0 | ∞* | 12 298–∞ |
+| **Ramus relationship/space available** | | | | |
+| Class 1 (sufficient) | 2 | 3 | 1.0 | |
+| Class 2 (reduced) | 10 | 19 | 0.79 | 0.11–5.68 |
+| Class 3 (none) | 8 | 2 | 6.00* | 0.57–62.7 |
+| **Spatial relationship** | | | | |
+| Vertical | 7 | 4 | 1.0 | |
+| Horizontal | 10 | 8 | 0.71 | 0.15–3.42 |
+| Inverted | 0 | 1 | — | |
+| Mesioangular | 3 | 9 | 0.19 | 0.03–1.13 |
+| Distoangular | 0 | 2 | — | |
+| **Proximity to mandibular canal** | | | | |
+| Distant | 5 | 5 | 1.0 | |
+| Close | 15 | 19 | 0.79 | 0.19–3.29 |
+| **Abnormal root curvature** | | | | |
+| Straight | 4 | 12 | 1.0 | |
+| Curved | 16 | 10 | 4.80* | 1.24–18.5 |
+| Incomplete | 0 | 2 | — | |
+| **Width of root** | | | | |
+| Thin | 10 | 13 | 1.0 | |
+| Bulbous | 10 | 2 | 6.50* | 1.25–33.7 |
+| Thick (multiple roots) | 0 | 7 | 0.00 | 0–0.12 |
+| Incomplete | 0 | 2 | — | |
+| **Number of root** | | | | |
+| Singular | 3 | 5 | 1.0 | |
+| Multiple | 17 | 17 | 1.67 | 0.34–8.18 |
+| Incomplete | 0 | 2 | — | |
+| **Periodontal membrane space** | | | | |
+| All | 7 | 11 | 1.0 | |
+| Part | 12 | 11 | 1.71 | 0.49–6.06 |
+| Nil | 1 | 2 | 0.79 | 0.06–11.0 |
+| **Relative horizontal position of the third molar** | | | | |
+| Buccal deflection | 3 | 7 | 1.0 | |
+| Centre | 12 | 10 | 2.80* | 0.57–13.7 |
+| Lingual deflection | 0 | 3 | — | |
+| No observation | 5 | 4 | 2.92* | 0.43–19.8 |
+
+*Odds ratio of ≥2.0.
+
+---
+
+## RESULTS
+
+The risk of difficult extraction was calculated for nine factors as an odds ratio on univariate analysis. Five factors had odds ratios over 2.0: depth, ramus relationship/space available, abnormal root curvature, width of root and relative horizontal position of the third molar (Table 3). However, we felt that these factors were too complicated for preoperative evaluation of the possibility of difficult extraction.
+
+To make a simpler index, the five factors were examined again by multivariate analysis, and we decided that the factors with significant odds ratios suggested a difficult extraction. The depth category had the highest odds ratio (999.0), followed by ramus relationship/space and width of root. These variables were significant. Abnormal root curvature and relative horizontal position were not significant (Table 4).
+
+The Tree method showed that the number of level C or class 3 was 10 in the difficult group, but 0 in the control group. The number of the thick root group was 7 in the difficult group and 2 in the control group. The incidence of both categories was 17/20 in the difficult group and 2/24 in the control group (Fig. 2), so we confirmed that level C, class 3, or thick root was the index for difficult extraction. Using this new index, we expect a difficult extraction if the depth is an occlusal level (level C), the ramus relationship is close (class 3), or the width of the middle root is thicker at the middle (bulbous) (Table 5). The new index was then checked for accuracy against Pederson's index.
+
+The new index had an odds ratio of 62.3 (95% confidence interval 9.5–415.9), sensitivity of 0.85 and specificity of 0.92, compared with 11.0, 0.5 and 0.92 on Pederson's index (Table 6).
+
+### Table 4 Multivariate analysis
+
+| Variable | Odds ratio | 95% CI |
+|----------|------------|--------|
+| **Depth** | | |
+| Level A (high) | 1.00 | |
+| Level B (medium) | 1.83 | 0.26–12.94 |
+| Level C (deep) | 999.0 | * |
+| **Ramus relationship/space available** | | |
+| Class 1 and class 2 (sufficient or reduced) | 1.00 | |
+| Class 3 (none) | 44.02 | 1.59–1216.3* |
+| **Abnormal root curvature** | | |
+| Straight and incomplete | 1.00 | |
+| Multiple | 15.37 | 0.68–345.3 |
+| **Width of root** | | |
+| Thin and thick (multiple roots) | 1.00 | |
+| Bulbous | 29.5 | 2.04–426.4* |
+| **Relative horizontal position of the third molar** | | |
+| Buccal deflection | 1.00 | |
+| Centre and lingual deflection | 1.01 | 0.03–34.33 |
+
+*P<0.05.
+
+**Fig. 2** Tree method analysis for prospective analysis. *Other cases (three cases) had abnormal root curvature shown after the operation. †Other cases included trees with incomplete roots (n=2).
+
+### Table 5 Classification of difficulty of surgical removal of impacted third molars
+
+- Depth or ramus relationship/space available or width of root on rotational panoramic images predicts difficulty
+- Depth is deep occlusal level — Level C
+- Ramus relationship/space available is no space — Class 3
+- Width — Bulbous
+
+Note: abnormal root curvature is not seen in some radiographs.
+
+### Table 6 Comparison of the new index with the conventional Pederson index
+
+| Classification before removal | Classification after removal — Difficult | Classification after removal — Easy or normal | Odds ratio | 95% CI | Sensitivity | Specificity |
+|-------------------------------|------------------------------------------|-----------------------------------------------|------------|--------|-------------|-------------|
+| **New index** | | | | | | |
+| Easy or normal | 3 | 22 | 1.00 | | | |
+| Difficult | 17 | 2 | 62.3 | 9.5–415.9 | 0.85 | 0.92 |
+| **Pederson's index** | | | | | | |
+| Slight or moderate | 10 | 22 | 1.00 | | | |
+| Very difficult | 10 | 2 | 11.0 | 2.0–59.7 | 0.50 | 0.92 |
+
+Pederson's index is a modified version of Table 1.
+
+---
+
+## DISCUSSION
+
+In the preliminary study the analysis showed that it is important to have the following information before extraction: relative depth, angulation and form of the root, number of roots, relationship of the tooth to the ramus, proximity to mandibular canal, lack of periodontal membrane space, position of the tooth in relation to the long axis of the second molar and relative horizontal position. In the main study outpatients who had impacted mandibular third molar extractions were selected randomly. Those selected were assigned to either the difficult group or the control group. We found that difficulty in extraction was associated with depth, ramus relationship/space available, width of root, or a combination of these factors. Our new index was significantly superior to Pederson's conventional index.
+
+We collected factors that contribute to difficult extraction from experienced surgeons, and some of the factors corresponded with previous reports.¹,²,⁷⁻⁹ To introduce the index, clinical evaluation was compared with panoramic tomograms usually taken for planning of treatment.⁹ We think that even busy practitioners can use this new index. In this study, a radiologist observed all images by index, but the classification is simple and does not require any calculation. Practitioners do not need training, therefore, and all dentists can easily use our assessment scale.
+
+In the main study, we selected three of nine factors. As well as these nine factors, we checked other factors such as age, sex and duration of operation. However, there was no relationship between factors. The results of the Tree method supported the effectiveness of our index. In that analysis, we had a false positive rate of 8.3% for difficult extraction according to the index, but predicting a difficult extraction that turns out to be easy is not clinically important. However, a 15% rate of false negative cases might cause more problems. Reviews have shown that this included many cases with abnormal root curvature seen during the procedure (data not shown). This may relate to our results of a slight decrease in sensitivity.
+
+The sample size may seem small, but to detect the difference of 10 in the odds ratio, a total of 38 cases was needed in the case-control study as calculated by the EpiCalc2000 programme software. Therefore we think that sample size is not a problem in this study. One unpredictable difficulty is abnormal root curvature, because it is not seen on radiographs. When teeth have single roots, we should divide the root in the apex as an amputation of the crown. When teeth have two roots, we should divide each root into two.
+
+The only indexes that classify difficulty are those described by Pederson and Parant.³,¹⁰ However, the Parant's index (extraction with forceps only, extraction by ostectomy, extraction by ostectomy and coronal section, and complex extraction) is used for classification after removal and cannot be used for preoperative evaluation. Although the Pederson index can be used for evaluation before extraction, it is not widely used because, other than the factors that Pederson advocates, it often incorrectly identifies a case as difficult. Although a lot of reports have described anatomical position,¹¹ few have used the Pederson index for evaluation.¹² Our comparative study showed that our index was better than Pederson's conventional index in terms of odds ratio, sensitivity and specificity. Our index had sensitivity of 85% and specificity of 92%. The Pederson index originally aimed to grade for difficulty of extraction; the intervals of each classification have the same value (except for spatial relationships) and the points indicate difficulty. However, the points in our subjects showed lower sensitivity, and almost all cases were classified as moderately difficult. The main difference between our new index and the Pederson index is the inclusion of width of the root. This suggests that the width is a more important factor than weight of score. This is thought to be the reason for the difference between the two indexes. Based on this, we think that our new index is suitable for evaluation before extraction.
+
+In conclusion, surgical difficulty in extracting impacted mandibular third molars can be predicted on the basis of level C, class 3, a bulbous root, or a combination of these factors on rotational panoramic images. We recognize that the sample size in this study was small, but our new index is simple and valid, particularly in checking difficult cases. One limitation is the existence of an unpredictable factor such as abnormal root curvature that cannot be detected on panoramic radiographs.
+
+---
+
+## ACKNOWLEDGEMENT
+
+The Department of Oral and Maxillofacial Surgery, Aichi-Gakuin University, supported this study financially.
+
+---
+
+## REFERENCES
+
+1. American Association of Oral and Maxillofacial Surgeons. Report of a workshop on the management of patients with third molar teeth. *J Oral Maxillofac Surg* 1994; 52: 1102–1112.
+2. Koerner KR. The removal of impacted third molars – principles and procedures. *Dent Clin North Am* 1994; 38: 255–278.
+3. Pederson GW. *Oral Surgery*. Philadelphia: WB Saunders, 1988. (Quoted by Koerner KR. The removal of impacted third molars – principles and procedures. *Dent Clin North Am* 1994; 38: 261. The book is out of print.)
+4. Guyatt GH, Townsend M, Berman LB, Keller JL. A comparison of Likert and visual analogue scales for measuring change in function. *J Chronic Dis* 1987; 40: 1129–1133.
+5. Likert R. A technique for the measurement of attitudes. *Arch Psychol* 1932; 140–143.
+6. Mangelsdorff AD. Patient satisfaction questionnaire. *Med Care* 1979; 17: 86–90.
+7. Pell GJ, Gregory BT. Impacted mandibular third molars; classification and modified techniques for removal. *Dent Dig* 1933; 39: 330.
+8. Pell GJ, Gregory TG. Report on a ten-year study of a tooth division technique for the removal of impacted teeth. *Am J Orthod* 1942; 28: 660–666.
+9. Venta I, Murtomaa H, Turtola L, Meurman J, Ylipaavalniemi P. Assessing the eruption of lower third molars on the basis of radiographic features. *Br J Oral Maxillofac Surg* 1991; 29: 259–262.
+10. Parant M. *Petite Chirurgie de la Bouche*. Paris: Expansion Cientifique, 1974. (Quoted by Garcia GA, Sampedro GF, Rey GJ, Torreira GM. Trismus and pain after removal of impacted lower third molars. *J Oral Maxillofac Surg* 1997; 55: 1223–1226. The book is out of print.)
+11. Brann CR, Brickley MR, Shepherd JP. Factors influencing nerve damage during lower third molar surgery. *Br Dent J* 1999; 186: 514–516.
+12. Gargallo-Aibiol J, Buenechea-Imaz R, Gay-Escoda C. Lingual nerve protection during surgical removal of lower third molars; a prospective randomised study. *Int J Oral Maxillofac Surg* 2000; 29: 268–271.
+
+---
+
+## The Authors
+
+**Hidemichi Yuasa** DDS PhD
+Department of Oral and Maxillofacial Surgery, Central Hospital of Tokai Medical Institute, Aichi and Second Department of Oral and Maxillofacial Surgery, School of Dentistry, Aich-Gakuin University, Nagoya, Japan
+
+**Toshihiko Kawai** DDS PhD
+Second Department of Oral and Maxillofacial Surgery, School of Dentistry, Aich-Gakuin University, Nagoya, Japan
+
+**Masayuki Sugiura** DDS PhD
+Department of Oral and Maxillofacial Surgery, Nagoya City Jyohoku Municipal Hospital, Nagoya, Japan
+
+Correspondence and requests for offprints to: Dr H. Yuasa, 8U-102 room, a-banrafure hosigaoka, 1-23-4 Hosigaoka, Chikusa-ku, Nagoya 464-0801, Japan. Tel: +81 (0) 52 781 4045; E-mail: mxe05064@nifty.ne.jp
+
+Accepted 10 May 2001

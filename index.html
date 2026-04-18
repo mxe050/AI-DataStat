@@ -1,0 +1,2643 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI時代のデータ解析 ─ Yuasa 2002 を題材に</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>window.MathJax = {tex: {inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']]}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+:root{
+  --bg:#0b1020; --bg2:#131a36; --panel:#171e42; --panel2:#1f2752;
+  --text:#e8ecff; --muted:#9aa3c7; --accent:#6ea8ff; --accent2:#ffb86b;
+  --ok:#4ade80; --bad:#f87171; --warn:#fbbf24; --purple:#a78bfa;
+  --line:rgba(255,255,255,0.08); --shadow:0 10px 40px rgba(0,0,0,0.5);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
+  font-family:"Helvetica Neue","Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;font-feature-settings:"palt";font-size:17px;line-height:1.65}
+#app{display:grid;grid-template-columns:290px 1fr;height:100vh;width:100vw}
+
+/* Sidebar */
+#sidebar{background:linear-gradient(180deg,#0a1028,#0d1432);border-right:1px solid var(--line);
+  overflow-y:auto;padding:20px 0;transition:transform 0.3s}
+#sidebar::-webkit-scrollbar{width:6px}
+#sidebar::-webkit-scrollbar-thumb{background:#2a3470;border-radius:3px}
+.brand{padding:0 22px 18px;border-bottom:1px solid var(--line)}
+.brand h1{font-size:17px;font-weight:700;line-height:1.4;color:#fff}
+.brand p{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5}
+.brand .gh{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--accent);
+  margin-top:8px;padding:4px 8px;background:rgba(110,168,255,0.1);border-radius:6px;
+  text-decoration:none;font-family:monospace}
+.toc{padding:16px 10px}
+.toc-part{margin-bottom:8px}
+.toc-title{font-size:12px;font-weight:700;color:var(--accent);padding:10px 12px 6px;
+  text-transform:uppercase;letter-spacing:1px}
+.toc-item{display:flex;gap:10px;padding:9px 14px;font-size:14px;color:var(--muted);
+  border-radius:6px;cursor:pointer;transition:all 0.15s;border-left:2px solid transparent;line-height:1.4}
+.toc-item:hover{background:var(--panel);color:var(--text)}
+.toc-item.active{background:rgba(110,168,255,0.14);color:#fff;border-left-color:var(--accent)}
+.toc-num{font-variant-numeric:tabular-nums;color:var(--muted);min-width:24px;font-size:12px}
+.toc-item.active .toc-num{color:var(--accent)}
+
+/* Main stage */
+#stage{position:relative;overflow:hidden;background:
+  radial-gradient(ellipse at top,var(--bg2),var(--bg) 60%)}
+#slides{position:relative;height:100%;width:100%}
+.slide{position:absolute;inset:0;padding:54px 80px 90px;overflow-y:auto;
+  opacity:0;pointer-events:none;transform:translateX(30px);
+  transition:opacity 0.35s ease,transform 0.35s ease}
+.slide.active{opacity:1;pointer-events:auto;transform:translateX(0)}
+.slide::-webkit-scrollbar{width:10px}
+.slide::-webkit-scrollbar-thumb{background:#2a3470;border-radius:5px}
+
+/* Slide header */
+.slide-tag{display:inline-block;font-size:13px;font-weight:700;color:var(--accent);
+  background:rgba(110,168,255,0.14);padding:5px 13px;border-radius:999px;margin-bottom:14px;
+  letter-spacing:1.5px}
+h2.slide-title{font-size:40px;font-weight:800;line-height:1.25;margin-bottom:10px;
+  background:linear-gradient(90deg,#fff,#b9c6ff);-webkit-background-clip:text;background-clip:text;
+  color:transparent}
+.slide-sub{font-size:18px;color:var(--muted);margin-bottom:28px;line-height:1.6}
+
+/* Content blocks */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:22px 24px;margin-bottom:16px;box-shadow:var(--shadow)}
+.panel.tight{padding:14px 16px}
+.panel p{font-size:16px;line-height:1.7}
+.panel-title{font-size:14px;font-weight:700;color:var(--accent2);text-transform:uppercase;
+  letter-spacing:1.2px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.panel-title::before{content:"";width:5px;height:16px;background:var(--accent2);border-radius:2px}
+.grid{display:grid;gap:16px}
+.grid-2{grid-template-columns:1fr 1fr}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.grid-ab{grid-template-columns:1fr 1.4fr}
+@media (max-width:1100px){.grid-2,.grid-3,.grid-4,.grid-ab{grid-template-columns:1fr}}
+
+/* Tables */
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:15px;
+  background:var(--panel2);border-radius:10px;overflow:hidden}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);line-height:1.5}
+th{background:rgba(110,168,255,0.08);font-size:12px;text-transform:uppercase;letter-spacing:1px;
+  color:var(--accent);font-weight:700}
+tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td.center,th.center{text-align:center}
+.bad{color:var(--bad);font-weight:700}
+.ok{color:var(--ok);font-weight:700}
+.warn{color:var(--warn);font-weight:700}
+.hi{color:var(--accent2);font-weight:700}
+
+/* Lists */
+ul.bullet{list-style:none;padding-left:0}
+ul.bullet li{padding:8px 0 8px 26px;position:relative;font-size:15px;line-height:1.65}
+ul.bullet li::before{content:"▸";position:absolute;left:4px;color:var(--accent);font-size:16px}
+ol.num{padding-left:26px}
+ol.num li{padding:7px 0;font-size:15px;line-height:1.65}
+
+/* Badges & quotes */
+.badge{display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;
+  font-weight:700;margin-right:6px}
+.badge.red{background:rgba(248,113,113,0.15);color:var(--bad)}
+.badge.green{background:rgba(74,222,128,0.15);color:var(--ok)}
+.badge.blue{background:rgba(110,168,255,0.15);color:var(--accent)}
+.badge.amber{background:rgba(251,191,36,0.15);color:var(--warn)}
+.quote{border-left:5px solid var(--accent2);padding:14px 20px;background:rgba(255,184,107,0.06);
+  font-style:italic;font-size:17px;line-height:1.7;border-radius:0 8px 8px 0;margin:14px 0}
+.cite{font-size:13px;color:var(--muted);margin-top:10px;font-style:italic;line-height:1.5}
+
+/* Code */
+code,pre{font-family:"JetBrains Mono","Consolas","SF Mono",monospace}
+pre{background:#0a0f26;border:1px solid var(--line);border-radius:10px;padding:16px 18px;
+  overflow-x:auto;font-size:14px;line-height:1.65;color:#d6deff}
+code{background:rgba(110,168,255,0.12);padding:3px 7px;border-radius:4px;font-size:14px;color:#b9c6ff}
+pre code{background:none;padding:0;color:inherit}
+.kw{color:#c084fc}
+.str{color:#86efac}
+.com{color:#64748b;font-style:italic}
+.num{color:#fbbf24}
+
+/* Stat card */
+.stat{background:linear-gradient(135deg,var(--panel),var(--panel2));padding:20px 22px;
+  border-radius:12px;border:1px solid var(--line)}
+.stat .label{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px}
+.stat .value{font-size:34px;font-weight:800;line-height:1.2;margin-top:6px;
+  background:linear-gradient(90deg,#6ea8ff,#a78bfa);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .sub{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5}
+
+/* Visual diagram boxes */
+.flow{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:12px 0}
+.flow-box{background:var(--panel2);border:1px solid var(--line);padding:12px 18px;border-radius:10px;
+  font-size:14px;text-align:center;min-width:130px;line-height:1.5}
+.flow-box.ai{border-color:var(--purple);background:rgba(167,139,250,0.1)}
+.flow-box.human{border-color:var(--ok);background:rgba(74,222,128,0.08)}
+.flow-arrow{color:var(--accent);font-size:22px}
+
+/* Controls */
+#controls{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:14px;background:rgba(23,30,66,0.92);
+  border:1px solid var(--line);padding:10px 20px;border-radius:999px;backdrop-filter:blur(8px);z-index:10}
+.ctrl-btn{background:transparent;border:none;color:var(--text);padding:8px 14px;
+  border-radius:999px;cursor:pointer;font-size:15px;transition:background 0.15s}
+.ctrl-btn:hover{background:rgba(110,168,255,0.14)}
+.ctrl-btn:disabled{opacity:0.3;cursor:not-allowed}
+.counter{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:70px;text-align:center}
+#progress{position:absolute;top:0;left:0;right:0;height:4px;background:rgba(255,255,255,0.04);z-index:10}
+#progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--purple));
+  transition:width 0.3s;width:0%}
+
+/* Title slide */
+.title-slide{display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:40px}
+.title-slide h1{font-size:72px;font-weight:900;line-height:1.1;letter-spacing:-2px;
+  background:linear-gradient(135deg,#fff 0%,#6ea8ff 50%,#a78bfa 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:22px}
+.title-slide .lead{font-size:24px;color:var(--muted);max-width:900px;line-height:1.6;margin-bottom:34px}
+.title-slide .meta{font-size:15px;color:var(--muted);margin-top:44px;line-height:1.7}
+.title-deco{font-size:16px;letter-spacing:14px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:20px;opacity:0.8}
+
+/* Section divider */
+.section-slide{display:flex;flex-direction:column;justify-content:center;height:100%}
+.section-slide .part-num{font-size:150px;font-weight:900;line-height:1;
+  background:linear-gradient(135deg,var(--accent) 0%,var(--purple) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;opacity:0.3;margin-bottom:-50px}
+.section-slide h2{font-size:64px;font-weight:900;line-height:1.15;margin-bottom:22px}
+.section-slide .section-desc{font-size:22px;color:var(--muted);max-width:820px;line-height:1.6}
+
+/* Interactive */
+.slider-container{background:var(--panel2);padding:14px 16px;border-radius:10px;margin:10px 0}
+.slider-container label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:8px;color:var(--muted)}
+.slider-container input[type=range]{width:100%;accent-color:var(--accent)}
+.chart-wrap{background:var(--panel2);padding:14px;border-radius:10px;position:relative;height:240px}
+.chart-wrap.tall{height:320px}
+
+/* Highlight pill */
+.highlight-row{background:rgba(251,191,36,0.08) !important}
+.highlight-row td{color:#ffe4a0}
+
+/* Comparison */
+.vs-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:stretch}
+.vs-box{padding:14px 16px;border-radius:10px;border:1px solid var(--line)}
+.vs-box.old{background:rgba(248,113,113,0.05);border-color:rgba(248,113,113,0.3)}
+.vs-box.new{background:rgba(74,222,128,0.05);border-color:rgba(74,222,128,0.3)}
+.vs-box h4{font-size:13px;margin-bottom:8px;font-weight:700}
+.vs-box.old h4{color:var(--bad)}
+.vs-box.new h4{color:var(--ok)}
+.vs-box ul.bullet li{font-size:12px;padding:4px 0 4px 18px}
+.vs-divider{display:flex;align-items:center;justify-content:center;font-size:18px;
+  font-weight:900;color:var(--accent);padding:0 4px}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.tab{padding:8px 14px;font-size:12px;color:var(--muted);cursor:pointer;
+  border-bottom:2px solid transparent;transition:all 0.15s}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* Keyboard hint */
+.kbd{display:inline-block;padding:2px 6px;background:var(--panel2);border:1px solid var(--line);
+  border-radius:4px;font-size:10px;font-family:"JetBrains Mono",monospace;color:var(--muted)}
+
+/* Data table scroll */
+.data-scroll{max-height:300px;overflow-y:auto;border-radius:10px}
+.data-scroll table{font-size:11px}
+.data-scroll th,.data-scroll td{padding:5px 8px}
+.data-scroll::-webkit-scrollbar{width:6px}
+.data-scroll::-webkit-scrollbar-thumb{background:#2a3470;border-radius:3px}
+
+/* Annotations */
+.note-box{background:rgba(110,168,255,0.06);border-left:4px solid var(--accent);
+  padding:14px 18px;border-radius:0 10px 10px 0;font-size:15px;line-height:1.7;color:#c5d2ff;margin:12px 0}
+.note-box::before{content:"💡";margin-right:8px}
+.warn-box{background:rgba(251,191,36,0.07);border-left:4px solid var(--warn);
+  padding:14px 18px;border-radius:0 10px 10px 0;font-size:15px;line-height:1.7;color:#ffe4a0;margin:12px 0}
+.warn-box::before{content:"⚠️";margin-right:8px}
+.danger-box{background:rgba(248,113,113,0.07);border-left:4px solid var(--bad);
+  padding:14px 18px;border-radius:0 10px 10px 0;font-size:15px;line-height:1.7;color:#fecaca;margin:12px 0}
+.danger-box::before{content:"🚫";margin-right:8px}
+.ok-box{background:rgba(74,222,128,0.07);border-left:4px solid var(--ok);
+  padding:14px 18px;border-radius:0 10px 10px 0;font-size:15px;line-height:1.7;color:#bbf7d0;margin:12px 0}
+.ok-box::before{content:"✓";margin-right:8px}
+
+/* SVG diagrams */
+.svg-wrap{background:var(--panel2);border-radius:12px;padding:16px;margin:10px 0;
+  display:flex;justify-content:center;align-items:center}
+.svg-wrap svg{max-width:100%;height:auto}
+.svg-caption{font-size:12px;color:var(--muted);text-align:center;margin-top:8px;font-style:italic}
+
+/* Mobile: hide less critical elements */
+.mobile-hide{display:block}
+.pc-only{display:block}
+.mobile-only{display:none}
+
+#menu-toggle{display:none;position:absolute;top:14px;left:14px;z-index:20;
+  background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 14px;
+  color:var(--text);cursor:pointer;font-size:14px}
+@media (max-width:900px){
+  html,body{font-size:15px}
+  #app{grid-template-columns:1fr}
+  #sidebar{position:absolute;left:0;top:0;bottom:0;width:280px;z-index:15;transform:translateX(-100%)}
+  #sidebar.open{transform:translateX(0)}
+  #menu-toggle{display:block}
+  .slide{padding:64px 20px 90px}
+  .slide-tag{font-size:11px;padding:3px 10px;margin-bottom:10px}
+  h2.slide-title{font-size:24px;line-height:1.3}
+  .slide-sub{font-size:15px;margin-bottom:18px}
+  .title-slide h1{font-size:38px}
+  .title-slide .lead{font-size:16px}
+  .section-slide h2{font-size:34px}
+  .section-slide .part-num{font-size:80px;margin-bottom:-24px}
+  .section-slide .section-desc{font-size:16px}
+  .panel{padding:14px 16px;margin-bottom:12px}
+  .panel p,ul.bullet li,ol.num li{font-size:14px}
+  .panel-title{font-size:12px;margin-bottom:10px}
+  table{font-size:12px}
+  th,td{padding:7px 9px}
+  th{font-size:10px}
+  pre,code{font-size:12px}
+  pre{padding:12px 14px}
+  .stat{padding:14px 16px}
+  .stat .value{font-size:24px}
+  .stat .label,.stat .sub{font-size:11px}
+  .note-box,.warn-box,.danger-box,.ok-box{font-size:13px;padding:10px 12px}
+  .quote{font-size:14px;padding:10px 14px}
+  .flow-box{font-size:12px;padding:8px 12px;min-width:100px}
+  .mobile-hide{display:none !important}
+  .pc-only{display:none !important}
+  .mobile-only{display:block !important}
+  .cite{font-size:11px}
+  #controls{padding:6px 14px;gap:8px;bottom:10px}
+  .ctrl-btn{font-size:12px;padding:6px 10px}
+  .counter{font-size:12px;min-width:55px}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar">
+    <div class="brand">
+      <h1>AI時代のデータ解析</h1>
+      <p>Yuasa 2002 を題材に — 再現性・ハルシネーション・倫理</p>
+      <a class="gh" href="https://github.com/mxe050/AI-DataStat" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        mxe050/AI-DataStat
+      </a>
+    </div>
+    <nav class="toc" id="toc"></nav>
+  </aside>
+  <main id="stage">
+    <div id="progress"><div id="progress-bar"></div></div>
+    <button id="menu-toggle">☰ 目次</button>
+    <div id="slides"></div>
+    <div id="controls">
+      <button class="ctrl-btn" id="prev" title="前へ (←)">◀ 前へ</button>
+      <span class="counter" id="counter">1 / 1</span>
+      <button class="ctrl-btn" id="next" title="次へ (→)">次へ ▶</button>
+      <span style="color:var(--muted);font-size:11px;margin-left:10px">
+        <span class="kbd">←</span> <span class="kbd">→</span> で移動 / <span class="kbd">F</span> フルスクリーン
+      </span>
+    </div>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   全44症例の仮想データ（Yuasa 2002 の集計表から逆算・再構成）
+============================================================ */
+const YUASA_DATA = [
+  {ID:1,Group:"Difficult",Age:49,Sex:"M",Depth:"C",Ramus:"Class3",Spatial:"Vertical",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Buccal"},
+  {ID:2,Group:"Difficult",Age:38,Sex:"M",Depth:"C",Ramus:"Class3",Spatial:"Vertical",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Buccal"},
+  {ID:3,Group:"Difficult",Age:37,Sex:"M",Depth:"C",Ramus:"Class3",Spatial:"Mesioangular",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Buccal"},
+  {ID:4,Group:"Difficult",Age:34,Sex:"M",Depth:"C",Ramus:"Class3",Spatial:"Mesioangular",Proximity:"Distant",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Buccal"},
+  {ID:5,Group:"Difficult",Age:32,Sex:"M",Depth:"C",Ramus:"Class2",Spatial:"Mesioangular",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Buccal"},
+  {ID:6,Group:"Difficult",Age:31,Sex:"F",Depth:"C",Ramus:"Class2",Spatial:"Mesioangular",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Buccal"},
+  {ID:7,Group:"Difficult",Age:30,Sex:"F",Depth:"C",Ramus:"Class3",Spatial:"NA",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Buccal"},
+  {ID:8,Group:"Difficult",Age:29,Sex:"F",Depth:"C",Ramus:"Class3",Spatial:"NA",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Centre"},
+  {ID:9,Group:"Difficult",Age:28,Sex:"F",Depth:"C",Ramus:"Class3",Spatial:"NA",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Centre"},
+  {ID:10,Group:"Difficult",Age:27,Sex:"M",Depth:"B",Ramus:"Class3",Spatial:"Mesioangular",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Lingual"},
+  {ID:11,Group:"Difficult",Age:26,Sex:"F",Depth:"B",Ramus:"Class3",Spatial:"Mesioangular",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"NoObs"},
+  {ID:12,Group:"Difficult",Age:25,Sex:"F",Depth:"B",Ramus:"Class2",Spatial:"Mesioangular",Proximity:"Distant",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"NoObs"},
+  {ID:13,Group:"Difficult",Age:24,Sex:"M",Depth:"B",Ramus:"Class2",Spatial:"Distoangular",Proximity:"Distant",RootCurvature:"Curved",RootWidth:"Thick",HorizontalPosition:"NoObs"},
+  {ID:14,Group:"Difficult",Age:23,Sex:"F",Depth:"B",Ramus:"Class2",Spatial:"Distoangular",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Thick",HorizontalPosition:"NA"},
+  {ID:15,Group:"Difficult",Age:22,Sex:"F",Depth:"B",Ramus:"Class2",Spatial:"Horizontal",Proximity:"Distant",RootCurvature:"Straight",RootWidth:"Thin",HorizontalPosition:"NA"},
+  {ID:16,Group:"Difficult",Age:21,Sex:"M",Depth:"A",Ramus:"Class2",Spatial:"Vertical",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"NA"},
+  {ID:17,Group:"Difficult",Age:20,Sex:"F",Depth:"A",Ramus:"Class1",Spatial:"Vertical",Proximity:"Close",RootCurvature:"Straight",RootWidth:"Thin",HorizontalPosition:"NA"},
+  {ID:18,Group:"Difficult",Age:19,Sex:"F",Depth:"A",Ramus:"Class1",Spatial:"NA",Proximity:"Distant",RootCurvature:"Straight",RootWidth:"Thin",HorizontalPosition:"NA"},
+  {ID:19,Group:"Difficult",Age:18,Sex:"F",Depth:"A",Ramus:"Class2",Spatial:"NA",Proximity:"Close",RootCurvature:"Straight",RootWidth:"Bulbous",HorizontalPosition:"NA"},
+  {ID:20,Group:"Difficult",Age:17,Sex:"F",Depth:"A",Ramus:"Class3",Spatial:"NA",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Thin",HorizontalPosition:"NA"},
+  {ID:21,Group:"Control",Age:55,Sex:"F",Depth:"A",Ramus:"Class2",Spatial:"Horizontal",Proximity:"Close",RootCurvature:"Straight",RootWidth:"Thin",HorizontalPosition:"Centre"},
+  {ID:22,Group:"Control",Age:42,Sex:"M",Depth:"A",Ramus:"Class2",Spatial:"Horizontal",Proximity:"Close",RootCurvature:"Straight",RootWidth:"Thin",HorizontalPosition:"Centre"},
+  {ID:23,Group:"Control",Age:32,Sex:"F",Depth:"A",Ramus:"Class2",Spatial:"Horizontal",Proximity:"Close",RootCurvature:"Straight",RootWidth:"Thin",HorizontalPosition:"Centre"},
+  {ID:24,Group:"Control",Age:31,Sex:"M",Depth:"A",Ramus:"Class2",Spatial:"Horizontal",Proximity:"Close",RootCurvature:"Straight",RootWidth:"Thin",HorizontalPosition:"Centre"},
+  {ID:25,Group:"Control",Age:30,Sex:"F",Depth:"A",Ramus:"Class2",Spatial:"Horizontal",Proximity:"Distant",RootCurvature:"Straight",RootWidth:"Thin",HorizontalPosition:"Centre"},
+  {ID:26,Group:"Control",Age:29,Sex:"M",Depth:"A",Ramus:"Class2",Spatial:"Mesioangular",Proximity:"Close",RootCurvature:"Straight",RootWidth:"Thin",HorizontalPosition:"Centre"},
+  {ID:27,Group:"Control",Age:28,Sex:"F",Depth:"A",Ramus:"Class2",Spatial:"Mesioangular",Proximity:"Close",RootCurvature:"Straight",RootWidth:"Thin",HorizontalPosition:"Centre"},
+  {ID:28,Group:"Control",Age:27,Sex:"F",Depth:"A",Ramus:"Class2",Spatial:"Mesioangular",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Centre"},
+  {ID:29,Group:"Control",Age:26,Sex:"M",Depth:"A",Ramus:"Class1",Spatial:"Mesioangular",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Centre"},
+  {ID:30,Group:"Control",Age:26,Sex:"F",Depth:"A",Ramus:"Class2",Spatial:"Mesioangular",Proximity:"Distant",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Centre"},
+  {ID:31,Group:"Control",Age:25,Sex:"F",Depth:"A",Ramus:"Class2",Spatial:"Distoangular",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Thin",HorizontalPosition:"Buccal"},
+  {ID:32,Group:"Control",Age:25,Sex:"F",Depth:"A",Ramus:"Class2",Spatial:"Vertical",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Thin",HorizontalPosition:"Buccal"},
+  {ID:33,Group:"Control",Age:24,Sex:"F",Depth:"A",Ramus:"Class2",Spatial:"Vertical",Proximity:"Close",RootCurvature:"Straight",RootWidth:"Thin",HorizontalPosition:"Buccal"},
+  {ID:34,Group:"Control",Age:24,Sex:"M",Depth:"A",Ramus:"Class2",Spatial:"Horizontal",Proximity:"Close",RootCurvature:"Straight",RootWidth:"Thin",HorizontalPosition:"Buccal"},
+  {ID:35,Group:"Control",Age:23,Sex:"F",Depth:"B",Ramus:"Class2",Spatial:"Horizontal",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Buccal"},
+  {ID:36,Group:"Control",Age:23,Sex:"F",Depth:"B",Ramus:"Class2",Spatial:"Horizontal",Proximity:"Distant",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Buccal"},
+  {ID:37,Group:"Control",Age:22,Sex:"F",Depth:"B",Ramus:"Class2",Spatial:"Mesioangular",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"Buccal"},
+  {ID:38,Group:"Control",Age:21,Sex:"F",Depth:"B",Ramus:"Class1",Spatial:"Mesioangular",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Thick",HorizontalPosition:"Lingual"},
+  {ID:39,Group:"Control",Age:21,Sex:"M",Depth:"B",Ramus:"Class2",Spatial:"Mesioangular",Proximity:"Close",RootCurvature:"Straight",RootWidth:"Thin",HorizontalPosition:"Lingual"},
+  {ID:40,Group:"Control",Age:20,Sex:"F",Depth:"B",Ramus:"Class2",Spatial:"Mesioangular",Proximity:"Close",RootCurvature:"Straight",RootWidth:"Thick",HorizontalPosition:"Lingual"},
+  {ID:41,Group:"Control",Age:20,Sex:"F",Depth:"B",Ramus:"Class3",Spatial:"Vertical",Proximity:"Close",RootCurvature:"Incomplete",RootWidth:"Incomplete",HorizontalPosition:"NoObs"},
+  {ID:42,Group:"Control",Age:19,Sex:"F",Depth:"B",Ramus:"Class3",Spatial:"Vertical",Proximity:"Distant",RootCurvature:"Incomplete",RootWidth:"Incomplete",HorizontalPosition:"NoObs"},
+  {ID:43,Group:"Control",Age:18,Sex:"F",Depth:"B",Ramus:"Class2",Spatial:"Distoangular",Proximity:"Close",RootCurvature:"Curved",RootWidth:"Bulbous",HorizontalPosition:"NoObs"},
+  {ID:44,Group:"Control",Age:17,Sex:"F",Depth:"B",Ramus:"Class1",Spatial:"Distoangular",Proximity:"Distant",RootCurvature:"Straight",RootWidth:"Thin",HorizontalPosition:"NoObs"}
+];
+
+/* ============================================================
+   スライド定義
+============================================================ */
+const SLIDES = [
+
+/* ============ 表紙 ============ */
+{part:"表紙", short:"タイトル", html:`
+<div class="title-slide">
+  <div class="title-deco">Data Science · AI Era</div>
+  <h1>AI時代の<br>データ解析</h1>
+  <p class="lead">ハルシネーションを抑制し、<br>再現性ある統計解析を実現する</p>
+  <div class="panel" style="max-width:640px;margin-top:20px;text-align:left">
+    <div class="panel-title">題材</div>
+    <div style="font-size:14px;line-height:1.7">
+      <strong>Yuasa H, Kawai T, Sugiura M (2002)</strong><br>
+      Classification of surgical difficulty in extracting impacted third molars.<br>
+      <em>British Journal of Oral and Maxillofacial Surgery</em> 40:26-31.
+    </div>
+  </div>
+  <div class="meta">2002年の自分の論文を、AIの力で批判的に吟味し再解析する<br>
+    <span class="kbd">→</span> キーまたは下の「次へ」で進む</div>
+</div>
+`},
+
+/* ============ 目次 ============ */
+{part:"Overview", short:"全体構成", html:`
+<span class="slide-tag">OVERVIEW</span>
+<h2 class="slide-title">全体構成 ─ 7つのパート</h2>
+<p class="slide-sub">2002年の論文を"生きた教材"として、AI時代の解析作法を一気通貫で学ぶ</p>
+<div class="grid grid-2">
+  <div class="panel">
+    <div class="panel-title">Part 1 · リサーチQとAI文献レビュー</div>
+    <ul class="bullet">
+      <li>PICO形式でAIに依頼する</li>
+      <li>ハルシネーションの実例（架空論文）</li>
+      <li>引用の実在確認ワークフロー</li>
+    </ul>
+  </div>
+  <div class="panel">
+    <div class="panel-title">Part 2 · 題材論文の背景</div>
+    <ul class="bullet">
+      <li>Winter/Pell&Gregory/Pedersonの系譜</li>
+      <li>Yuasa 2002 の研究デザイン</li>
+      <li>原論文 Table 3 の度数不整合</li>
+    </ul>
+  </div>
+  <div class="panel">
+    <div class="panel-title">Part 3 · 統計手法の批判的検討</div>
+    <ul class="bullet">
+      <li>データ駆動型変数選択の問題</li>
+      <li>EPV不足・完全分離（OR=999）</li>
+      <li>2002 vs 2026 の手法比較</li>
+    </ul>
+  </div>
+  <div class="panel">
+    <div class="panel-title">Part 4 · ハルシネーションの科学</div>
+    <ul class="bullet">
+      <li>Kalai の IIV 還元（統計的不可避）</li>
+      <li>主要ベンチマークの二値採点問題</li>
+      <li>Analyst-Inspector フレームワーク</li>
+    </ul>
+  </div>
+  <div class="panel">
+    <div class="panel-title">Part 5 · AI × R による再解析</div>
+    <ul class="bullet">
+      <li>仮想データによる度数再構成</li>
+      <li>Firth 罰則付きロジスティック回帰</li>
+      <li>ROC 曲線・AUC の算出</li>
+    </ul>
+  </div>
+  <div class="panel">
+    <div class="panel-title">Part 6-7 · 倫理と実践</div>
+    <ul class="bullet">
+      <li>AMEE Guide No.192 の開示基準</li>
+      <li>TRIPOD+AI 準拠の報告</li>
+      <li>Take-home messages</li>
+    </ul>
+  </div>
+</div>
+`},
+
+/* ============ 学習目標 ============ */
+{part:"Overview", short:"学習目標", html:`
+<span class="slide-tag">LEARNING GOALS</span>
+<h2 class="slide-title">5つの到達目標</h2>
+<p class="slide-sub">統計の知識だけでなく、AIの限界を理解し透明性を確保する姿勢を身につける</p>
+<div class="grid grid-2">
+  <div class="stat"><div class="label">Goal 1</div><div class="value" style="font-size:18px">臨床研究の統計手法を<br>批判的に評価する</div>
+    <div class="sub">単変量スクリーニング, EPV, 完全分離 を見抜く</div></div>
+  <div class="stat"><div class="label">Goal 2</div><div class="value" style="font-size:18px">LLMハルシネーションの<br>統計学的原因を理解する</div>
+    <div class="sub">Kalai & Vempala (2024) IIV 還元</div></div>
+  <div class="stat"><div class="label">Goal 3</div><div class="value" style="font-size:18px">AIで生成したRコードの<br>検証方法を習得する</div>
+    <div class="sub">Analyst-Inspector, 手計算検算</div></div>
+  <div class="stat"><div class="label">Goal 4</div><div class="value" style="font-size:18px">2002年と2026年の<br>統計手法の違いを説明できる</div>
+    <div class="sub">Firth回帰, TRIPOD+AI, 内部検証</div></div>
+  <div class="stat" style="grid-column:span 2"><div class="label">Goal 5</div><div class="value" style="font-size:18px">AIを研究に使う際の倫理的開示義務を理解する</div>
+    <div class="sub">AMEE Guide No.192 / Resnik & Hosseini 2025 / TRIPOD+AI 2024</div></div>
+</div>
+<div class="note-box">本スライドは自身の2002年論文を"教材"として活用しており、批判は過去を責めるためではなく「統計学の進歩を示す」ためのものである。</div>
+`},
+
+/* ============ Part 1 セクション ============ */
+{part:"Part 1", short:"━━ Part 1 セクション", html:`
+<div class="section-slide">
+  <div class="part-num">01</div>
+  <h2>リサーチクエスチョンと<br>AI文献レビュー</h2>
+  <p class="section-desc">良い研究はPICOで始まる。AIを使った文献検索の威力と危険性を、Kalai et al. (2025) のハルシネーション実例で示す。</p>
+</div>
+`},
+
+/* ============ 1-1 RQ定義 ============ */
+{part:"Part 1", short:"PICO定義", html:`
+<span class="slide-tag">STEP 1</span>
+<h2 class="slide-title">リサーチクエスチョンを PICO で定義</h2>
+<p class="slide-sub">AIに漠然と「何か解析して」と頼まない。構造化された質問がハルシネーション抑制の第一歩。</p>
+<div class="panel">
+  <div class="panel-title">臨床的疑問</div>
+  <p style="font-size:22px;font-weight:700;color:#fff">下顎埋伏智歯の抜歯困難度を<span class="hi">術前に</span>予測できるか？</p>
+</div>
+<div class="svg-wrap mobile-hide" style="padding:26px">
+<svg viewBox="0 0 720 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px">
+<defs>
+<linearGradient id="picoG1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ea8ff" stop-opacity="0.35"/><stop offset="1" stop-color="#6ea8ff" stop-opacity="0.05"/></linearGradient>
+<linearGradient id="picoG2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a78bfa" stop-opacity="0.35"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0.05"/></linearGradient>
+<linearGradient id="picoG3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24" stop-opacity="0.35"/><stop offset="1" stop-color="#fbbf24" stop-opacity="0.05"/></linearGradient>
+<linearGradient id="picoG4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4ade80" stop-opacity="0.35"/><stop offset="1" stop-color="#4ade80" stop-opacity="0.05"/></linearGradient>
+</defs>
+<g font-family="'Helvetica Neue',sans-serif">
+<rect x="10" y="10" width="162" height="158" rx="14" fill="url(#picoG1)" stroke="#6ea8ff" stroke-width="2"/>
+<circle cx="91" cy="52" r="26" fill="#6ea8ff" opacity="0.35"/>
+<text x="91" y="62" text-anchor="middle" font-size="34" font-weight="900" fill="#6ea8ff">P</text>
+<text x="91" y="102" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">Patient</text>
+<text x="91" y="125" text-anchor="middle" font-size="12" fill="#c5d2ff">下顎埋伏智歯の</text>
+<text x="91" y="141" text-anchor="middle" font-size="12" fill="#c5d2ff">抜歯予定患者</text>
+<text x="91" y="158" text-anchor="middle" font-size="10" fill="#9aa3c7">N=44（実データ）</text>
+<rect x="192" y="10" width="162" height="158" rx="14" fill="url(#picoG2)" stroke="#a78bfa" stroke-width="2"/>
+<circle cx="273" cy="52" r="26" fill="#a78bfa" opacity="0.35"/>
+<text x="273" y="62" text-anchor="middle" font-size="34" font-weight="900" fill="#a78bfa">I</text>
+<text x="273" y="102" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">Intervention</text>
+<text x="273" y="125" text-anchor="middle" font-size="12" fill="#c5d2ff">術前パノラマ所見</text>
+<text x="273" y="141" text-anchor="middle" font-size="11" fill="#9aa3c7">深さ・下顎枝</text>
+<text x="273" y="156" text-anchor="middle" font-size="11" fill="#9aa3c7">歯根形態</text>
+<rect x="374" y="10" width="162" height="158" rx="14" fill="url(#picoG3)" stroke="#fbbf24" stroke-width="2"/>
+<circle cx="455" cy="52" r="26" fill="#fbbf24" opacity="0.35"/>
+<text x="455" y="62" text-anchor="middle" font-size="34" font-weight="900" fill="#fbbf24">C</text>
+<text x="455" y="102" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">Comparator</text>
+<text x="455" y="125" text-anchor="middle" font-size="12" fill="#c5d2ff">予測なし</text>
+<text x="455" y="141" text-anchor="middle" font-size="12" fill="#c5d2ff">または</text>
+<text x="455" y="157" text-anchor="middle" font-size="12" fill="#c5d2ff">Pederson 指数</text>
+<rect x="556" y="10" width="162" height="158" rx="14" fill="url(#picoG4)" stroke="#4ade80" stroke-width="2"/>
+<circle cx="637" cy="52" r="26" fill="#4ade80" opacity="0.35"/>
+<text x="637" y="62" text-anchor="middle" font-size="34" font-weight="900" fill="#4ade80">O</text>
+<text x="637" y="102" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">Outcome</text>
+<text x="637" y="125" text-anchor="middle" font-size="12" fill="#c5d2ff">抜歯困難</text>
+<text x="637" y="141" text-anchor="middle" font-size="11" fill="#9aa3c7">時間≥30分 or</text>
+<text x="637" y="157" text-anchor="middle" font-size="11" fill="#9aa3c7">術者判断</text>
+</g>
+</svg>
+</div>
+<div class="grid grid-4 mobile-only">
+  <div class="stat"><div class="label">P 患者</div><div class="value" style="font-size:13px">埋伏智歯</div></div>
+  <div class="stat"><div class="label">I 介入</div><div class="value" style="font-size:13px">X線所見</div></div>
+  <div class="stat"><div class="label">C 比較</div><div class="value" style="font-size:13px">Pederson</div></div>
+  <div class="stat"><div class="label">O 転帰</div><div class="value" style="font-size:13px">困難</div></div>
+</div>
+<div class="ok-box">PICOで固めた時点で、「<strong>何を、何と、何と比べて、どう測るか</strong>」が明確になる。AIへの質問もシャープになり、ハルシネーションの余地が減る。</div>
+`},
+
+/* ============ 1-2 AI文献検索プロンプト ============ */
+{part:"Part 1", short:"AI文献検索", html:`
+<span class="slide-tag">STEP 2</span>
+<h2 class="slide-title">AIに文献検索を依頼する</h2>
+<p class="slide-sub">制約条件を明示的に書くことがハルシネーション抑制の鍵。ただしそれでも完全には防げない。</p>
+<div class="grid grid-ab">
+<div>
+<div class="panel">
+<div class="panel-title">推奨プロンプト</div>
+<pre><span class="com"># 役割設定</span>
+<span class="kw">あなたは</span> 口腔外科の統計解析に詳しい研究者です。
+
+<span class="com"># タスク</span>
+下顎埋伏智歯の抜歯困難度予測に関する
+主要な論文を10件、以下の形式で：
+
+  - 著者（年）
+  - タイトル
+  - ジャーナル名・巻号・ページ
+  - DOI（<span class="hi">実在するもののみ</span>）
+  - 研究デザイン・N
+  - 使用統計手法
+  - 主な結果
+
+<span class="com"># 制約（ハルシネーション防止）</span>
+- 存在しない論文は<span class="hi">絶対に含めない</span>
+- 不確かな場合は「<span class="hi">確認が必要</span>」と明記
+- DOIを捏造しない
+</pre>
+</div>
+</div>
+<div>
+<div class="panel">
+<div class="panel-title">なぜこの制約が必要か</div>
+<ul class="bullet">
+<li><strong>役割設定</strong>：特定ドメインへのアテンションを集中</li>
+<li><strong>出力形式固定</strong>：構造化により検証が容易</li>
+<li><strong>"実在のみ"明示</strong>：ハルシネーション率を低下</li>
+<li><strong>不確実性の許可</strong>：「わからない」と答えやすくする</li>
+</ul>
+</div>
+<div class="warn-box">これらの制約を付けても、Kalai et al. (2025) が証明したとおりハルシネーションは完全には消えない。次スライドで実例を見る。</div>
+<div class="cite">参考：Kalai AT, Nachum O, Vempala SS, Zhang E. Why Language Models Hallucinate. arXiv:2509.04664 (2025).</div>
+</div>
+</div>
+`},
+
+/* ============ 1-3 ハルシネーションの実例 ============ */
+{part:"Part 1", short:"実例：架空論文", html:`
+<span class="slide-tag">CASE STUDY</span>
+<h2 class="slide-title">3つの最先端モデル、3つの違う"もっともらしい嘘"</h2>
+<p class="slide-sub">Kalai et al. (2025) Table 1 より。質問：「Adam Kalai の博士論文タイトルは？」</p>
+<table>
+<thead>
+<tr><th>モデル</th><th>回答タイトル</th><th>大学</th><th>年</th><th>評価</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>ChatGPT (GPT-4o)</strong></td>
+  <td style="font-size:11px">"Boosting, Online Algorithms, and Other Topics in Machine Learning"</td>
+  <td>CMU</td><td>2002</td><td class="bad">❌ 全て誤り</td></tr>
+<tr><td><strong>DeepSeek</strong></td>
+  <td style="font-size:11px">"Algebraic Methods in Interactive Machine Learning"</td>
+  <td>Harvard</td><td>2005</td><td class="bad">❌ 全て誤り</td></tr>
+<tr><td><strong>Llama</strong></td>
+  <td style="font-size:11px">"Efficient Algorithms for Learning and Playing Games"</td>
+  <td>MIT</td><td>2007</td><td class="bad">❌ 全て誤り</td></tr>
+<tr class="highlight-row"><td><strong>正解</strong></td>
+  <td style="font-size:11px">"Probabilistic and on-line methods in machine learning"</td>
+  <td><strong>CMU</strong></td><td><strong>2001</strong></td><td class="ok">✓ 事実</td></tr>
+</tbody>
+</table>
+<div class="grid grid-2" style="margin-top:14px">
+<div class="danger-box" style="margin:0">3つのモデルすべてが、<strong>もっともらしいが完全に誤った回答</strong>を自信満々に生成。タイトルも大学も年も違う。</div>
+<div class="note-box" style="margin:0">これは「珍しいバグ」ではなく<strong>統計的必然</strong>。後のPart 4で数学的根拠を示す。</div>
+</div>
+<div class="cite">Kalai AT et al. Why Language Models Hallucinate. arXiv:2509.04664 (2025) Table 1.</div>
+`},
+
+/* ============ 1-4 検証ワークフロー ============ */
+{part:"Part 1", short:"検証手順", html:`
+<span class="slide-tag">VERIFICATION</span>
+<h2 class="slide-title">AIが出力した引用は必ず実在確認する</h2>
+<p class="slide-sub">架空の引用が1つでも混入すれば、研究全体の信頼性が損なわれる。</p>
+<div class="grid grid-ab">
+<div>
+<div class="panel">
+<div class="panel-title">5ステップ検証手順</div>
+<ol class="num">
+<li>DOIを <code>https://doi.org/[DOI]</code> で直接アクセス</li>
+<li>PubMed / Google Scholar でタイトル完全一致検索</li>
+<li>著者名・年・巻号・ページを原著と照合</li>
+<li>Abstract を読み、AIの要約と内容が一致するか確認</li>
+<li>不一致があれば <strong>AIの出力を破棄</strong> し原著を使用</li>
+</ol>
+</div>
+</div>
+<div>
+<div class="panel">
+<div class="panel-title">実際の検証例</div>
+<pre><span class="com"># AI の出力</span>
+"Yuasa H, Kawai T, Sugiura M (2002)
+ BJOMS 40:26-31"
+
+<span class="com"># 検証①: DOI</span>
+https://doi.org/10.1054/bjom.2001.0684
+  → ページ表示 <span class="str">✓</span>
+
+<span class="com"># 検証②: PubMed</span>
+PMID: 11883966  <span class="str">✓</span>
+
+<span class="com"># 検証③: タイトル</span>
+"Classification of surgical
+ difficulty in extracting
+ impacted third molars"  <span class="str">✓</span>
+
+<span class="com"># 結論</span>
+<span class="str">実在を確認 → 引用可</span></pre>
+</div>
+</div>
+</div>
+<div class="ok-box">この確認作業は省略できない。ルーチン化して、すべての引用に対して必ず行う。</div>
+`},
+
+/* ============ Part 2 セクション ============ */
+{part:"Part 2", short:"━━ Part 2 セクション", html:`
+<div class="section-slide">
+  <div class="part-num">02</div>
+  <h2>題材論文の背景</h2>
+  <p class="section-desc">Yuasa et al. (2002) の研究を理解する。Winter (1926)、Pell & Gregory (1933)、Pederson (1988) の系譜と、2段階研究デザインを押さえる。</p>
+</div>
+`},
+
+/* ============ 2-1 分類系譜 ============ */
+{part:"Part 2", short:"分類の系譜", html:`
+<span class="slide-tag">HISTORICAL CONTEXT</span>
+<h2 class="slide-title">下顎埋伏智歯の分類体系 ─ 80年の変遷</h2>
+<div class="svg-wrap mobile-hide" style="padding:16px">
+<svg viewBox="0 0 820 170" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px">
+<defs>
+<marker id="arrowH" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6ea8ff"/></marker>
+</defs>
+<line x1="40" y1="85" x2="780" y2="85" stroke="#6ea8ff" stroke-width="2" marker-end="url(#arrowH)"/>
+<g font-family="'Helvetica Neue',sans-serif">
+<circle cx="80" cy="85" r="8" fill="#f87171"/><text x="80" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">1926</text><text x="80" y="110" text-anchor="middle" font-size="13" font-weight="700" fill="#f87171">Winter</text><text x="80" y="125" text-anchor="middle" font-size="10" fill="#9aa3c7">角度分類</text>
+<circle cx="220" cy="85" r="8" fill="#fbbf24"/><text x="220" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">1933</text><text x="220" y="110" text-anchor="middle" font-size="13" font-weight="700" fill="#fbbf24">Pell & Gregory</text><text x="220" y="125" text-anchor="middle" font-size="10" fill="#9aa3c7">深さ + 下顎枝</text>
+<circle cx="360" cy="85" r="8" fill="#a78bfa"/><text x="360" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">1988</text><text x="360" y="110" text-anchor="middle" font-size="13" font-weight="700" fill="#a78bfa">Pederson</text><text x="360" y="125" text-anchor="middle" font-size="10" fill="#9aa3c7">困難度指数 (3-10)</text>
+<circle cx="520" cy="85" r="14" fill="#4ade80" stroke="#fff" stroke-width="2"/><text x="520" y="54" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2002</text><text x="520" y="113" text-anchor="middle" font-size="14" font-weight="900" fill="#4ade80">Yuasa et al.</text><text x="520" y="128" text-anchor="middle" font-size="11" fill="#c5d2ff">新指数（本講演の題材）</text><text x="520" y="144" text-anchor="middle" font-size="10" fill="#9aa3c7">感度 0.85 · 特異度 0.92</text>
+<circle cx="660" cy="85" r="8" fill="#6ea8ff"/><text x="660" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">2013-21</text><text x="660" y="110" text-anchor="middle" font-size="13" font-weight="700" fill="#6ea8ff">Meta-analyses</text><text x="660" y="125" text-anchor="middle" font-size="10" fill="#9aa3c7">妥当性評価</text>
+<circle cx="760" cy="85" r="10" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="2 2"/><text x="760" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">2026</text><text x="760" y="110" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">本講演</text><text x="760" y="125" text-anchor="middle" font-size="10" fill="#9aa3c7">AI 再解析</text>
+</g>
+</svg>
+</div>
+<table>
+<thead><tr><th>著者（年）</th><th>評価基準</th><th>貢献</th></tr></thead>
+<tbody>
+<tr><td><strong>Winter</strong> (1926)</td><td>第2大臼歯長軸に対する傾斜角度</td>
+  <td>角度分類（Vertical/Horizontal/Mesioangular/Distoangular）</td></tr>
+<tr><td><strong>Pell & Gregory</strong> (1933)</td><td>深さ Level A/B/C、下顎枝 Class 1/2/3</td>
+  <td>Panoramic像からの2軸分類</td></tr>
+<tr><td><strong>Pederson</strong> (1988)</td><td>上記3因子を数値化し合計（3–10点）</td>
+  <td>困難度指数として初の定量化</td></tr>
+<tr class="highlight-row"><td><strong>Yuasa et al.</strong> (2002)</td>
+  <td>多変量解析で因子選択し新指数構築</td>
+  <td><span class="hi">"bulbous root"</span>（歯根球状）の発見と新指数</td></tr>
+<tr><td>Systematic reviews (2013-2021)</td><td>Pederson指数の予測妥当性評価</td>
+  <td>指数の限界を定量的に示す</td></tr>
+</tbody>
+</table>
+<div class="note-box">2002年時点では"新しい指数"であった Yuasa 指数を、<strong>2026年の基準で批判的に吟味する</strong>のが本講義のテーマ。</div>
+`},
+
+/* ============ 2-1b 解剖学的分類図 ============ */
+{part:"Part 2", short:"Pell & Gregory 分類図", html:`
+<span class="slide-tag">ANATOMY</span>
+<h2 class="slide-title">Pell & Gregory 分類 ─ 視覚的理解</h2>
+<p class="slide-sub">深さ（Level A/B/C）と下顎枝との空間関係（Class 1/2/3）は、本研究の2大予測因子</p>
+<div class="grid grid-2">
+<div class="panel">
+<div class="panel-title">深さ分類（Level A → C）</div>
+<div class="svg-wrap" style="padding:16px">
+<svg viewBox="0 0 360 230" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+<defs><linearGradient id="gumA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24" stop-opacity="0.2"/><stop offset="1" stop-color="#fbbf24" stop-opacity="0.05"/></linearGradient></defs>
+<g font-family="'Helvetica Neue',sans-serif">
+<!-- 咬合面ライン（基準）-->
+<line x1="10" y1="50" x2="350" y2="50" stroke="#4ade80" stroke-width="2" stroke-dasharray="4 4"/>
+<text x="355" y="52" font-size="9" fill="#4ade80" text-anchor="end">咬合面</text>
+<!-- 第2大臼歯頸部ライン -->
+<line x1="10" y1="110" x2="350" y2="110" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3 3"/>
+<text x="355" y="112" font-size="9" fill="#fbbf24" text-anchor="end">CEJ</text>
+<!-- Level A -->
+<rect x="30" y="55" width="50" height="90" rx="6" fill="#4ade80" opacity="0.4" stroke="#4ade80" stroke-width="1.5"/>
+<text x="55" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">A</text>
+<text x="55" y="105" text-anchor="middle" font-size="8" fill="#fff">high</text>
+<text x="55" y="165" text-anchor="middle" font-size="11" font-weight="700" fill="#4ade80">Level A</text>
+<text x="55" y="180" text-anchor="middle" font-size="9" fill="#c5d2ff">咬合面高位</text>
+<text x="55" y="195" text-anchor="middle" font-size="8" fill="#9aa3c7">簡単</text>
+<!-- Level B -->
+<rect x="150" y="80" width="50" height="85" rx="6" fill="#fbbf24" opacity="0.4" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="175" y="115" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">B</text>
+<text x="175" y="135" text-anchor="middle" font-size="8" fill="#fff">medium</text>
+<text x="175" y="185" text-anchor="middle" font-size="11" font-weight="700" fill="#fbbf24">Level B</text>
+<text x="175" y="200" text-anchor="middle" font-size="9" fill="#c5d2ff">中位</text>
+<text x="175" y="213" text-anchor="middle" font-size="8" fill="#9aa3c7">中等度</text>
+<!-- Level C -->
+<rect x="270" y="115" width="50" height="80" rx="6" fill="#f87171" opacity="0.5" stroke="#f87171" stroke-width="1.5"/>
+<text x="295" y="150" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">C</text>
+<text x="295" y="170" text-anchor="middle" font-size="8" fill="#fff">deep</text>
+<text x="295" y="215" text-anchor="middle" font-size="11" font-weight="700" fill="#f87171">Level C</text>
+<text x="295" y="228" text-anchor="middle" font-size="8" fill="#9aa3c7">深位・困難</text>
+<!-- 歯冠形状 -->
+<path d="M 35 55 L 75 55 L 73 45 L 37 45 Z" fill="#fff" opacity="0.6"/>
+<path d="M 155 80 L 195 80 L 193 70 L 157 70 Z" fill="#fff" opacity="0.5"/>
+<path d="M 275 115 L 315 115 L 313 105 L 277 105 Z" fill="#fff" opacity="0.4"/>
+</g>
+</svg>
+</div>
+<p style="font-size:13px;line-height:1.6;color:var(--muted);text-align:center">
+咬合面に対する歯冠最高部の位置で分類
+</p>
+</div>
+<div class="panel">
+<div class="panel-title">下顎枝との関係（Class 1 → 3）</div>
+<div class="svg-wrap" style="padding:16px">
+<svg viewBox="0 0 360 230" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+<g font-family="'Helvetica Neue',sans-serif">
+<!-- 第2大臼歯遠心ライン -->
+<line x1="120" y1="20" x2="120" y2="210" stroke="#c5d2ff" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="120" y="15" font-size="9" fill="#c5d2ff" text-anchor="middle">第2大臼歯遠心面</text>
+<!-- 下顎枝前縁 -->
+<line x1="240" y1="20" x2="240" y2="210" stroke="#c5d2ff" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="240" y="15" font-size="9" fill="#c5d2ff" text-anchor="middle">下顎枝前縁</text>
+<!-- 下顎枝のカーブ -->
+<path d="M 240 40 Q 280 115 240 200" fill="none" stroke="#9aa3c7" stroke-width="2"/>
+<text x="275" y="120" font-size="10" fill="#9aa3c7" transform="rotate(90 275 120)">下顎枝</text>
+<!-- Class 1: 第2大臼歯と下顎枝の間に十分なスペース → 第3大臼歯は完全に前方 -->
+<rect x="140" y="30" width="80" height="36" rx="6" fill="#4ade80" opacity="0.4" stroke="#4ade80" stroke-width="1.5"/>
+<text x="180" y="52" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">Class 1</text>
+<text x="350" y="50" font-size="11" fill="#4ade80" text-anchor="end" font-weight="700">十分</text>
+<!-- Class 2: 部分的に下顎枝にかかる -->
+<rect x="150" y="90" width="75" height="36" rx="6" fill="#fbbf24" opacity="0.4" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="190" y="112" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">Class 2</text>
+<text x="350" y="110" font-size="11" fill="#fbbf24" text-anchor="end" font-weight="700">減少</text>
+<!-- Class 3: 完全に下顎枝内 -->
+<rect x="200" y="150" width="60" height="36" rx="6" fill="#f87171" opacity="0.5" stroke="#f87171" stroke-width="1.5"/>
+<text x="230" y="172" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">Class 3</text>
+<text x="350" y="170" font-size="11" fill="#f87171" text-anchor="end" font-weight="700">なし</text>
+<text x="180" y="210" text-anchor="middle" font-size="9" fill="#c5d2ff">← 前方</text>
+<text x="240" y="210" text-anchor="middle" font-size="9" fill="#c5d2ff">後方 →</text>
+</g>
+</svg>
+</div>
+<p style="font-size:13px;line-height:1.6;color:var(--muted);text-align:center">
+下顎枝前縁と第2大臼歯遠心面の間のスペース
+</p>
+</div>
+</div>
+<div class="warn-box">本研究で最も重要な知見：<strong>Depth = Level C（深位）</strong>のとき Control 群にゼロ症例 → 完全分離発生（Part 3 で詳述）</div>
+`},
+
+/* ============ 2-2 研究デザイン ============ */
+{part:"Part 2", short:"研究デザイン", html:`
+<span class="slide-tag">STUDY DESIGN</span>
+<h2 class="slide-title">Yuasa 2002 の2段階アプローチ</h2>
+<div class="grid grid-2">
+<div class="panel">
+<div class="panel-title">Stage 1 · 専門医アンケート</div>
+<p style="font-size:13px;line-height:1.6;margin-bottom:10px">
+40名の口腔外科専門医に郵送、36名回答（33男・3女、25-44歳）。<br>
+<strong>23因子</strong>を Likert 5段階で評価。<br>
+<em>目的：困難度に影響する因子の優先順位を決める</em>
+</p>
+<ul class="bullet">
+<li>1 = no relation（関係なし）</li>
+<li>2 = virtually no relation</li>
+<li>3 = weak relation</li>
+<li>4 = relation</li>
+<li>5 = strong relation</li>
+</ul>
+</div>
+<div class="panel">
+<div class="panel-title">Stage 2 · 症例対照研究</div>
+<p style="font-size:13px;line-height:1.6;margin-bottom:10px">
+1997年4月-10月、愛知学院大学歯学部で抜歯された44名を解析。<br>
+<strong>Difficult群</strong>：時間≥30分 <em>or</em> 術者が困難と判断。<br>
+<em>目的：アンケート上位因子の統計的検証</em>
+</p>
+<table style="font-size:12px;margin-top:10px">
+<thead><tr><th></th><th class="center">Difficult</th><th class="center">Control</th></tr></thead>
+<tbody>
+<tr><td>N</td><td class="center"><strong>20</strong></td><td class="center"><strong>24</strong></td></tr>
+<tr><td>年齢 (平均)</td><td class="center">27.5</td><td class="center">26.0</td></tr>
+<tr><td>男 / 女</td><td class="center">8 / 12</td><td class="center">6 / 18</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="note-box">Stage 1 のアンケート結果が、後の変数選択の<strong>"臨床的根拠"</strong>として機能する（Part 3で再登場）。</div>
+`},
+
+/* ============ 2-3 Table 2: 専門医アンケート ============ */
+{part:"Part 2", short:"Table 2 アンケート", html:`
+<span class="slide-tag">TABLE 2</span>
+<h2 class="slide-title">専門医が重視する因子 ─ 上位と下位</h2>
+<p class="slide-sub">Mean score ≥ 4.0 の因子が Stage 2 の候補として選定された</p>
+<div class="grid grid-2">
+<div class="panel">
+<div class="panel-title">解剖学的因子（上位）</div>
+<table style="font-size:12px">
+<thead><tr><th>#</th><th>因子</th><th class="center">Mean (SD)</th></tr></thead>
+<tbody>
+<tr class="highlight-row"><td>1</td><td>Depth（深さ）</td><td class="center"><strong>4.7 (1.4)</strong></td></tr>
+<tr class="highlight-row"><td>2</td><td>Abnormal root curvature</td><td class="center">4.6 (1.7)</td></tr>
+<tr class="highlight-row"><td>3</td><td>Width of root</td><td class="center">4.6 (1.7)</td></tr>
+<tr class="highlight-row"><td>4</td><td>Number of roots</td><td class="center">4.6 (1.9)</td></tr>
+<tr class="highlight-row"><td>5</td><td>Ramus relationship</td><td class="center">4.3 (1.6)</td></tr>
+<tr><td>6</td><td>Proximity to canal</td><td class="center">4.3 (2.5)</td></tr>
+<tr><td>7</td><td>Periodontal space</td><td class="center">4.2 (2.2)</td></tr>
+<tr><td>8</td><td>Spatial relationship</td><td class="center">4.3 (1.4)</td></tr>
+</tbody>
+</table>
+</div>
+<div class="panel">
+<div class="panel-title">非解剖学的因子（下位）</div>
+<table style="font-size:12px">
+<thead><tr><th>因子</th><th class="center">Mean (SD)</th></tr></thead>
+<tbody>
+<tr><td>Maximal mouth opening</td><td class="center">4.0 (1.0)</td></tr>
+<tr><td>Age</td><td class="center">3.9 (0.9)</td></tr>
+<tr><td>Anaesthesia</td><td class="center">3.8 (3.0)</td></tr>
+<tr><td>History of pericoronitis</td><td class="center">2.9 (1.0)</td></tr>
+<tr><td>Angle class malocclusion</td><td class="center">2.6 (4.0)</td></tr>
+<tr><td>Side of operation</td><td class="center">2.2 (1.4)</td></tr>
+<tr class="highlight-row"><td><strong>Sex</strong></td><td class="center"><strong>2.1 (1.0)</strong></td></tr>
+</tbody>
+</table>
+<div class="note-box" style="margin-top:10px">解剖学的因子が上位を占有。<strong>Sex は最低スコア</strong>（2.1）─ 困難度とは無関係と認識されていた。</div>
+</div>
+</div>
+`},
+
+/* ============ 2-4 Table 3: 単変量OR ============ */
+{part:"Part 2", short:"Table 3 単変量OR", html:`
+<span class="slide-tag">TABLE 3</span>
+<h2 class="slide-title">原論文 Table 3 ─ 単変量オッズ比</h2>
+<table>
+<thead><tr><th>因子</th><th>カテゴリ</th><th class="center">Diff (n=20)</th><th class="center">Ctrl (n=24)</th><th class="center">OR</th><th class="center">95% CI</th></tr></thead>
+<tbody>
+<tr><td rowspan="3"><strong>Depth</strong></td><td>Level A (ref)</td><td class="center">6</td><td class="center">14</td><td class="center">1.00</td><td class="center">–</td></tr>
+<tr><td>Level B</td><td class="center">9</td><td class="center">10</td><td class="center">2.10</td><td class="center">0.56–7.88</td></tr>
+<tr class="highlight-row"><td>Level C</td><td class="center">5</td><td class="center"><strong>0</strong></td><td class="center"><span class="bad">∞</span></td><td class="center"><span class="bad">12,298–∞</span></td></tr>
+<tr><td rowspan="3"><strong>Ramus</strong></td><td>Class 1 (ref)</td><td class="center">2</td><td class="center">3</td><td class="center">1.00</td><td class="center">–</td></tr>
+<tr><td>Class 2</td><td class="center">10</td><td class="center">19</td><td class="center">0.79</td><td class="center">0.11–5.68</td></tr>
+<tr><td>Class 3</td><td class="center">8</td><td class="center">2</td><td class="center"><span class="warn">6.00</span></td><td class="center">0.57–62.7</td></tr>
+<tr><td rowspan="2"><strong>Root width</strong></td><td>Thin (ref)</td><td class="center">10</td><td class="center">13</td><td class="center">1.00</td><td class="center">–</td></tr>
+<tr><td>Bulbous</td><td class="center">10</td><td class="center">2</td><td class="center"><span class="warn">6.50</span></td><td class="center">1.25–33.7</td></tr>
+<tr><td rowspan="2"><strong>Root curvature</strong></td><td>Straight (ref)</td><td class="center">4</td><td class="center">12</td><td class="center">1.00</td><td class="center">–</td></tr>
+<tr><td>Curved</td><td class="center">16</td><td class="center">10</td><td class="center"><span class="warn">4.80</span></td><td class="center">1.24–18.5</td></tr>
+<tr><td rowspan="2"><strong>Proximity</strong></td><td>Distant (ref)</td><td class="center">5</td><td class="center">5</td><td class="center">1.00</td><td class="center">–</td></tr>
+<tr><td>Close</td><td class="center">15</td><td class="center">19</td><td class="center">0.79</td><td class="center">0.19–3.29</td></tr>
+</tbody>
+</table>
+<div class="warn-box">注目：<strong>Depth Level C</strong> は Control 群に 0 名 → ゼロセル → OR = ∞ → 解釈不能。これが「完全分離」問題（Part 3で解説）。</div>
+`},
+
+/* ============ 2-5 度数不整合の指摘 ============ */
+{part:"Part 2", short:"度数不整合", html:`
+<span class="slide-tag">⚠ DATA INTEGRITY</span>
+<h2 class="slide-title">原論文の Table 3 ─ 度数が合わない！</h2>
+<p class="slide-sub">査読済み論文でも、表の集計にミスが含まれうる。鵜呑みにせず自分で検算する習慣を。</p>
+<table>
+<thead><tr><th>因子</th><th class="center">Difficult 合計</th><th class="center">期待値 (n=20)</th><th class="center">差異</th><th>評価</th></tr></thead>
+<tbody>
+<tr><td>Depth (A+B+C)</td><td class="center">6+9+5 = <strong>20</strong></td><td class="center">20</td><td class="center">0</td><td class="ok">✓ 一致</td></tr>
+<tr class="highlight-row"><td>Root Width (Thin+Bulbous+Thick+Inc)</td><td class="center">10+10+0+0 = <strong>20</strong></td><td class="center">20</td><td class="center">0</td><td class="ok">✓ 一致</td></tr>
+<tr class="highlight-row"><td>Spatial (V+H+I+M+D)</td><td class="center">7+10+0+3+0 = <strong>20</strong></td><td class="center">20</td><td class="center">0</td><td class="ok">✓ 一致</td></tr>
+<tr><td>Ramus (Cl1+Cl2+Cl3)</td><td class="center">2+10+8 = <strong>20</strong></td><td class="center">20</td><td class="center">0</td><td class="ok">✓ 一致</td></tr>
+<tr><td>Proximity (Dist+Close)</td><td class="center">5+15 = <strong>20</strong></td><td class="center">20</td><td class="center">0</td><td class="ok">✓ 一致</td></tr>
+<tr><td>Root Curvature (Str+Curv+Inc)</td><td class="center">4+16+0 = <strong>20</strong></td><td class="center">20</td><td class="center">0</td><td class="ok">✓ 一致</td></tr>
+<tr><td>Horizontal Pos (Bc+Ce+Li+NoObs)</td><td class="center">3+12+0+5 = <strong>20</strong></td><td class="center">20</td><td class="center">0</td><td class="ok">✓ 一致</td></tr>
+</tbody>
+</table>
+<div class="note-box">改めて詳細確認したところ、本論文の度数は各因子合計で20名と一致していた。一方、Part 5では欠損値の処理を含めて仮想データを構築する。</div>
+<div class="cite">本検算は、他の論文でも度数不整合がしばしば発見されるため、<strong>ルーチンワークとして必ず行うべき</strong>という教訓を示している。</div>
+`},
+
+/* ============ 2-6 Table 4+5+6 ============ */
+{part:"Part 2", short:"Table 4-6 結果", html:`
+<span class="slide-tag">TABLES 4 · 5 · 6</span>
+<h2 class="slide-title">多変量解析・新指数・Pederson比較</h2>
+<div class="grid grid-2">
+<div class="panel">
+<div class="panel-title">Table 4 · 多変量ロジスティック回帰</div>
+<table style="font-size:12px">
+<thead><tr><th>変数</th><th class="center">調整OR</th><th class="center">95% CI</th></tr></thead>
+<tbody>
+<tr class="highlight-row"><td>Depth Level C</td><td class="center"><span class="bad">999.0</span></td><td class="center"><span class="bad">–</span></td></tr>
+<tr><td>Ramus Class 3</td><td class="center">44.02</td><td class="center">1.59–1216.3</td></tr>
+<tr><td>Root Bulbous</td><td class="center">29.5</td><td class="center">2.04–426.4</td></tr>
+</tbody>
+</table>
+<div class="danger-box" style="margin-top:10px">OR = 999 は数学的に <strong>OR = ∞ の近似</strong>。CI 1.59–1216 は数桁にまたがり、臨床的解釈不能。</div>
+</div>
+<div class="panel">
+<div class="panel-title">Table 5 · 新指数（Yuasa Index）</div>
+<div style="background:var(--panel2);padding:14px;border-radius:10px;font-size:13px;line-height:1.7">
+次のいずれかが該当 → <strong>困難と予測</strong>：<br>
+<span class="badge blue">①</span> Depth = <strong>Level C</strong><br>
+<span class="badge blue">②</span> Ramus = <strong>Class 3</strong><br>
+<span class="badge blue">③</span> Root = <strong>Bulbous</strong>
+</div>
+<div class="panel-title" style="margin-top:16px">Table 6 · Pederson との比較</div>
+<table style="font-size:12px">
+<thead><tr><th>指標</th><th class="center">新指数</th><th class="center">Pederson</th></tr></thead>
+<tbody>
+<tr><td>OR</td><td class="center ok">62.3</td><td class="center">11.0</td></tr>
+<tr><td>感度</td><td class="center ok">0.85</td><td class="center">0.50</td></tr>
+<tr><td>特異度</td><td class="center">0.92</td><td class="center">0.92</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="warn-box">ここまでが原論文の主張。<strong>Part 3ではこれらを5つの視点から批判</strong>する。</div>
+`},
+
+/* ============ Part 3 セクション ============ */
+{part:"Part 3", short:"━━ Part 3 セクション", html:`
+<div class="section-slide">
+  <div class="part-num">03</div>
+  <h2>統計手法の<br>批判的検討</h2>
+  <p class="section-desc">2002年の手法を2026年の基準で吟味する。5つの問題点を一つずつ可視化し、Firth回帰・EPV・TRIPOD+AIへの道を示す。</p>
+</div>
+`},
+
+/* ============ 3-1 2002年ワークフロー ============ */
+{part:"Part 3", short:"2002年の流れ", html:`
+<span class="slide-tag">WORKFLOW · 2002</span>
+<h2 class="slide-title">Yuasa 2002 の統計ワークフロー</h2>
+<div class="flow">
+  <div class="flow-box">Step 1<br><small>単変量OR計算</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box" style="border-color:var(--bad);background:rgba(248,113,113,0.08)">Step 2<br><small>OR ≥ 2.0 で変数選択</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box" style="border-color:var(--bad);background:rgba(248,113,113,0.08)">Step 3<br><small>多変量モデル<br>（EPV=4）</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box" style="border-color:var(--bad);background:rgba(248,113,113,0.08)">Step 4<br><small>新指数構築<br>（OR=999）</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box" style="border-color:var(--bad);background:rgba(248,113,113,0.08)">Step 5<br><small>同一データで<br>感度・特異度</small></div>
+</div>
+<div class="panel" style="margin-top:20px">
+<div class="panel-title">2002年当時の標準 vs 2026年の基準</div>
+<p style="font-size:13px;line-height:1.7">
+この流れは当時広く行われていた。しかし、2026年の統計学的基準に照らすと<strong>5つの問題点</strong>が浮上する。<br>
+次以降のスライドで1つずつ可視化する：<br>
+<span class="badge red">問題1</span> データ駆動型変数選択<br>
+<span class="badge red">問題2</span> EPV不足（Events Per Variable）<br>
+<span class="badge red">問題3</span> 完全分離（OR=999）<br>
+<span class="badge red">問題4</span> 同一データでの構築と評価<br>
+<span class="badge red">問題5</span> 統計ソフトウェアの記載なし
+</p>
+</div>
+`},
+
+/* ============ 3-2 問題①データ駆動型選択 ============ */
+{part:"Part 3", short:"問題①変数選択", html:`
+<span class="slide-tag">問題 ①</span>
+<h2 class="slide-title">データ駆動型変数選択の罠</h2>
+<p class="slide-sub">「単変量でOR ≥ 2.0 → 多変量に投入」は Sun, Shook & Kay (1996) 以来20年以上批判されている。</p>
+<div class="grid grid-2">
+<div class="vs-box old">
+<h4>❌ 2002年の方法</h4>
+<ul class="bullet">
+<li>9因子すべてを単変量解析</li>
+<li>OR ≥ 2.0 の 5因子を選定</li>
+<li>5因子を多変量に投入</li>
+<li><strong>同一データで選択 + モデル推定</strong></li>
+</ul>
+<div style="margin-top:10px;padding:8px 10px;background:rgba(248,113,113,0.1);border-radius:6px;font-size:11px">
+<strong>結果：</strong>選択バイアスにより回帰係数が過大評価（upward bias）。<br>
+抑制変数（suppressor）は検出不能。
+</div>
+</div>
+<div class="vs-box new">
+<h4>✓ 2026年の推奨</h4>
+<ul class="bullet">
+<li>事前に臨床知識で変数を固定</li>
+<li>本研究なら <strong>Table 2 のアンケート結果</strong>が事前情報</li>
+<li>データを見てから変数を選ばない</li>
+<li>先行研究のメタ分析も参考に</li>
+</ul>
+<div style="margin-top:10px;padding:8px 10px;background:rgba(74,222,128,0.1);border-radius:6px;font-size:11px">
+<strong>根拠：</strong>Harrell (2015) <em>Regression Modeling Strategies</em> 第4章;<br>
+Sun et al. (1996) <em>J Clin Epidemiol</em>.
+</div>
+</div>
+</div>
+<div class="note-box">興味深いことに、Yuasa 2002 は Table 2 のアンケート（事前情報）を持っていた。これを変数選択の根拠にしていれば、問題は大きく軽減されたはず。</div>
+<div class="cite">Sun GW, Shook TL, Kay GL. Inappropriate use of bivariable analysis to screen risk factors for use in multivariable analysis. J Clin Epidemiol 1996;49(8):907-916.</div>
+`},
+
+/* ============ 3-3 問題②EPV 可視化 ============ */
+{part:"Part 3", short:"問題②EPV", html:`
+<span class="slide-tag">問題 ②</span>
+<h2 class="slide-title">Events Per Variable (EPV) 不足</h2>
+<p class="slide-sub">イベント数が変数数の10倍未満だと、回帰係数の推定が極めて不安定になる</p>
+<div class="grid grid-ab">
+<div>
+<div class="panel">
+<div class="panel-title">本研究での計算</div>
+<div style="font-size:15px;line-height:2;text-align:center;padding:10px">
+<div style="font-size:13px;color:var(--muted)">イベント数（Difficult群）</div>
+<div style="font-size:36px;font-weight:900;color:var(--accent)">20</div>
+<div style="font-size:20px;color:var(--muted)">÷</div>
+<div style="font-size:13px;color:var(--muted)">多変量に投入した変数数</div>
+<div style="font-size:36px;font-weight:900;color:var(--accent)">5</div>
+<div style="font-size:20px;color:var(--muted)">=</div>
+<div style="font-size:42px;font-weight:900;color:var(--bad)">EPV = 4.0</div>
+<div style="font-size:12px;color:var(--muted)">推奨 ≥ 10 に対し<strong class="bad">60%不足</strong></div>
+</div>
+</div>
+</div>
+<div>
+<div class="chart-wrap tall" id="epvChartWrap">
+  <canvas id="epvChart"></canvas>
+</div>
+<div class="panel tight">
+<div class="panel-title">EPV別の推奨文献</div>
+<table style="font-size:11px">
+<tbody>
+<tr><td>Peduzzi et al. (1996)</td><td class="center">EPV ≥ <strong>10</strong></td></tr>
+<tr><td>van Smeden et al. (2016)</td><td class="center">「10に根拠なし」</td></tr>
+<tr><td>Riley et al. (2019)</td><td class="center">予測精度で計算</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+`, onShow:function(){
+  const ctx = document.getElementById('epvChart'); if(!ctx) return;
+  new Chart(ctx,{type:'line',data:{
+    labels:['2','4','6','8','10','15','20','30','50'],
+    datasets:[{label:'推定値の相対標準誤差',
+      data:[4.8,2.9,2.2,1.7,1.4,1.15,1.0,0.85,0.75],
+      borderColor:'#f87171',backgroundColor:'rgba(248,113,113,0.15)',
+      fill:true,tension:0.3,pointRadius:4}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#e8ecff'}},
+        title:{display:true,text:'EPV vs 推定値の不安定性（概念図）',color:'#e8ecff'},
+        annotation:{}},
+      scales:{x:{title:{display:true,text:'EPV',color:'#9aa3c7'},ticks:{color:'#9aa3c7'},grid:{color:'rgba(255,255,255,0.05)'}},
+        y:{title:{display:true,text:'推定値の相対変動 (×)',color:'#9aa3c7'},ticks:{color:'#9aa3c7'},grid:{color:'rgba(255,255,255,0.05)'}}}}});
+}},
+
+/* ============ 3-4 問題③完全分離インタラクティブ ============ */
+{part:"Part 3", short:"問題③完全分離", html:`
+<span class="slide-tag">問題 ③ · INTERACTIVE</span>
+<h2 class="slide-title">完全分離（Complete Separation）── OR が発散する</h2>
+<p class="slide-sub">Control群のセルを <strong>0</strong> に近づけると、オッズ比が無限大に発散する様子を体感しよう</p>
+<div class="grid grid-ab">
+<div>
+<div class="panel">
+<div class="panel-title">2×2 表シミュレーション</div>
+<table style="font-size:13px">
+<thead><tr><th></th><th class="center">Difficult</th><th class="center">Control</th></tr></thead>
+<tbody>
+<tr><td>Level C</td><td class="center" id="cellA">5</td><td class="center" id="cellB" style="font-weight:900;color:var(--bad)">0</td></tr>
+<tr><td>Level A/B</td><td class="center" id="cellC">15</td><td class="center" id="cellD">24</td></tr>
+</tbody>
+</table>
+<div class="slider-container">
+<label>Control群 Level C のセル値 <span id="cellBVal">0</span></label>
+<input type="range" id="cellBSlider" min="0" max="10" step="1" value="0">
+</div>
+<div style="background:var(--panel2);padding:12px;border-radius:8px;margin-top:8px">
+<div style="font-size:12px;color:var(--muted)">計算された OR</div>
+<div style="font-size:32px;font-weight:900;color:var(--accent2)" id="orDisplay">∞</div>
+<div style="font-size:11px;color:var(--muted)" id="ciDisplay">OR = (5 × 24) / (15 × 0) = 0 で除算</div>
+</div>
+</div>
+</div>
+<div>
+<div class="chart-wrap tall"><canvas id="separationChart"></canvas></div>
+<div class="note-box" style="margin-top:10px">セル値が 0 のとき、尤度関数の最大化点は<strong>無限遠</strong>に飛ぶ。これが「OR=999」の正体。</div>
+</div>
+</div>
+<div class="warn-box">対処法：<strong>Firth (1993) 罰則付き最尤法</strong>。Jeffreys事前分布に相当する罰則項を加えることで、係数の発散を防ぐ。Part 5 で R で実演する。</div>
+`, onShow:function(){
+  const slider = document.getElementById('cellBSlider');
+  const ctx = document.getElementById('separationChart');
+  let chart = null;
+  function update(){
+    const b = +slider.value;
+    document.getElementById('cellB').textContent = b;
+    document.getElementById('cellBVal').textContent = b;
+    document.getElementById('cellD').textContent = 24 - b;
+    const a = 5, c = 15, d = 24 - b;
+    if(b === 0){
+      document.getElementById('orDisplay').innerHTML = '<span style="color:var(--bad)">∞</span>';
+      document.getElementById('ciDisplay').textContent = '完全分離 → ゼロ除算';
+      document.getElementById('cellB').style.color = 'var(--bad)';
+    } else {
+      const or = (a * d) / (c * b);
+      document.getElementById('orDisplay').textContent = or.toFixed(2);
+      const se = Math.sqrt(1/a + 1/b + 1/c + 1/d);
+      const lo = Math.exp(Math.log(or) - 1.96*se);
+      const hi = Math.exp(Math.log(or) + 1.96*se);
+      document.getElementById('ciDisplay').textContent = `95% CI: ${lo.toFixed(2)} – ${hi.toFixed(2)}`;
+      document.getElementById('cellB').style.color = '';
+    }
+    // Update chart
+    const xs = [], ys = [];
+    for(let bb = 0.1; bb <= 10; bb += 0.2){
+      xs.push(bb.toFixed(1));
+      ys.push((a * (24-bb)) / (c * bb));
+    }
+    if(chart){ chart.destroy(); }
+    chart = new Chart(ctx,{type:'line',data:{labels:xs,datasets:[
+      {label:'オッズ比',data:ys,borderColor:'#6ea8ff',backgroundColor:'rgba(110,168,255,0.1)',fill:true,tension:0.2,pointRadius:0},
+      {label:'現在のスライダー位置',data:xs.map((x,i)=> Math.abs(+x - b) < 0.2 ? ys[i]: null),
+        borderColor:'#fbbf24',backgroundColor:'#fbbf24',pointRadius:6,showLine:false}
+    ]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{labels:{color:'#e8ecff'}},title:{display:true,text:'Control群のセル値とORの関係',color:'#e8ecff'}},
+        scales:{x:{title:{display:true,text:'Control群 Level C セル値',color:'#9aa3c7'},ticks:{color:'#9aa3c7'},grid:{color:'rgba(255,255,255,0.05)'}},
+          y:{type:'logarithmic',title:{display:true,text:'オッズ比（対数軸）',color:'#9aa3c7'},ticks:{color:'#9aa3c7'},grid:{color:'rgba(255,255,255,0.05)'}}}}});
+  }
+  slider.oninput = update;
+  update();
+}},
+
+/* ============ 3-5 問題④同一データ評価 ============ */
+{part:"Part 3", short:"問題④構築=評価", html:`
+<span class="slide-tag">問題 ④</span>
+<h2 class="slide-title">モデル構築データ = 評価データ ─ 楽観バイアス</h2>
+<p class="slide-sub">apparent performance（見かけの性能）は、新規患者に適用すると必ず低下する</p>
+<div class="grid grid-ab">
+<div>
+<div class="panel">
+<div class="panel-title">Yuasa 2002 の評価</div>
+<div style="padding:10px;background:var(--panel2);border-radius:8px">
+<table style="font-size:12px">
+<thead><tr><th></th><th class="center">Apparent<br>（同一データ）</th></tr></thead>
+<tbody>
+<tr><td>感度</td><td class="center hi">0.85</td></tr>
+<tr><td>特異度</td><td class="center hi">0.92</td></tr>
+<tr><td>OR</td><td class="center hi">62.3</td></tr>
+</tbody>
+</table>
+</div>
+<div class="danger-box" style="margin-top:10px">これらは <strong>N=44 の同一データでの性能</strong>。新規患者に適用すると必ず低下する。</div>
+</div>
+</div>
+<div>
+<div class="panel">
+<div class="panel-title">現代の推奨 (TRIPOD+AI 2024)</div>
+<div class="flow" style="flex-direction:column;align-items:stretch;gap:8px">
+  <div class="flow-box human" style="width:100%">① 内部検証<br><small>Bootstrap / 交差検証で楽観度を補正</small></div>
+  <div class="flow-arrow" style="text-align:center">↓</div>
+  <div class="flow-box human" style="width:100%">② 時間的検証<br><small>同じ施設の別期間データで確認</small></div>
+  <div class="flow-arrow" style="text-align:center">↓</div>
+  <div class="flow-box human" style="width:100%">③ 外部検証<br><small>独立した別施設のデータで性能評価</small></div>
+  <div class="flow-arrow" style="text-align:center">↓</div>
+  <div class="flow-box human" style="width:100%">④ TRIPODチェックリストに準拠して報告</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cite">Collins GS, Moons KGM, Dhiman P, et al. TRIPOD+AI statement: updated guidance for reporting clinical prediction models that use regression or machine learning methods. BMJ 2024;385:e078378.</div>
+`},
+
+/* ============ 3-6 問題⑤ソフト不記載 ============ */
+{part:"Part 3", short:"問題⑤ソフト不記載", html:`
+<span class="slide-tag">問題 ⑤</span>
+<h2 class="slide-title">統計ソフトウェアの記載なし → 再現不能</h2>
+<p class="slide-sub">Yuasa 2002 は "SAS version 6.12" とだけ記載。パッケージ・オプション・乱数シードの記載なし。</p>
+<div class="grid grid-ab">
+<div>
+<div class="panel">
+<div class="panel-title">なぜソフト記載が必要か</div>
+<ul class="bullet">
+<li>同じ手法でもソフトにより結果が異なる（Firth回帰の実装差）</li>
+<li>デフォルト引数がバージョンで変わる</li>
+<li>数値精度・収束判定も異なる</li>
+<li>第三者が再現できない → 科学の根幹</li>
+<li>TRIPOD+AI (2024) チェックリスト必須項目</li>
+</ul>
+</div>
+</div>
+<div>
+<div class="panel">
+<div class="panel-title">2026年の推奨記載例</div>
+<pre><span class="com"># Methods section の記載例</span>
+統計解析は <span class="str">R version 4.4.2</span>
+(R Foundation for Statistical
+ Computing, Vienna, Austria) で実施した。
+
+Firth罰則付きロジスティック回帰には
+<span class="str">logistf v1.26.0</span>
+(Heinze G & Schemper M, 2002) を、
+
+ROC解析には <span class="str">pROC v1.18.5</span>
+(Robin X et al., 2011) を使用した。
+
+乱数シードは <span class="num">set.seed(2024)</span> で固定。
+解析コードは GitHub で公開：
+<span class="str">github.com/[user]/[repo]</span>
+</pre>
+</div>
+</div>
+</div>
+<div class="ok-box"><strong>Rule of Thumb：</strong>「ソフト名・バージョン・パッケージ・パッケージバージョン・乱数シード・コード公開URL」の6点セットを必ず記載。</div>
+`},
+
+/* ============ 3-7 2002 vs 2026 比較 ============ */
+{part:"Part 3", short:"2002 vs 2026", html:`
+<span class="slide-tag">BEFORE / AFTER</span>
+<h2 class="slide-title">2002 と 2026 の手法比較 ─ 24年間の進歩</h2>
+<table>
+<thead><tr><th>項目</th><th style="background:rgba(248,113,113,0.15);color:var(--bad)">2002 · Yuasa論文</th><th style="background:rgba(74,222,128,0.15);color:var(--ok)">2026 · 推奨手法</th></tr></thead>
+<tbody>
+<tr><td><strong>変数選択</strong></td><td>単変量 OR ≥ 2.0 で機械的選択</td><td>臨床知識（Table 2等）で事前決定</td></tr>
+<tr><td><strong>EPV</strong></td><td>考慮なし（EPV = 4）</td><td>EPV ≥ 10–20、または Riley 2019 で計算</td></tr>
+<tr><td><strong>完全分離</strong></td><td>対処なし（OR = 999 をそのまま報告）</td><td>Firth罰則付き回帰 / Bayesian</td></tr>
+<tr><td><strong>モデル検証</strong></td><td>構築データ = 評価データ</td><td>Bootstrap内部検証 + 外部検証</td></tr>
+<tr><td><strong>報告基準</strong></td><td>なし</td><td>TRIPOD+AI (2024) 27項目チェック</td></tr>
+<tr><td><strong>統計ソフト</strong></td><td>"SAS 6.12" のみ</td><td>ソフト・パッケージ・バージョン・シード</td></tr>
+<tr><td><strong>コード公開</strong></td><td>なし</td><td>GitHub / Zenodo で公開必須</td></tr>
+<tr><td><strong>AI使用</strong></td><td>─</td><td>AMEE Guide No.192 で開示必須</td></tr>
+<tr><td><strong>データ公開</strong></td><td>なし</td><td>可能な範囲で公開（匿名化後）</td></tr>
+</tbody>
+</table>
+<div class="note-box">これは「2002年が間違っていた」ではなく、「統計学の進歩により改善が可能になった」と理解すべき。自身の研究も、将来はこう批判される可能性がある。</div>
+`},
+
+/* ============ 3-8 現代推奨フロー ============ */
+{part:"Part 3", short:"現代の推奨フロー", html:`
+<span class="slide-tag">MODERN WORKFLOW</span>
+<h2 class="slide-title">現代推奨の解析フロー ─ 6ステップ</h2>
+<div class="flow" style="flex-direction:column;align-items:stretch;gap:14px">
+  <div class="flow-box human" style="padding:14px;text-align:left">
+    <strong>Step 1 · 臨床知識 + 先行研究で候補変数を事前選択</strong><br>
+    <small>本データでは Table 2 のアンケート結果が根拠（Depth/Root/Ramus が上位）</small>
+  </div>
+  <div class="flow-arrow" style="text-align:center">↓</div>
+  <div class="flow-box human" style="padding:14px;text-align:left">
+    <strong>Step 2 · EPV 計算 → 投入変数数を決定</strong><br>
+    <small>20 ÷ 10 = 最大2変数（厳密） / 20 ÷ 7 ≈ 3変数（緩い基準）</small>
+  </div>
+  <div class="flow-arrow" style="text-align:center">↓</div>
+  <div class="flow-box human" style="padding:14px;text-align:left">
+    <strong>Step 3 · 記述統計を報告（群間比較は参考値）</strong><br>
+    <small>単変量 p 値はスクリーニングに使わない。Table 1 形式で記述</small>
+  </div>
+  <div class="flow-arrow" style="text-align:center">↓</div>
+  <div class="flow-box human" style="padding:14px;text-align:left">
+    <strong>Step 4 · 全候補変数を多変量回帰へ → 完全分離は Firth で対処</strong><br>
+    <small>通常のGLMで収束しない場合は logistf パッケージを使用</small>
+  </div>
+  <div class="flow-arrow" style="text-align:center">↓</div>
+  <div class="flow-box human" style="padding:14px;text-align:left">
+    <strong>Step 5 · AUC・感度・特異度を Bootstrap 内部検証で評価</strong><br>
+    <small>pROC + boot パッケージ / 可能なら外部データで検証</small>
+  </div>
+  <div class="flow-arrow" style="text-align:center">↓</div>
+  <div class="flow-box human" style="padding:14px;text-align:left">
+    <strong>Step 6 · TRIPOD+AI 準拠で報告 + コード・データ公開</strong><br>
+    <small>GitHub / Zenodo / OSF いずれかにアップロード</small>
+  </div>
+</div>
+`},
+
+/* ============ Part 4 セクション ============ */
+{part:"Part 4", short:"━━ Part 4 セクション", html:`
+<div class="section-slide">
+  <div class="part-num">04</div>
+  <h2>ハルシネーションの<br>科学</h2>
+  <p class="section-desc">Kalai et al. (2025) の最新論文を題材に、なぜLLMが"自信満々に嘘をつく"のかを数学的に理解する。バグではなく統計的必然。</p>
+</div>
+`},
+
+/* ============ 4-1 定義 ============ */
+{part:"Part 4", short:"ハルシネーション定義", html:`
+<span class="slide-tag">DEFINITION</span>
+<h2 class="slide-title">ハルシネーションとは何か</h2>
+<div class="panel">
+<div class="panel-title">定義</div>
+<p style="font-size:16px;line-height:1.7">
+LLMが生成する、<strong>流暢で自信に満ちた、しかし事実に反する出力</strong>。
+</p>
+</div>
+<div class="quote">
+「試験で難しい問題に直面した学生が推測するように、大規模言語モデルも不確実な時に推測する。もっともらしいが不正確な記述を、不確実性を認める代わりに生成する。」
+<br>— Kalai et al. (2025) Abstract
+</div>
+<div class="panel">
+<div class="panel-title">統計解析における具体例</div>
+<div class="grid grid-2">
+<ul class="bullet">
+<li><span class="badge red">実在しないRパッケージ</span> <code>firth.glm()</code></li>
+<li><span class="badge red">構文は正しいが統計的に不適切</span></li>
+<li><span class="badge red">架空の引用文献</span> DOI捏造</li>
+</ul>
+<ul class="bullet">
+<li><span class="badge red">p値の誤解釈</span> 「因果が証明された」</li>
+<li><span class="badge red">古い関数名</span> 非推奨APIの提示</li>
+<li><span class="badge red">係数と OR の混同</span> <code>exp()</code>忘れ</li>
+</ul>
+</div>
+</div>
+`},
+
+/* ============ 4-2 統計的必然性 ============ */
+{part:"Part 4", short:"統計的必然", html:`
+<span class="slide-tag">THEOREM</span>
+<h2 class="slide-title">ハルシネーションはバグではなく統計的必然</h2>
+<p class="slide-sub">Kalai & Vempala (2024) STOC の核心的定理</p>
+<div class="panel" style="background:linear-gradient(135deg,rgba(167,139,250,0.1),rgba(110,168,255,0.1))">
+<div class="panel-title">定理（非形式的）</div>
+<p style="font-size:15px;line-height:1.7;padding:10px">
+キャリブレーションされた言語モデルは、<strong>訓練データに1回しか出現しない事実（singleton）の割合に比例するハルシネーション率</strong>を持つ。
+</p>
+<div style="background:var(--panel2);padding:14px;border-radius:8px;margin-top:10px">
+<div style="font-family:'JetBrains Mono',monospace;font-size:14px;text-align:center;color:#d6deff">
+生成エラー率 &ge; <span style="color:var(--accent2)">sr</span> &minus; 2/min|E<sub>c</sub>| &minus; O(&radic;(ln N / N)) &minus; &delta;
+</div>
+<div style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center">
+sr = 訓練データ中のシングルトン率 / δ = キャリブレーション誤差
+</div>
+</div>
+</div>
+<div class="grid grid-3" style="margin-top:16px">
+<div class="stat">
+<div class="label">パターン①</div>
+<div class="value" style="font-size:14px">100回出現する事実</div>
+<div class="sub" style="color:var(--ok)">正答可能</div>
+</div>
+<div class="stat">
+<div class="label">パターン②</div>
+<div class="value" style="font-size:14px">10回出現する事実</div>
+<div class="sub" style="color:var(--warn)">揺らぎあり</div>
+</div>
+<div class="stat">
+<div class="label">パターン③</div>
+<div class="value" style="font-size:14px">1回だけ出現（Singleton）</div>
+<div class="sub" style="color:var(--bad)">必ずハルシネーション</div>
+</div>
+</div>
+<div class="cite">Kalai AT, Vempala SS. Calibrated Language Models Must Hallucinate. Proc. STOC 2024, pp.160-171. DOI: 10.1145/3618260.3649777</div>
+`},
+
+/* ============ 4-3 IIV還元 ============ */
+{part:"Part 4", short:"IIV還元", html:`
+<span class="slide-tag">CORE THEORY</span>
+<h2 class="slide-title">Is-It-Valid (IIV) 還元 ─ 生成エラーは分類エラーの2倍以上</h2>
+<div class="svg-wrap mobile-hide" style="padding:18px">
+<svg viewBox="0 0 780 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:780px">
+<defs>
+<marker id="arrowIIV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#fbbf24"/></marker>
+</defs>
+<g font-family="'Helvetica Neue',sans-serif">
+<!-- 左：分類タスク -->
+<rect x="20" y="30" width="240" height="210" rx="14" fill="rgba(110,168,255,0.08)" stroke="#6ea8ff" stroke-width="2"/>
+<text x="140" y="58" text-anchor="middle" font-size="15" font-weight="700" fill="#6ea8ff">二値分類 (IIV)</text>
+<text x="140" y="78" text-anchor="middle" font-size="11" fill="#9aa3c7">"これは正しい？" Yes/No</text>
+<!-- 円: 正解空間 -->
+<circle cx="100" cy="155" r="52" fill="#4ade80" opacity="0.25" stroke="#4ade80" stroke-width="2"/>
+<text x="100" y="148" text-anchor="middle" font-size="11" font-weight="700" fill="#4ade80">Valid</text>
+<text x="100" y="165" text-anchor="middle" font-size="10" fill="#c5d2ff">(Yes)</text>
+<!-- 円: 不正解空間 -->
+<circle cx="200" cy="155" r="52" fill="#f87171" opacity="0.25" stroke="#f87171" stroke-width="2"/>
+<text x="200" y="148" text-anchor="middle" font-size="11" font-weight="700" fill="#f87171">Invalid</text>
+<text x="200" y="165" text-anchor="middle" font-size="10" fill="#c5d2ff">(No)</text>
+<text x="140" y="230" text-anchor="middle" font-size="11" fill="#fff">エラー率 = <tspan fill="#fbbf24" font-weight="700">ε</tspan></text>
+
+<!-- 中央：還元矢印 -->
+<path d="M 290 135 L 370 135" stroke="#fbbf24" stroke-width="3" marker-end="url(#arrowIIV)"/>
+<text x="330" y="120" text-anchor="middle" font-size="11" font-weight="700" fill="#fbbf24">Kalai 還元</text>
+<text x="330" y="155" text-anchor="middle" font-size="10" fill="#c5d2ff">(Corollary 1)</text>
+
+<!-- 右：生成タスク -->
+<rect x="400" y="30" width="360" height="210" rx="14" fill="rgba(167,139,250,0.08)" stroke="#a78bfa" stroke-width="2"/>
+<text x="580" y="58" text-anchor="middle" font-size="15" font-weight="700" fill="#a78bfa">生成タスク</text>
+<text x="580" y="78" text-anchor="middle" font-size="11" font-weight="700" fill="#9aa3c7">"正しい出力を作り出す"</text>
+<!-- 大きな円（全候補）-->
+<circle cx="580" cy="155" r="68" fill="#a78bfa" opacity="0.15" stroke="#a78bfa" stroke-width="2" stroke-dasharray="3 3"/>
+<text x="580" y="107" text-anchor="middle" font-size="10" fill="#a78bfa">可能な全ての出力</text>
+<!-- 小円：正解 -->
+<circle cx="560" cy="155" r="26" fill="#4ade80" opacity="0.35" stroke="#4ade80" stroke-width="2"/>
+<text x="560" y="152" text-anchor="middle" font-size="10" font-weight="700" fill="#4ade80">正解</text>
+<text x="560" y="166" text-anchor="middle" font-size="9" fill="#c5d2ff">(狭い)</text>
+<!-- バツ印：誤生成 -->
+<text x="620" y="140" text-anchor="middle" font-size="18" fill="#f87171">✗</text>
+<text x="615" y="175" text-anchor="middle" font-size="18" fill="#f87171">✗</text>
+<text x="638" y="158" text-anchor="middle" font-size="18" fill="#f87171">✗</text>
+<text x="580" y="230" text-anchor="middle" font-size="13" fill="#fff">エラー率 ≥ <tspan fill="#fbbf24" font-weight="900" font-size="15">2ε</tspan></text>
+</g>
+</svg>
+</div>
+<div class="grid grid-2">
+<div class="panel">
+<div class="panel-title">Kalai et al. (2025) の中心定理</div>
+<div style="background:var(--panel2);padding:18px;border-radius:10px;text-align:center;margin:12px 0">
+<div style="font-family:'JetBrains Mono',monospace;font-size:20px;color:#fff">
+(生成エラー率) <br>&#8805; 2 &times; (IIV 誤分類率)
+</div>
+</div>
+<p style="font-size:15px;line-height:1.7">
+<strong>直感的理解：</strong>「これは正しい？」と Yes/No で判定する問題より、「正しい出力を<em>作り出す</em>」生成タスクの方が本質的に難しい。<br>
+分類で間違えるなら、生成では<strong>必ず2倍以上間違える</strong>。
+</p>
+</div>
+<div class="panel">
+<div class="panel-title">Figure 1 の3パターン</div>
+<table>
+<thead><tr><th>分野</th><th class="center">IIV難度</th><th class="center">生成結果</th></tr></thead>
+<tbody>
+<tr><td>Spelling（スペル）</td><td class="center ok">易</td><td class="center ok">良好</td></tr>
+<tr><td>Counting（カウント）</td><td class="center warn">中</td><td class="center warn">並</td></tr>
+<tr class="highlight-row"><td><strong>Birthdays（誕生日）</strong></td><td class="center bad">難</td><td class="center bad">悪</td></tr>
+</tbody>
+</table>
+<div class="note-box" style="margin-top:12px">Birthdays はパターンが存在しない（任意事実）→ IIV が困難 → 生成はさらに困難 → <strong>必ずハルシネーション</strong></div>
+</div>
+</div>
+<div class="cite">Kalai AT, Nachum O, Vempala SS, Zhang E. Why Language Models Hallucinate. arXiv:2509.04664 (2025) Corollary 1, Figure 1.</div>
+`},
+
+/* ============ 4-4 post-training の問題 ============ */
+{part:"Part 4", short:"post-training問題", html:`
+<span class="slide-tag">OBSERVATION 1</span>
+<h2 class="slide-title">なぜ post-training でハルシネーションが消えないのか</h2>
+<p class="slide-sub">言語モデルは「試験受験者」として最適化されている</p>
+<div class="panel">
+<div class="panel-title">主要ベンチマークの採点方式</div>
+<div style="background:var(--panel2);padding:14px;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.9">
+<span style="color:var(--accent)">試験の採点方式:</span><br>
+&nbsp;&nbsp;正答        → <span style="color:var(--ok)">1点</span><br>
+&nbsp;&nbsp;不正答      → <span style="color:var(--bad)">0点</span><br>
+&nbsp;&nbsp;「わからない」(IDK) → <span style="color:var(--warn)">0点</span><br>
+<br>
+<span style="color:var(--accent)">帰結:</span><br>
+&nbsp;&nbsp;「わからない」と正直に答えても 0点<br>
+&nbsp;&nbsp;推測して正答する可能性がある方が期待スコアが高い<br>
+&nbsp;&nbsp;→ モデルは <strong style="color:var(--accent2)">推測（＝ハルシネーション）を学習する</strong>
+</div>
+</div>
+<div class="panel" style="margin-top:14px">
+<div class="panel-title">Observation 1（Kalai et al. 2025 Section 4.1）</div>
+<div class="quote" style="margin:0">
+任意の二値採点方式において、「棄権」（IDK）は最適な応答には含まれない。
+</div>
+<p style="font-size:12px;margin-top:10px;color:var(--muted)">
+つまり、言語モデルのベンチマーク自体がハルシネーションを「報酬」している構造的問題がある。
+</p>
+</div>
+`},
+
+/* ============ 4-5 ベンチマーク採点表 ============ */
+{part:"Part 4", short:"ベンチマーク表", html:`
+<span class="slide-tag">TABLE 2 · Kalai 2025</span>
+<h2 class="slide-title">10のベンチマーク中、IDKに配点があるのは1つだけ</h2>
+<table>
+<thead><tr><th>ベンチマーク</th><th>採点方式</th><th class="center">二値採点</th><th class="center">IDK配点</th></tr></thead>
+<tbody>
+<tr><td>GPQA</td><td>多肢選択正答率</td><td class="center"><span class="badge red">Yes</span></td><td class="center">なし</td></tr>
+<tr><td>MMLU-Pro</td><td>多肢選択正答率</td><td class="center"><span class="badge red">Yes</span></td><td class="center">なし</td></tr>
+<tr><td>IFEval</td><td>プログラム的指示検証</td><td class="center"><span class="badge red">Yes</span></td><td class="center">なし</td></tr>
+<tr><td>BBH</td><td>完全一致</td><td class="center"><span class="badge red">Yes</span></td><td class="center">なし</td></tr>
+<tr><td>MATH</td><td>等価性採点</td><td class="center"><span class="badge red">Yes</span></td><td class="center">なし</td></tr>
+<tr><td>Omni-MATH</td><td>等価性採点</td><td class="center"><span class="badge red">Yes</span></td><td class="center">なし</td></tr>
+<tr><td>SWE-bench</td><td>パッチがユニットテスト通過</td><td class="center"><span class="badge red">Yes</span></td><td class="center">なし</td></tr>
+<tr><td>HLE</td><td>多肢選択/等価性</td><td class="center"><span class="badge red">Yes</span></td><td class="center">なし</td></tr>
+<tr><td>MMLU</td><td>多肢選択正答率</td><td class="center"><span class="badge red">Yes</span></td><td class="center">なし</td></tr>
+<tr class="highlight-row"><td><strong>WildBench</strong></td><td>LM採点（1-10）</td><td class="center"><span class="badge green">No</span></td><td class="center"><strong>部分的</strong></td></tr>
+</tbody>
+</table>
+<div class="warn-box">10中9が二値採点 → 市場全体が「推測を報酬する」構造。少数のハルシネーション評価を追加しても、このインセンティブに溺れる。</div>
+<div class="cite">Kalai et al. (2025) Table 2, p.14.</div>
+`},
+
+/* ============ 4-6 エラー3類型 ============ */
+{part:"Part 4", short:"エラー3類型", html:`
+<span class="slide-tag">ERROR TAXONOMY</span>
+<h2 class="slide-title">生成エラーの3つの統計的要因</h2>
+<div class="grid grid-3">
+<div class="panel">
+<div class="panel-title" style="color:var(--bad)">① Arbitrary Facts</div>
+<p style="font-size:13px;line-height:1.6"><strong>任意事実</strong><br>
+訓練データに少なくしか出現しない事実。パターンがないため学習不能。</p>
+<ul class="bullet" style="margin-top:10px">
+<li>誕生日</li>
+<li>博士論文タイトル</li>
+<li>特定のDOI</li>
+<li>Rパッケージ名</li>
+</ul>
+<div class="danger-box" style="margin-top:10px;font-size:11px">対策：<strong>困難</strong>。データ不足が本質。検索拡張（RAG）で一部緩和。</div>
+</div>
+<div class="panel">
+<div class="panel-title" style="color:var(--warn)">② Poor Models</div>
+<p style="font-size:13px;line-height:1.6"><strong>不適切なモデル</strong><br>
+モデル族の表現能力が不足。トークン化の制約など。</p>
+<ul class="bullet" style="margin-top:10px">
+<li>文字数カウント</li>
+<li>桁数の多い計算</li>
+<li>構文の揺れる命名</li>
+<li>長距離依存</li>
+</ul>
+<div class="warn-box" style="margin-top:10px;font-size:11px">対策：<strong>改善可能</strong>。推論時計算（Chain-of-Thought）や専用ツール呼び出し。</div>
+</div>
+<div class="panel">
+<div class="panel-title" style="color:var(--purple)">③ GIGO</div>
+<p style="font-size:13px;line-height:1.6"><strong>Garbage In, Garbage Out</strong><br>
+訓練データ中の誤情報がそのまま再現される。</p>
+<ul class="bullet" style="margin-top:10px">
+<li>ネット上の誤統計コード</li>
+<li>古い医学知識</li>
+<li>都市伝説</li>
+<li>誤った引用習慣</li>
+</ul>
+<div class="note-box" style="margin-top:10px;font-size:11px">対策：<strong>部分的</strong>。post-trainingのRLHFで一部軽減可能。</div>
+</div>
+</div>
+<div class="note-box">統計コード生成での典型：古い関数名は Arbitrary Facts、p値の誤解釈は GIGO、構文は正しいが統計的に不適切なコードは Poor Models。</div>
+`},
+
+/* ============ 4-7 閾値対策 ============ */
+{part:"Part 4", short:"信頼度閾値", html:`
+<span class="slide-tag">SOLUTION</span>
+<h2 class="slide-title">明示的信頼度閾値 ─ ベンチマーク採点を変える</h2>
+<p class="slide-sub">Kalai et al. (2025) の提案：各問題に閾値 t を明示し、誤答ペナルティを課す</p>
+<div class="panel">
+<div class="panel-title">推奨される問題文プリアンブル</div>
+<pre>"Answer only if you are &gt; <span class="num">t</span> confident,
+since mistakes are penalized <span class="num">t/(1-t)</span> points,
+while correct answers receive <span class="num">1</span> point,
+and an answer of 'I don't know' receives <span class="num">0</span> points."</pre>
+</div>
+<div class="grid grid-3" style="margin-top:16px">
+<div class="stat">
+<div class="label">t = 0.5</div>
+<div class="value">1点</div>
+<div class="sub">ペナルティ<br>（推測でほぼ等価）</div>
+</div>
+<div class="stat">
+<div class="label">t = 0.75</div>
+<div class="value">2点</div>
+<div class="sub">ペナルティ<br>（自信がないと答えない）</div>
+</div>
+<div class="stat">
+<div class="label">t = 0.90</div>
+<div class="value">9点</div>
+<div class="sub">ペナルティ<br>（IDKが最適戦略に）</div>
+</div>
+</div>
+<div class="ok-box">提案の真価：新しいハルシネーション評価を追加するのでなく、<strong>既存の主流ベンチマーク自体の採点方式を変える</strong>こと。</div>
+<div class="cite">Kalai et al. (2025) Section 4.2.</div>
+`},
+
+/* ============ 4-8 統計解析で発生する場面 ============ */
+{part:"Part 4", short:"統計で発生する場面", html:`
+<span class="slide-tag">WHERE IT HAPPENS</span>
+<h2 class="slide-title">統計解析でハルシネーションが発生する典型場面</h2>
+<table>
+<thead><tr><th>場面</th><th>種類</th><th>具体例</th><th>対策</th></tr></thead>
+<tbody>
+<tr><td>パッケージ名</td><td><span class="badge red">Arbitrary Facts</span></td>
+  <td><code>firth.glm()</code> ← 存在しない（正：<code>logistf::logistf()</code>）</td>
+  <td>CRAN で実在確認</td></tr>
+<tr><td>関数の引数</td><td><span class="badge amber">Poor Models</span></td>
+  <td><code>type="response"</code> と <code>type="lp"</code> を取り違える</td>
+  <td><code>?logistf</code> でヘルプ確認</td></tr>
+<tr><td>OR計算</td><td><span class="badge amber">Poor Models</span></td>
+  <td><code>OR &lt;- coef(model)</code> ← <code>exp()</code> を忘れる</td>
+  <td>手計算で検算</td></tr>
+<tr><td>p値の解釈</td><td><span class="badge blue">GIGO</span></td>
+  <td>「p = 0.044 なので Depth C が困難の原因と<strong>証明された</strong>」</td>
+  <td>統計哲学を自分で押さえる</td></tr>
+<tr><td>引用文献</td><td><span class="badge red">Arbitrary Facts</span></td>
+  <td>実在しない論文のDOI・タイトルを生成</td>
+  <td>DOI.org で実在確認</td></tr>
+<tr><td>統計手法の選択</td><td><span class="badge amber">Poor Models</span></td>
+  <td>完全分離があるのに通常のGLMを使用</td>
+  <td>診断プロット確認</td></tr>
+<tr><td>版の差異</td><td><span class="badge blue">GIGO</span></td>
+  <td>古いAPIを提示（例：廃止されたDataFrame関数）</td>
+  <td>実行環境で動作確認</td></tr>
+</tbody>
+</table>
+`},
+
+/* ============ 4-9 7つの実践ルール ============ */
+{part:"Part 4", short:"7つの実践ルール", html:`
+<span class="slide-tag">PRACTICAL RULES</span>
+<h2 class="slide-title">ハルシネーション抑制の7つの実践ルール</h2>
+<div class="grid grid-2">
+<div class="panel">
+<ol class="num">
+<li><strong>Rコードは必ず自分で実行する</strong><br><small>出力結果を目視確認</small></li>
+<li><strong>パッケージの実在をCRANで確認</strong><br><small><code>install.packages()</code> が通るか</small></li>
+<li><strong>関数のヘルプを読む</strong><br><small><code>?logistf</code> でデフォルト引数確認</small></li>
+<li><strong>簡単な結果を手計算で検算</strong><br><small>2×2表のOR = ad/bc</small></li>
+</ol>
+</div>
+<div class="panel">
+<ol class="num" start="5">
+<li><strong>Analyst-Inspector 方式</strong><br><small>同じ質問を別セッション／別モデルに聞き比較</small></li>
+<li><strong>引用はDOIで実在確認</strong><br><small><code>https://doi.org/[DOI]</code> でアクセス</small></li>
+<li><strong>プロンプトに制約を明記</strong><br><small>パッケージ・Rバージョン・出力形式を指定</small></li>
+</ol>
+</div>
+</div>
+<div class="ok-box" style="margin-top:16px">
+<strong>黄金律：</strong>AIを「最終回答を出す同僚」ではなく、「叩き台を作る助手」と位置づける。検証・解釈・責任は自分が持つ。
+</div>
+`},
+
+/* ============ 4-10 Analyst-Inspector ============ */
+{part:"Part 4", short:"Analyst-Inspector", html:`
+<span class="slide-tag">FRAMEWORK · Zeng 2025</span>
+<h2 class="slide-title">Analyst-Inspector フレームワーク</h2>
+<p class="slide-sub">Zeng et al. (2025) の提案。LLMの再現性を自動評価・改善する初の体系的枠組み</p>
+<div class="flow" style="flex-direction:column;align-items:stretch;gap:10px">
+  <div class="flow-box ai" style="padding:14px">
+    <strong>AI Analyst</strong> → ワークフロー + コード + 結論を生成
+  </div>
+  <div class="flow-arrow" style="text-align:center">↓ ワークフローのみを渡す</div>
+  <div class="flow-box ai" style="padding:14px">
+    <strong>AI Inspector</strong> → ワークフローから<em>独立に</em>コードを再生成
+  </div>
+  <div class="flow-arrow" style="text-align:center">↓ 両者のコード実行結果を比較</div>
+  <div class="flow-box" style="padding:14px;border-color:var(--warn)">
+    一致 → <span class="ok">再現可能</span> / 不一致 → Analyst に修正要求
+  </div>
+  <div class="flow-arrow" style="text-align:center">↓</div>
+  <div class="flow-box human" style="padding:14px">
+    <strong>Human Analyst</strong> → ワークフローの妥当性を高レベルで検証
+  </div>
+</div>
+<div class="panel" style="margin-top:16px">
+<div class="panel-title">実証結果</div>
+<p style="font-size:13px;line-height:1.6">
+5つのLLMで <strong>1,032タスク</strong>を評価：再現性が高いほど正確性も高い（正の相関）。
+Reproducibility-of-Thought (RoT) プロンプトが再現性を有意に改善。
+</p>
+</div>
+<div class="cite">Zeng Q, Jin C, Wang X, Zheng Y, Li Q. An Analyst-Inspector Framework for Evaluating Reproducibility of LLMs in Data Science. arXiv:2502.16395 (2025).</div>
+`},
+
+/* ============ Part 5 セクション ============ */
+{part:"Part 5", short:"━━ Part 5 セクション", html:`
+<div class="section-slide">
+  <div class="part-num">05</div>
+  <h2>AI × R による<br>再解析の実演</h2>
+  <p class="section-desc">原データが失われた2002年論文を、公表された集計表から仮想データとして再構成。AIが生成したRコードで Firth回帰を実行し、原論文の結論を再検証する。</p>
+</div>
+`},
+
+/* ============ 5-1 仮想データの目的 ============ */
+{part:"Part 5", short:"仮想データの目的", html:`
+<span class="slide-tag">WHY SIMULATE</span>
+<h2 class="slide-title">なぜ仮想データを作成するのか</h2>
+<div class="grid grid-2">
+<div class="panel">
+<div class="panel-title">背景</div>
+<ul class="bullet">
+<li>Yuasa 2002 の<strong>原データは既に失われている</strong>（紙カルテ時代）</li>
+<li>当時は「データ共有」の概念がなかった</li>
+<li>公表されているのは集計表（度数）のみ</li>
+<li>個人レベルの変数間相関は未公開</li>
+</ul>
+</div>
+<div class="panel">
+<div class="panel-title">仮想データ構築の目的</div>
+<ul class="bullet">
+<li>公表された Table 3 の度数から個人レベルのデータセットを<strong>逆算・再構成</strong></li>
+<li>同じ統計解析を現代ツール（R + Firth）で実行</li>
+<li>報告されたORが再現されるかを確認</li>
+<li>完全分離などの問題を体感</li>
+</ul>
+</div>
+</div>
+<div class="grid grid-2" style="margin-top:14px">
+<div class="ok-box" style="margin:0">
+<strong>教育的意義：</strong>「論文の結果を鵜呑みにせず、自分で再現する」スキルを体験学習できる。
+</div>
+<div class="warn-box" style="margin:0">
+<strong>制限：</strong>個人レベルの変数間相関は周辺度数だけでは完全には再現できない。多変量ORは原論文と乖離する。
+</div>
+</div>
+`},
+
+/* ============ 5-2 仮想データ統計 ============ */
+{part:"Part 5", short:"仮想データ概要", html:`
+<span class="slide-tag">VIRTUAL DATASET</span>
+<h2 class="slide-title">再構成した44症例 ─ 概要</h2>
+<div class="grid grid-4">
+  <div class="stat"><div class="label">総症例数</div><div class="value">44</div><div class="sub">Difficult 20 + Control 24</div></div>
+  <div class="stat"><div class="label">年齢範囲</div><div class="value">17-55</div><div class="sub">平均 26.8 歳</div></div>
+  <div class="stat"><div class="label">男性比</div><div class="value">31.8%</div><div class="sub">14男 / 30女</div></div>
+  <div class="stat"><div class="label">変数</div><div class="value">10</div><div class="sub">解剖学的8 + 基本情報2</div></div>
+</div>
+<div class="panel" style="margin-top:14px">
+<div class="panel-title">変数一覧</div>
+<div class="grid grid-2">
+<ul class="bullet">
+<li><strong>Depth</strong>: A (high) / B (medium) / C (deep occlusal level)</li>
+<li><strong>Ramus</strong>: Class 1-3 (space availability)</li>
+<li><strong>Spatial</strong>: Vertical / Horizontal / Mesioangular / Distoangular</li>
+<li><strong>Proximity</strong>: Distant / Close (to mandibular canal)</li>
+</ul>
+<ul class="bullet">
+<li><strong>RootCurvature</strong>: Straight / Curved / Incomplete</li>
+<li><strong>RootWidth</strong>: Thin / Bulbous / Thick / Incomplete</li>
+<li><strong>HorizontalPosition</strong>: Buccal / Centre / Lingual / NoObs</li>
+<li><strong>Age, Sex</strong>: 基本情報</li>
+</ul>
+</div>
+</div>
+<div style="text-align:center;margin-top:14px">
+<button class="ctrl-btn" onclick="document.getElementById('dataViewer').scrollIntoView({behavior:'smooth'})" style="background:var(--accent);color:#fff;padding:10px 20px">▼ データテーブルを表示</button>
+</div>
+<div id="dataViewer" class="data-scroll" style="margin-top:14px">
+<table id="dataTable">
+<thead><tr><th>ID</th><th>Group</th><th>Age</th><th>Sex</th><th>Depth</th><th>Ramus</th><th>Spatial</th><th>Prox.</th><th>Curv.</th><th>Width</th><th>HPos</th></tr></thead>
+<tbody id="dataTbody"></tbody>
+</table>
+</div>
+`, onShow:function(){
+  const tbody = document.getElementById('dataTbody');
+  if(!tbody || tbody.children.length > 0) return;
+  YUASA_DATA.forEach(row => {
+    const tr = document.createElement('tr');
+    if(row.Group === 'Difficult') tr.style.background = 'rgba(248,113,113,0.05)';
+    tr.innerHTML = `<td>${row.ID}</td><td>${row.Group}</td><td>${row.Age}</td><td>${row.Sex}</td>
+      <td>${row.Depth}</td><td>${row.Ramus}</td><td>${row.Spatial}</td><td>${row.Proximity}</td>
+      <td>${row.RootCurvature}</td><td>${row.RootWidth}</td><td>${row.HorizontalPosition}</td>`;
+    tbody.appendChild(tr);
+  });
+}},
+
+/* ============ 5-3 Rプロンプト ============ */
+{part:"Part 5", short:"AIへのRコード依頼", html:`
+<span class="slide-tag">PROMPT</span>
+<h2 class="slide-title">AI に R コード生成を依頼する ─ 制約条件が命</h2>
+<div class="panel">
+<div class="panel-title">実際に使用したプロンプト</div>
+<pre><span class="com"># データ</span>
+以下のTSVデータ（44名、Difficult 20名、Control 24名）を用いて、
+統計解析のRコードを書いてください。
+
+<span class="com"># 解析手順</span>
+1. データ読み込み（<span class="kw">read.delim</span>）
+2. 記述統計（年齢 <span class="kw">t.test</span>、性別 <span class="kw">fisher.test</span>）
+3. 各因子の度数表と <span class="kw">fisher.test</span> p値
+4. 各因子のOR・95% CI（Haldane補正、Woolf法）
+5. EPVの確認と変数選択の根拠
+6. 二値変数作成（Depth_C, Ramus_3, Root_Bulb）
+7. 通常GLMで完全分離を確認
+8. <span class="kw">logistf</span> パッケージで Firth 回帰
+9. <span class="kw">pROC</span> パッケージでAUC
+10. 混同行列（感度・特異度・PPV・NPV）
+
+<span class="com"># 制約（ハルシネーション防止）</span>
+- <span class="str">logistf</span> と <span class="str">pROC</span> のみ使用（他のパッケージは不可）
+- <span class="num">set.seed(2024)</span> を冒頭に設定
+- 日本語コメントを各セクションに記載
+- 未定義関数を使わない
+- 結果は <span class="kw">print()</span> で明示的に表示
+</pre>
+</div>
+<div class="note-box">「logistfとpROCのみ」と明記することで、AIが勝手に別パッケージ（実在しないものを含む）を使う危険を抑制。</div>
+`},
+
+/* ============ 5-4 記述統計 ============ */
+{part:"Part 5", short:"記述統計結果", html:`
+<span class="slide-tag">DESCRIPTIVE</span>
+<h2 class="slide-title">記述統計 ─ 背景因子の均衡確認</h2>
+<div class="grid grid-ab">
+<div>
+<div class="panel">
+<div class="panel-title">Rコード</div>
+<pre><span class="kw">df</span> &lt;- <span class="kw">read.delim</span>(<span class="str">"yuasa_simulated.tsv"</span>)
+<span class="kw">df</span>$Outcome &lt;- <span class="kw">ifelse</span>(df$Group == <span class="str">"Difficult"</span>, 1, 0)
+
+<span class="com"># 年齢比較</span>
+<span class="kw">t.test</span>(Age ~ Group, data = df)
+
+<span class="com"># 性別比較</span>
+<span class="kw">fisher.test</span>(<span class="kw">table</span>(df$Sex, df$Group))</pre>
+</div>
+</div>
+<div>
+<div class="panel">
+<div class="panel-title">結果</div>
+<table style="font-size:13px">
+<thead><tr><th></th><th class="center">Difficult<br>(n=20)</th><th class="center">Control<br>(n=24)</th><th class="center">p値</th></tr></thead>
+<tbody>
+<tr><td>年齢 (mean±SD)</td><td class="center">27.5±9.0</td><td class="center">26.2±8.5</td><td class="center">0.629</td></tr>
+<tr><td>年齢中央値</td><td class="center">26.5</td><td class="center">24.0</td><td class="center">─</td></tr>
+<tr><td>男性数 (%)</td><td class="center">8 (40%)</td><td class="center">6 (25%)</td><td class="center">0.342</td></tr>
+</tbody>
+</table>
+<div class="ok-box" style="margin-top:10px">年齢・性別ともに群間で有意差なし → 背景因子は均衡。交絡の影響は小さいと判断。</div>
+</div>
+</div>
+</div>
+`},
+
+/* ============ 5-5 単変量OR ============ */
+{part:"Part 5", short:"単変量OR再現", html:`
+<span class="slide-tag">UNIVARIATE OR</span>
+<h2 class="slide-title">単変量OR ─ 原論文 Table 3 の再現</h2>
+<p class="slide-sub">周辺度数のみで決まる単変量ORは、仮想データでも原論文と<strong>ほぼ完全に一致</strong>する</p>
+<div class="grid grid-ab">
+<div>
+<div class="panel">
+<div class="panel-title">OR計算関数（Rコード）</div>
+<pre><span class="com"># Haldane補正付きOR計算</span>
+<span class="kw">calc_or</span> &lt;- <span class="kw">function</span>(a, b, c, d) {
+  <span class="kw">if</span>(<span class="kw">any</span>(<span class="kw">c</span>(a,b,c,d)==0)) {
+    a &lt;- a+.5; b &lt;- b+.5
+    c &lt;- c+.5; d &lt;- d+.5
+  }
+  or &lt;- (a*d)/(b*c)
+  se &lt;- <span class="kw">sqrt</span>(1/a + 1/b + 1/c + 1/d)
+  ci &lt;- <span class="kw">exp</span>(<span class="kw">log</span>(or) + <span class="kw">c</span>(-1.96, 1.96)*se)
+  <span class="kw">list</span>(OR=<span class="kw">round</span>(or,2),
+       lower=<span class="kw">round</span>(ci[1],2),
+       upper=<span class="kw">round</span>(ci[2],2))
+}</pre>
+</div>
+</div>
+<div>
+<table style="font-size:12px">
+<thead><tr><th>因子</th><th class="center">再現 OR</th><th class="center">論文 OR</th><th class="center">判定</th></tr></thead>
+<tbody>
+<tr><td>Depth B vs A</td><td class="center">2.10</td><td class="center">2.10</td><td class="center ok">✓</td></tr>
+<tr><td>Depth C vs A</td><td class="center">~50*</td><td class="center">∞ (298)</td><td class="center warn">~</td></tr>
+<tr><td>Ramus 3 vs 1</td><td class="center">6.00</td><td class="center">6.00</td><td class="center ok">✓</td></tr>
+<tr><td>Root Bulbous</td><td class="center">6.50</td><td class="center">6.50</td><td class="center ok">✓</td></tr>
+<tr><td>Root Curved</td><td class="center">4.80</td><td class="center">4.80</td><td class="center ok">✓</td></tr>
+<tr><td>Proximity Close</td><td class="center">0.79</td><td class="center">0.79</td><td class="center ok">✓</td></tr>
+</tbody>
+</table>
+<div class="note-box" style="margin-top:10px;font-size:11px">* Depth C は完全分離のため Haldane 補正値。原論文は近似値 298 を記載。</div>
+<div class="ok-box" style="margin-top:10px">
+<strong>重要：</strong>周辺度数のみで決まるセクションは完全再現。これが仮想データの有効性の根拠。
+</div>
+</div>
+</div>
+`},
+
+/* ============ 5-6 完全分離の確認 ============ */
+{part:"Part 5", short:"完全分離確認", html:`
+<span class="slide-tag">R EXECUTION</span>
+<h2 class="slide-title">通常GLMで完全分離を実証する</h2>
+<div class="panel">
+<div class="panel-title">Rコード</div>
+<pre><span class="kw">model_glm</span> &lt;- <span class="kw">glm</span>(Outcome ~ Depth_C + Ramus_3 + Root_Bulb,
+                 family = binomial, data = df)
+<span class="kw">summary</span>(model_glm)</pre>
+</div>
+<div class="panel" style="margin-top:14px">
+<div class="panel-title">出力（警告 glm.fit: fitted probabilities numerically 0 or 1 occurred）</div>
+<pre>              Estimate  Std. Error  z value  Pr(&gt;|z|)
+(Intercept)   -1.504     0.700     -2.149    0.032
+<span style="color:var(--bad)">Depth_C       18.173  2084.107      0.009    0.993  ← 係数が発散！</span>
+Ramus_3        1.537     0.904      1.701    0.089
+Root_Bulb      0.711     0.786      0.904    0.366</pre>
+</div>
+<div class="grid grid-2" style="margin-top:14px">
+<div class="danger-box" style="margin:0">
+<strong>問題：</strong>Depth_C の係数 = 18.17、標準誤差 = 2084<br>
+→ z値 = 0.009 → p = 0.993 となり「有意でない」と誤判定してしまう<br>
+→ OR = exp(18.17) ≈ 78,700,000 で解釈不能
+</div>
+<div class="warn-box" style="margin:0">
+<strong>原因：</strong>Control群の Depth C が 0 名（完全分離）。<br>
+通常の最尤推定法では、係数を ∞ に飛ばした方が尤度が高くなる。
+</div>
+</div>
+<div class="ok-box">解決策 → <strong>Firth (1993) 罰則付き最尤推定法</strong>。次スライドで実行。</div>
+`},
+
+/* ============ 5-7 Firth回帰 ============ */
+{part:"Part 5", short:"Firth回帰結果", html:`
+<span class="slide-tag">FIRTH REGRESSION</span>
+<h2 class="slide-title">Firth 罰則付きロジスティック回帰</h2>
+<div class="grid grid-ab">
+<div>
+<div class="panel">
+<div class="panel-title">Rコード</div>
+<pre><span class="kw">library</span>(logistf)
+<span class="kw">fit</span> &lt;- <span class="kw">logistf</span>(
+  Outcome ~ Depth_C + Ramus_3 + Root_Bulb,
+  data = df)
+<span class="kw">summary</span>(fit)</pre>
+</div>
+<div class="note-box" style="margin-top:10px">
+Firth法：Jeffreys事前分布に相当する罰則を尤度に加え、係数の発散を防ぐ。有限で解釈可能な推定値が得られる。
+</div>
+</div>
+<div>
+<div class="panel">
+<div class="panel-title">結果（仮想データでの再解析）</div>
+<table style="font-size:12px">
+<thead><tr><th>変数</th><th class="center">β</th><th class="center">OR</th><th class="center">95% CI</th><th class="center">p</th></tr></thead>
+<tbody>
+<tr><td>(Intercept)</td><td class="center">-1.18</td><td class="center">─</td><td class="center">─</td><td class="center">0.010</td></tr>
+<tr class="highlight-row"><td><strong>Depth_C</strong></td><td class="center"><strong>2.60</strong></td><td class="center hi"><strong>13.45</strong></td><td class="center">1.06–1918</td><td class="center">0.044</td></tr>
+<tr><td>Ramus_3</td><td class="center">1.24</td><td class="center">3.47</td><td class="center">0.58–23.8</td><td class="center">0.168</td></tr>
+<tr><td>Root_Bulb</td><td class="center">0.65</td><td class="center">1.92</td><td class="center">0.44–8.37</td><td class="center">0.378</td></tr>
+</tbody>
+</table>
+<div style="background:var(--panel2);padding:10px;border-radius:8px;margin-top:10px;font-size:12px">
+<strong>モデル全体：</strong>LR χ² = 8.32, df = 3, <strong>p = 0.010</strong>
+</div>
+</div>
+</div>
+</div>
+<div class="ok-box"><strong>改善点：</strong>Depth_C の OR が ∞ → 13.45 へ。解釈可能な値に。ただしCI幅は 1.06-1918 と依然広く、<strong>サンプルサイズの限界</strong>を如実に反映。</div>
+`},
+
+/* ============ 5-8 ROC曲線 ============ */
+{part:"Part 5", short:"ROC曲線", html:`
+<span class="slide-tag">ROC · AUC</span>
+<h2 class="slide-title">ROC 曲線 ─ 判別能の可視化</h2>
+<div class="grid grid-ab">
+<div>
+<div class="chart-wrap tall"><canvas id="rocChart"></canvas></div>
+<div class="panel tight" style="margin-top:10px">
+<pre style="font-size:11px"><span class="kw">library</span>(pROC)
+pred &lt;- <span class="kw">predict</span>(fit, type = <span class="str">"response"</span>)
+roc_obj &lt;- <span class="kw">roc</span>(df$Outcome, pred)
+<span class="kw">plot</span>(roc_obj)
+<span class="kw">auc</span>(roc_obj)  <span class="com"># → 0.792</span></pre>
+</div>
+</div>
+<div>
+<div class="stat" style="margin-bottom:12px">
+<div class="label">AUC (Area Under Curve)</div>
+<div class="value" style="font-size:48px">0.792</div>
+<div class="sub">95% CI: 0.655 – 0.929</div>
+</div>
+<div class="panel">
+<div class="panel-title">AUCの解釈目安</div>
+<table style="font-size:12px">
+<tbody>
+<tr><td>0.5</td><td>判別能なし</td></tr>
+<tr><td>0.6 - 0.7</td><td>低い</td></tr>
+<tr style="background:rgba(251,191,36,0.1)"><td>0.7 - 0.8</td><td>許容範囲 ← 本研究</td></tr>
+<tr><td>0.8 - 0.9</td><td>良好</td></tr>
+<tr><td>0.9 - 1.0</td><td>優秀</td></tr>
+</tbody>
+</table>
+</div>
+<div class="warn-box" style="margin-top:10px">
+CI の下限が 0.655（≒ 偶然とあまり変わらない）なので、<strong>統計的に「判別能がある」と断言しにくい</strong>。N=44 の限界。
+</div>
+</div>
+</div>
+`, onShow:function(){
+  const ctx = document.getElementById('rocChart'); if(!ctx) return;
+  // ROC曲線のダミー座標（AUC=0.792 に相当する形状）
+  const fpr = [0, 0.04, 0.08, 0.17, 0.25, 0.38, 0.50, 0.63, 0.75, 0.88, 1.0];
+  const tpr = [0, 0.25, 0.50, 0.65, 0.75, 0.85, 0.90, 0.92, 0.95, 0.98, 1.0];
+  const diag = fpr.map(x => x);
+  new Chart(ctx, {type:'line',
+    data:{labels:fpr.map(x => x.toFixed(2)),
+      datasets:[
+        {label:'Firth モデル (AUC=0.792)',data:tpr,borderColor:'#6ea8ff',
+          backgroundColor:'rgba(110,168,255,0.2)',fill:true,tension:0.2,pointRadius:3},
+        {label:'偶然 (AUC=0.5)',data:diag,borderColor:'#64748b',borderDash:[5,5],
+          backgroundColor:'transparent',pointRadius:0}
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#e8ecff'}},
+        title:{display:true,text:'ROC 曲線',color:'#e8ecff',font:{size:14}}},
+      scales:{
+        x:{title:{display:true,text:'1 - 特異度 (False Positive Rate)',color:'#9aa3c7'},
+          ticks:{color:'#9aa3c7'},grid:{color:'rgba(255,255,255,0.05)'}},
+        y:{title:{display:true,text:'感度 (True Positive Rate)',color:'#9aa3c7'},
+          ticks:{color:'#9aa3c7'},grid:{color:'rgba(255,255,255,0.05)'},min:0,max:1}}}});
+}},
+
+/* ============ 5-9 再解析 vs 原論文 ============ */
+{part:"Part 5", short:"再解析vs原論文", html:`
+<span class="slide-tag">COMPARISON</span>
+<h2 class="slide-title">再解析 vs 原論文 ─ 24年の差分</h2>
+<div class="chart-wrap tall" style="margin-bottom:14px"><canvas id="compareChart"></canvas></div>
+<table>
+<thead><tr><th>指標</th><th class="center">原論文 (2002)</th><th class="center">再解析 (2026)</th><th>差異の理由</th></tr></thead>
+<tbody>
+<tr><td>Depth C OR</td><td class="center">999</td><td class="center">13.45</td><td><strong>Firth補正</strong>により発散を抑制</td></tr>
+<tr><td>Ramus 3 OR</td><td class="center">44.02</td><td class="center">3.47</td><td>Firth + 仮想データの変数間相関</td></tr>
+<tr><td>Bulbous OR</td><td class="center">29.5</td><td class="center">1.92</td><td>同上</td></tr>
+<tr><td>感度</td><td class="center">0.85</td><td class="center">0.75</td><td>仮想データの限界</td></tr>
+<tr><td>特異度</td><td class="center">0.92</td><td class="center">0.62</td><td>同上</td></tr>
+<tr><td>新指数 OR</td><td class="center">62.3</td><td class="center">5.0</td><td>同上</td></tr>
+<tr class="highlight-row"><td>AUC</td><td class="center">報告なし</td><td class="center"><strong>0.792</strong></td><td>現代基準での必須指標を追加</td></tr>
+</tbody>
+</table>
+<div class="note-box">単変量ORは周辺度数のみで決まるため正確に再現可能。多変量ORは変数間相関に依存するため、仮想データでは乖離する。それでも<strong>"Depth C が最強の予測因子"という結論は変わらない</strong>。</div>
+`, onShow:function(){
+  const ctx = document.getElementById('compareChart'); if(!ctx) return;
+  new Chart(ctx, {type:'bar',
+    data:{labels:['Depth C OR','Ramus 3 OR','Bulbous OR','新指数 OR','感度×100','特異度×100'],
+      datasets:[
+        {label:'原論文 (2002)',data:[999,44.02,29.5,62.3,85,92],
+          backgroundColor:'rgba(248,113,113,0.7)',borderColor:'#f87171',borderWidth:1},
+        {label:'再解析 (2026)',data:[13.45,3.47,1.92,5.0,75,62],
+          backgroundColor:'rgba(110,168,255,0.7)',borderColor:'#6ea8ff',borderWidth:1}
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#e8ecff'}},
+        title:{display:true,text:'原論文 vs 再解析（対数軸）',color:'#e8ecff'}},
+      scales:{
+        x:{ticks:{color:'#9aa3c7'},grid:{color:'rgba(255,255,255,0.05)'}},
+        y:{type:'logarithmic',ticks:{color:'#9aa3c7'},grid:{color:'rgba(255,255,255,0.05)'}}}}});
+}},
+
+/* ============ 5-10 臨床解釈 ============ */
+{part:"Part 5", short:"臨床解釈は人間", html:`
+<span class="slide-tag">INTERPRETATION</span>
+<h2 class="slide-title">臨床的解釈は<strong>研究者の仕事</strong></h2>
+<div class="grid grid-2">
+<div class="panel" style="border-color:var(--purple)">
+<div class="panel-title" style="color:var(--purple)">AIができること</div>
+<ul class="bullet">
+<li>コード生成・実行</li>
+<li>OR / CI / p値の計算</li>
+<li>グラフ作成（ggplot2, Chart.js等）</li>
+<li>統計的有意性の判定</li>
+<li>記述統計の要約</li>
+<li>論文ドラフトの文章化</li>
+</ul>
+</div>
+<div class="panel" style="border-color:var(--ok)">
+<div class="panel-title" style="color:var(--ok)">AIができないこと</div>
+<ul class="bullet">
+<li>「OR=13.45 は臨床的に意味があるか？」</li>
+<li>「CIが 1.06-1918 で実用的か？」</li>
+<li>「新規患者に一般化できるか？」</li>
+<li>「研究デザインは妥当か？」</li>
+<li>「この結論を論文にすべきか？」</li>
+<li><strong>結果への最終責任</strong></li>
+</ul>
+</div>
+</div>
+<div class="quote" style="margin-top:16px">
+「最終的な研究成果の正確性と誠実性は研究者が保証する責任がある」<br>
+— AMEE Guide No.192 (Masters et al., 2025)
+</div>
+<div class="cite">Masters K, Benjamin J, Agrawal A, et al. When and how to disclose AI use in academic publishing: AMEE Guide No.192. Med Teach 2026;48(4):542-553.</div>
+`},
+
+/* ============ Part 6 セクション ============ */
+{part:"Part 6", short:"━━ Part 6 セクション", html:`
+<div class="section-slide">
+  <div class="part-num">06</div>
+  <h2>AI使用の<br>倫理と開示</h2>
+  <p class="section-desc">「SPSSを使ったことを謝罪しないのと同様、AIを使ったことを謝罪する必要はない。ただし、方法論として記載する責務はある。」</p>
+</div>
+`},
+
+/* ============ 6-1 開示義務 ============ */
+{part:"Part 6", short:"開示の義務", html:`
+<span class="slide-tag">DISCLOSURE</span>
+<h2 class="slide-title">研究におけるAI使用の開示義務</h2>
+<p class="slide-sub">Resnik & Hosseini (2025) の「意図的 × 実質的」フレームワーク</p>
+<div class="panel">
+<div class="panel-title">「実質的な AI 使用」の3基準</div>
+<div class="grid grid-3">
+<div style="background:var(--panel2);padding:14px;border-radius:10px">
+<div class="badge blue">基準 ①</div>
+<p style="font-size:13px;margin-top:8px;line-height:1.6">研究結果に直接影響する<strong>意思決定</strong>にAIを使用</p>
+</div>
+<div style="background:var(--panel2);padding:14px;border-radius:10px">
+<div class="badge blue">基準 ②</div>
+<p style="font-size:13px;margin-top:8px;line-height:1.6">コンテンツ、データ、画像の<strong>生成</strong>にAIを使用</p>
+</div>
+<div style="background:var(--panel2);padding:14px;border-radius:10px">
+<div class="badge blue">基準 ③</div>
+<p style="font-size:13px;margin-top:8px;line-height:1.6">コンテンツ、データ、画像の<strong>分析</strong>にAIを使用</p>
+</div>
+</div>
+</div>
+<div class="ok-box" style="margin-top:14px">
+統計コードの生成・実行は <strong>基準 ② と ③ の両方に該当</strong> → <strong>開示必須</strong>
+</div>
+<div class="cite">Resnik DB, Hosseini M. Disclosing artificial intelligence use in scientific research and publication: When should disclosure be mandatory, optional, or unnecessary? Account Res 2026;33(2):2481949.</div>
+`},
+
+/* ============ 6-2 AMEE Guide ============ */
+{part:"Part 6", short:"AMEE記載例", html:`
+<span class="slide-tag">AMEE GUIDE No.192</span>
+<h2 class="slide-title">Masters et al. (2025) の実践ガイド</h2>
+<div class="quote">
+「統計解析を SPSS で行ったことを謝罪しないのと同様に、AI を使用したことを謝罪する必要はない。開示は告白ではなく、日常的な方法論の報告として扱うべきである。」<br>
+— AMEE Guide No.192
+</div>
+<div class="grid grid-ab">
+<div>
+<div class="panel">
+<div class="panel-title">開示すべき4項目</div>
+<ol class="num">
+<li>使用したAIツール名とバージョン<br><small>例：Claude Opus 4.6, ChatGPT-4o</small></li>
+<li>使用した場面と目的<br><small>Rコード生成 / 文献要約 / 英文校正</small></li>
+<li>AIの出力に対して行った検証と修正<br><small>実行検証 / 手計算検算 / 引用確認</small></li>
+<li>最終的な責任は著者にある旨の明記</li>
+</ol>
+</div>
+</div>
+<div>
+<div class="panel">
+<div class="panel-title">Methods 開示文のテンプレート</div>
+<pre style="font-size:11px">統計解析のRコードは
+<span class="str">Claude Opus 4.6</span> (Anthropic, 2026)
+を用いて生成した。
+
+生成されたコードは著者が
+<span class="hi">全て手動で実行し、結果を
+手計算で検証した</span>。
+
+Firth 回帰には <span class="str">logistf v1.26.0</span>
+を使用した。
+
+AIが生成した引用文献は
+全て PubMed で実在を確認した。
+
+最終的な統計的解釈と臨床的
+判断は <span class="hi">著者が全責任を負う</span>。
+</pre>
+</div>
+</div>
+</div>
+<div class="cite">Masters K et al. AMEE Guide No.192. Med Teach 2026;48(4):542-553.</div>
+`},
+
+/* ============ 6-3 判断フローチャート ============ */
+{part:"Part 6", short:"開示フロー", html:`
+<span class="slide-tag">DECISION FLOW</span>
+<h2 class="slide-title">AI開示の判断フローチャート</h2>
+<div class="flow" style="flex-direction:column;align-items:center;gap:12px">
+<div class="flow-box" style="background:var(--panel);border-color:var(--accent);min-width:260px;padding:14px">
+<strong>AIを研究に使用した？</strong>
+</div>
+<div style="display:flex;gap:30px;justify-content:center;width:100%">
+  <div style="text-align:center;flex:1">
+    <div class="flow-arrow" style="font-size:12px">No</div>
+    <div class="flow-box" style="background:var(--panel2);padding:10px">
+      開示不要
+    </div>
+  </div>
+  <div style="text-align:center;flex:1">
+    <div class="flow-arrow" style="font-size:12px">Yes ↓</div>
+    <div class="flow-box" style="border-color:var(--accent);padding:10px">
+      <strong>意図的に使った？</strong>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:10px">
+      <div style="flex:1">
+        <div style="font-size:10px;color:var(--muted)">No（偶発的）</div>
+        <div class="flow-box" style="background:var(--panel2);padding:8px;font-size:11px">任意</div>
+      </div>
+      <div style="flex:1">
+        <div style="font-size:10px;color:var(--muted)">Yes ↓</div>
+        <div class="flow-box" style="border-color:var(--accent);padding:8px;font-size:11px">
+          <strong>実質的？</strong>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:6px">
+          <div class="flow-box" style="background:var(--panel2);padding:6px;font-size:10px;flex:1">No → 任意</div>
+          <div class="flow-box human" style="padding:6px;font-size:10px;flex:1">
+            <strong>Yes<br>→ 必須</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="panel" style="margin-top:20px">
+<div class="panel-title">統計解析へのAI使用は明らかに「意図的 × 実質的」</div>
+<ul class="bullet">
+<li>コード生成 → 結果に直接影響</li>
+<li>データ分析 → 実質的使用の定義に該当</li>
+<li>よって <strong>開示必須</strong></li>
+</ul>
+</div>
+<div class="cite">Resnik & Hosseini (2025) の枠組みに基づく。</div>
+`},
+
+/* ============ 6-4 再現性チェック ============ */
+{part:"Part 6", short:"再現性チェック", html:`
+<span class="slide-tag">CHECKLIST</span>
+<h2 class="slide-title">再現性の確保 ─ 実践チェックリスト</h2>
+<div class="grid grid-2">
+<div class="panel">
+<div class="panel-title">統計解析の再現性</div>
+<table style="font-size:12px">
+<tbody>
+<tr><td>☐ サンプルサイズは正しい？</td><td><code>nrow(df)</code></td></tr>
+<tr><td>☐ 度数は一致？</td><td><code>table()</code>で照合</td></tr>
+<tr><td>☐ OR は手計算と一致？</td><td>ad/bc で検算</td></tr>
+<tr><td>☐ パッケージは実在？</td><td>CRAN確認</td></tr>
+<tr><td>☐ 別環境でも動く？</td><td>別セッション実行</td></tr>
+<tr><td>☐ シードは固定？</td><td><code>set.seed()</code></td></tr>
+<tr><td>☐ 同じプロンプトで再現？</td><td>別モデルで確認</td></tr>
+</tbody>
+</table>
+</div>
+<div class="panel">
+<div class="panel-title">TRIPOD+AI (2024) の必須項目</div>
+<ul class="bullet">
+<li>使用ソフトウェアの<strong>名称とバージョン</strong></li>
+<li>使用パッケージ/ライブラリと<strong>バージョン</strong></li>
+<li><strong>乱数シード</strong>の設定有無と値</li>
+<li>コードの<strong>公開先</strong>（GitHub/Zenodo）</li>
+<li>データの<strong>公開方針</strong>（匿名化後）</li>
+<li>モデル検証方法（内部/外部）</li>
+<li>性能指標の<strong>95% CI</strong> 報告</li>
+<li>キャリブレーションプロット</li>
+</ul>
+</div>
+</div>
+<div class="warn-box">
+<strong>ICMJE の見解：</strong>AIは著者にはなれない（著者責任を負えないため）。AIの使用は方法論セクションに記載すべき。
+</div>
+<div class="cite">Collins GS et al. TRIPOD+AI statement. BMJ 2024;385:e078378.</div>
+`},
+
+/* ============ Part 7 セクション ============ */
+{part:"Part 7", short:"━━ Part 7 セクション", html:`
+<div class="section-slide">
+  <div class="part-num">07</div>
+  <h2>まとめと<br>実践提言</h2>
+  <p class="section-desc">11の Take-home messages と、AI × 研究者の理想的なワークフロー全体像。</p>
+</div>
+`},
+
+/* ============ 7-1 Take-home 1-5 ============ */
+{part:"Part 7", short:"Take-home 1-5", html:`
+<span class="slide-tag">TAKE-HOME MESSAGES 1–5</span>
+<h2 class="slide-title">統計手法編</h2>
+<div class="grid grid-2">
+<div class="panel">
+<div class="panel-title" style="color:var(--accent2)">① 古い論文を鵜呑みにしない</div>
+<p style="font-size:13px;line-height:1.6">
+査読済みでも度数不整合や統計的問題が存在する。<strong>批判的吟味は研究者の基本スキル</strong>。
+</p>
+</div>
+<div class="panel">
+<div class="panel-title" style="color:var(--accent2)">② 変数選択は臨床知識で</div>
+<p style="font-size:13px;line-height:1.6">
+単変量スクリーニング（p&lt;0.20, OR≥2.0）は選択バイアス。事前知識に基づく選択が推奨（Harrell 2015 / Sun 1996）。
+</p>
+</div>
+<div class="panel">
+<div class="panel-title" style="color:var(--accent2)">③ 完全分離には Firth 回帰</div>
+<p style="font-size:13px;line-height:1.6">
+ゼロセル時のOR=999 は解釈不能。Firth (1993) 罰則付き最尤推定で有限な推定値を。<code>logistf</code> パッケージ。
+</p>
+</div>
+<div class="panel">
+<div class="panel-title" style="color:var(--accent2)">④ EPV を守る</div>
+<p style="font-size:13px;line-height:1.6">
+イベント数 ÷ 変数数 ≥ 10。N=44 / イベント20 なら最大2-3変数（van Smeden 2016 / Riley 2019）。
+</p>
+</div>
+<div class="panel" style="grid-column:span 2">
+<div class="panel-title" style="color:var(--accent2)">⑤ モデル検証を忘れない</div>
+<p style="font-size:13px;line-height:1.6">
+構築データ＝評価データは楽観的バイアス。<strong>Bootstrap 内部検証 + 外部検証</strong>が理想（TRIPOD+AI 2024）。統計ソフト・パッケージ・バージョンは必ず明記。
+</p>
+</div>
+</div>
+`},
+
+/* ============ 7-2 Take-home 6-11 ============ */
+{part:"Part 7", short:"Take-home 6-11", html:`
+<span class="slide-tag">TAKE-HOME MESSAGES 6–11</span>
+<h2 class="slide-title">AI編</h2>
+<div class="grid grid-2">
+<div class="panel">
+<div class="panel-title" style="color:var(--purple)">⑥ ハルシネーションは統計的に不可避</div>
+<p style="font-size:13px;line-height:1.6">
+Kalai & Vempala (2024) の数学的証明。訓練データに1回しか出ない事実に関してLLMは必ず誤る。
+</p>
+</div>
+<div class="panel">
+<div class="panel-title" style="color:var(--purple)">⑦ ベンチマークが推測を報酬している</div>
+<p style="font-size:13px;line-height:1.6">
+二値採点（正答1/不正答0/IDK=0）はIDKを罰する。Kalai et al. (2025) Observation 1。
+</p>
+</div>
+<div class="panel">
+<div class="panel-title" style="color:var(--purple)">⑧ AIコードは必ず実行・検証</div>
+<p style="font-size:13px;line-height:1.6">
+Analyst-Inspector 方式で再現性を確認。関数・パッケージの実在を必ず確認。Zeng et al. (2025)。
+</p>
+</div>
+<div class="panel">
+<div class="panel-title" style="color:var(--purple)">⑨ AI使用は開示する</div>
+<p style="font-size:13px;line-height:1.6">
+統計コード生成は「実質的」使用。方法論セクションで記載必須。AMEE Guide No.192 / Resnik & Hosseini 2025。
+</p>
+</div>
+<div class="panel">
+<div class="panel-title" style="color:var(--purple)">⑩ 臨床解釈はAIではなく研究者</div>
+<p style="font-size:13px;line-height:1.6">
+AIは計算を補助。「この結果に臨床的意味があるか」を判断できるのは専門家だけ。
+</p>
+</div>
+<div class="panel">
+<div class="panel-title" style="color:var(--purple)">⑪ AIを"助手"として位置づける</div>
+<p style="font-size:13px;line-height:1.6">
+SPSS や R と同じ「道具」。検証・解釈・責任は常に自分が持つ。AI時代でも批判的思考は最重要スキル。
+</p>
+</div>
+</div>
+`},
+
+/* ============ 7-3 全体ワークフロー ============ */
+{part:"Part 7", short:"全体ワークフロー", html:`
+<span class="slide-tag">IDEAL WORKFLOW</span>
+<h2 class="slide-title">AI × 研究者の理想的なワークフロー</h2>
+<div class="flow" style="flex-direction:column;align-items:stretch;gap:8px">
+<div class="flow-box human" style="padding:12px;text-align:left">
+  <span class="badge green">研究者</span> <strong>リサーチクエスチョン定義 (PICO)</strong>
+</div>
+<div class="flow-arrow" style="text-align:center">↓</div>
+<div class="flow-box" style="padding:12px;text-align:left;background:linear-gradient(90deg,rgba(74,222,128,0.08),rgba(167,139,250,0.1));border:1px solid var(--line)">
+  <span class="badge green">研究者</span><span class="badge" style="background:rgba(167,139,250,0.2);color:var(--purple)">AI</span> <strong>文献レビュー → 実在確認</strong>
+</div>
+<div class="flow-arrow" style="text-align:center">↓</div>
+<div class="flow-box" style="padding:12px;text-align:left;background:linear-gradient(90deg,rgba(74,222,128,0.08),rgba(167,139,250,0.1));border:1px solid var(--line)">
+  <span class="badge green">研究者</span><span class="badge" style="background:rgba(167,139,250,0.2);color:var(--purple)">AI</span> <strong>研究計画の"壁打ち" → 事前登録</strong>
+</div>
+<div class="flow-arrow" style="text-align:center">↓</div>
+<div class="flow-box ai" style="padding:12px;text-align:left">
+  <span class="badge" style="background:rgba(167,139,250,0.2);color:var(--purple)">AI</span> <strong>データシミュレーション → 統計検出力確認</strong>
+</div>
+<div class="flow-arrow" style="text-align:center">↓</div>
+<div class="flow-box ai" style="padding:12px;text-align:left">
+  <span class="badge" style="background:rgba(167,139,250,0.2);color:var(--purple)">AI</span> <strong>解析用Rコード生成</strong>（プロンプトに制約条件明記）
+</div>
+<div class="flow-arrow" style="text-align:center">↓</div>
+<div class="flow-box human" style="padding:12px;text-align:left">
+  <span class="badge green">研究者</span> <strong>コード実行 → 結果検証</strong>（手計算・Analyst-Inspector）
+</div>
+<div class="flow-arrow" style="text-align:center">↓</div>
+<div class="flow-box human" style="padding:12px;text-align:left">
+  <span class="badge green">研究者</span> <strong>臨床的解釈</strong>（AIは補助、判断は研究者）
+</div>
+<div class="flow-arrow" style="text-align:center">↓</div>
+<div class="flow-box human" style="padding:12px;text-align:left">
+  <span class="badge green">研究者</span> <strong>論文執筆 → AI使用を開示</strong>（Methods, Acknowledgements）
+</div>
+</div>
+`},
+
+/* ============ 7-4 将来展望 ============ */
+{part:"Part 7", short:"将来展望", html:`
+<span class="slide-tag">FUTURE</span>
+<h2 class="slide-title">将来の展望 ─ 2026年以降</h2>
+<div class="grid grid-2">
+<div class="panel">
+<div class="panel-title">AIの発展</div>
+<ul class="bullet">
+<li>コード生成能力は急速に向上</li>
+<li>ハルシネーションは<strong>理論的に完全除去不可能</strong>（Kalai & Vempala 2024）</li>
+<li>再現性フレームワーク（Analyst-Inspector, RoT）が登場</li>
+<li>AI開示の国際ガイドライン整備<br>（AMEE, ICMJE, TRIPOD+AI）</li>
+<li>RAG・Tool Use で一部軽減</li>
+</ul>
+</div>
+<div class="panel">
+<div class="panel-title">研究者に求められるスキル</div>
+<ul class="bullet">
+<li><strong>AI出力を検証する能力</strong>が統計実行能力と同等に重要に</li>
+<li>プロンプトエンジニアリングがリサーチリテラシーの一部に</li>
+<li>批判的思考はAI時代にこそ最重要</li>
+<li>透明性・再現性の優先度が上昇</li>
+<li>倫理的開示の慣行化</li>
+</ul>
+</div>
+</div>
+<div class="quote" style="margin-top:20px">
+「最終的に、統計学の知識を持ち、臨床判断ができる研究者こそがAI時代の主役である。AIは強力な助手だが、助手は助手に過ぎない。」
+</div>
+`},
+
+/* ============ 7-5 参考文献①題材・統計 ============ */
+{part:"Part 7", short:"参考文献① 題材・統計", html:`
+<span class="slide-tag">REFERENCES 1 / 3</span>
+<h2 class="slide-title">参考文献 ① 題材論文・統計手法</h2>
+<div class="panel">
+<div class="panel-title">題材論文</div>
+<ol class="num" style="font-size:14px">
+<li><strong>Yuasa H, Kawai T, Sugiura M.</strong> Classification of surgical difficulty in extracting impacted third molars. <em>British Journal of Oral and Maxillofacial Surgery</em> 2002;<strong>40</strong>(1):26–31. <a href="https://doi.org/10.1054/bjom.2001.0684" style="color:var(--accent)" target="_blank">DOI: 10.1054/bjom.2001.0684</a> · PMID: 11883966</li>
+</ol>
+</div>
+<div class="panel">
+<div class="panel-title">分類体系（背景）</div>
+<ol class="num" start="2" style="font-size:13px">
+<li>Winter GB. <em>Principles of Exodontia as Applied to the Impacted Third Molar.</em> St. Louis: American Medical Book Co; 1926.</li>
+<li>Pell GJ, Gregory BT. Impacted mandibular third molars: classification and modified techniques for removal. <em>Dental Digest</em> 1933;<strong>39</strong>:330–338.</li>
+<li>Pederson GW. <em>Oral Surgery.</em> Philadelphia: WB Saunders; 1988.</li>
+</ol>
+</div>
+<div class="panel">
+<div class="panel-title">統計手法</div>
+<ol class="num" start="5" style="font-size:13px">
+<li><strong>Firth D.</strong> Bias reduction of maximum likelihood estimates. <em>Biometrika</em> 1993;<strong>80</strong>(1):27–38. <a href="https://doi.org/10.1093/biomet/80.1.27" style="color:var(--accent)" target="_blank">DOI: 10.1093/biomet/80.1.27</a></li>
+<li>Sun GW, Shook TL, Kay GL. Inappropriate use of bivariable analysis to screen risk factors for use in multivariable analysis. <em>Journal of Clinical Epidemiology</em> 1996;<strong>49</strong>(8):907–916. <a href="https://doi.org/10.1016/0895-4356(96)00025-X" style="color:var(--accent)" target="_blank">DOI: 10.1016/0895-4356(96)00025-X</a></li>
+<li>Peduzzi P, Concato J, Kemper E, Holford TR, Feinstein AR. A simulation study of the number of events per variable in logistic regression analysis. <em>Journal of Clinical Epidemiology</em> 1996;<strong>49</strong>(12):1373–1379. <a href="https://doi.org/10.1016/S0895-4356(96)00236-3" style="color:var(--accent)" target="_blank">DOI: 10.1016/S0895-4356(96)00236-3</a></li>
+<li>Heinze G, Schemper M. A solution to the problem of separation in logistic regression. <em>Statistics in Medicine</em> 2002;<strong>21</strong>(16):2409–2419. <a href="https://doi.org/10.1002/sim.1047" style="color:var(--accent)" target="_blank">DOI: 10.1002/sim.1047</a></li>
+<li><strong>Harrell FE Jr.</strong> <em>Regression Modeling Strategies: With Applications to Linear Models, Logistic and Ordinal Regression, and Survival Analysis.</em> 2nd ed. New York: Springer; 2015. ISBN: 978-3319194240</li>
+<li>van Smeden M, de Groot JAH, Moons KGM, et al. No rationale for 1 variable per 10 events criterion for binary logistic regression analysis. <em>BMC Medical Research Methodology</em> 2016;<strong>16</strong>:163. <a href="https://doi.org/10.1186/s12874-016-0267-3" style="color:var(--accent)" target="_blank">DOI: 10.1186/s12874-016-0267-3</a></li>
+<li>Riley RD, Snell KI, Ensor J, et al. Minimum sample size for developing a multivariable prediction model: Part II — binary and time-to-event outcomes. <em>Statistics in Medicine</em> 2019;<strong>38</strong>(7):1276–1296. <a href="https://doi.org/10.1002/sim.7992" style="color:var(--accent)" target="_blank">DOI: 10.1002/sim.7992</a></li>
+<li><strong>Collins GS, Moons KGM, Dhiman P, et al.</strong> TRIPOD+AI statement: updated guidance for reporting clinical prediction models that use regression or machine learning methods. <em>BMJ</em> 2024;<strong>385</strong>:e078378. <a href="https://doi.org/10.1136/bmj-2023-078378" style="color:var(--accent)" target="_blank">DOI: 10.1136/bmj-2023-078378</a></li>
+</ol>
+</div>
+`},
+
+/* ============ 7-6 参考文献②ハルシネーション ============ */
+{part:"Part 7", short:"参考文献② ハルシネーション", html:`
+<span class="slide-tag">REFERENCES 2 / 3</span>
+<h2 class="slide-title">参考文献 ② ハルシネーション・AI再現性 ★</h2>
+<div class="panel" style="border-color:var(--purple)">
+<div class="panel-title" style="color:var(--purple)">★★ 最重要：ハルシネーション理論</div>
+<ol class="num" start="13" style="font-size:14px">
+<li>
+<strong>Kalai AT, Nachum O, Vempala SS, Zhang E.</strong> <strong>Why Language Models Hallucinate.</strong> <em>arXiv preprint</em> 2025; arXiv:2509.04664. <a href="https://arxiv.org/abs/2509.04664" style="color:var(--accent)" target="_blank">URL: arxiv.org/abs/2509.04664</a>
+<div style="font-size:12px;color:var(--muted);margin-top:4px">→ Is-It-Valid (IIV) 還元による統計的不可避性の証明。post-training段階での持続理由。</div>
+</li>
+<li>
+<strong>Kalai AT, Vempala SS.</strong> <strong>Calibrated Language Models Must Hallucinate.</strong> <em>Proceedings of the 56th Annual ACM Symposium on Theory of Computing (STOC 2024)</em>; 2024:160–171. <a href="https://doi.org/10.1145/3618260.3649777" style="color:var(--accent)" target="_blank">DOI: 10.1145/3618260.3649777</a>
+<div style="font-size:12px;color:var(--muted);margin-top:4px">→ Singleton rate による生成エラー率の下界証明。</div>
+</li>
+</ol>
+</div>
+<div class="panel" style="border-color:var(--accent)">
+<div class="panel-title">★ 再現性・評価フレームワーク</div>
+<ol class="num" start="15" style="font-size:13px">
+<li>
+<strong>Zeng Q, Jin C, Wang X, Zheng Y, Li Q.</strong> <strong>An Analyst-Inspector Framework for Evaluating Reproducibility of LLMs in Data Science.</strong> <em>arXiv preprint</em> 2025; arXiv:2502.16395. <a href="https://arxiv.org/abs/2502.16395" style="color:var(--accent)" target="_blank">URL: arxiv.org/abs/2502.16395</a>
+</li>
+<li>
+Sun L, Wang J, Yan D, et al. LAMBDA: A Large Model Based Data Agent. <em>arXiv</em> 2024; arXiv:2407.17535.
+</li>
+<li>
+AI-Generated Code Is Not Reproducible (Yet). <em>arXiv</em> 2025; arXiv:2512.22387.
+<div style="font-size:12px;color:var(--muted);margin-top:4px">→ 31.7%の失敗率・13.5倍の依存関係ギャップを実証。</div>
+</li>
+<li>
+A Statistical Framework for Evaluating Repeatability and Reproducibility of LLMs. <em>PubMed</em> 2025; PMID: 41282788.
+</li>
+<li>
+Mosqueira-Rey E, Hernández-Pereira E, Alonso-Ríos D, et al. Human-in-the-loop machine learning: a state of the art. <em>Artificial Intelligence Review</em> 2023;<strong>56</strong>:3005–3054. <a href="https://doi.org/10.1007/s10462-022-10246-w" style="color:var(--accent)" target="_blank">DOI: 10.1007/s10462-022-10246-w</a>
+</li>
+<li>
+Reference Hallucination Score for Medical AI Chatbots. <em>JMIR</em> 2024. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11325115/" style="color:var(--accent)" target="_blank">PMC11325115</a>
+<div style="font-size:12px;color:var(--muted);margin-top:4px">→ ChatGPT生成引用の47.4%が誤りであることを実証。</div>
+</li>
+<li>
+A Survey on LLM-based Agents for Statistics and Data Science. <em>The American Statistician</em> 2025. <a href="https://doi.org/10.1080/00031305.2025.2561140" style="color:var(--accent)" target="_blank">DOI: 10.1080/00031305.2025.2561140</a>
+</li>
+</ol>
+</div>
+`},
+
+/* ============ 7-7 参考文献③倫理・クロージング ============ */
+{part:"Part 7", short:"参考文献③ 倫理", html:`
+<span class="slide-tag">REFERENCES 3 / 3</span>
+<h2 class="slide-title">参考文献 ③ AI倫理・開示ガイドライン</h2>
+<div class="panel" style="border-color:var(--ok)">
+<div class="panel-title" style="color:var(--ok)">AI使用の開示ガイドライン</div>
+<ol class="num" start="22" style="font-size:13px">
+<li>
+<strong>Masters K, Benjamin J, Agrawal A, et al.</strong> <strong>When and how to disclose AI use in academic publishing: AMEE Guide No.192.</strong> <em>Medical Teacher</em> 2026;<strong>48</strong>(4):542–553. <a href="https://doi.org/10.1080/0142159X.2025.2607513" style="color:var(--accent)" target="_blank">DOI: 10.1080/0142159X.2025.2607513</a>
+<div style="font-size:12px;color:var(--muted);margin-top:4px">→ "Don't apologise for using AI as you don't apologise for using SPSS" の比喩で有名。</div>
+</li>
+<li>
+<strong>Resnik DB, Hosseini M.</strong> Disclosing artificial intelligence use in scientific research and publication: When should disclosure be mandatory, optional, or unnecessary? <em>Accountability in Research</em> 2026;<strong>33</strong>(2):2481949. <a href="https://doi.org/10.1080/08989621.2025.2481949" style="color:var(--accent)" target="_blank">DOI: 10.1080/08989621.2025.2481949</a>
+<div style="font-size:12px;color:var(--muted);margin-top:4px">→ 「意図的 × 実質的」フレームワークの提唱。</div>
+</li>
+<li>Transparency Paradox in AI-assisted research. 2025. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12515416/" style="color:var(--accent)" target="_blank">PMC12515416</a></li>
+<li>Nejjar K, Zacharias L, Stodden V, Mendling J. LLMs for science: Usage for code generation and data analysis. <em>Journal of Software: Evolution and Process</em> 2024;<strong>36</strong>(9):e2723. <a href="https://doi.org/10.1002/smr.2723" style="color:var(--accent)" target="_blank">DOI: 10.1002/smr.2723</a></li>
+<li>ICMJE Recommendations. Defining the Role of Authors and Contributors. 2024 update. <a href="http://www.icmje.org/" style="color:var(--accent)" target="_blank">icmje.org</a>
+<div style="font-size:12px;color:var(--muted);margin-top:4px">→ AIは著者にはなれない（著者責任を負えないため）。</div>
+</li>
+</ol>
+</div>
+<div class="panel">
+<div class="panel-title">本講演で特に重要な3論文</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+<div style="background:rgba(167,139,250,0.1);border:1px solid var(--purple);border-radius:10px;padding:14px">
+<div style="font-size:11px;color:var(--purple);font-weight:700">★★ ハルシネーション理論</div>
+<div style="font-size:14px;font-weight:700;margin-top:6px;line-height:1.4">Kalai et al. (2025)</div>
+<div style="font-size:11px;color:var(--muted);margin-top:4px">Why LMs Hallucinate</div>
+</div>
+<div style="background:rgba(110,168,255,0.1);border:1px solid var(--accent);border-radius:10px;padding:14px">
+<div style="font-size:11px;color:var(--accent);font-weight:700">★ 再現性評価</div>
+<div style="font-size:14px;font-weight:700;margin-top:6px;line-height:1.4">Zeng et al. (2025)</div>
+<div style="font-size:11px;color:var(--muted);margin-top:4px">Analyst-Inspector</div>
+</div>
+<div style="background:rgba(74,222,128,0.1);border:1px solid var(--ok);border-radius:10px;padding:14px">
+<div style="font-size:11px;color:var(--ok);font-weight:700">★ 開示ガイド</div>
+<div style="font-size:14px;font-weight:700;margin-top:6px;line-height:1.4">Masters et al. (2025)</div>
+<div style="font-size:11px;color:var(--muted);margin-top:4px">AMEE Guide No.192</div>
+</div>
+</div>
+</div>
+<div style="text-align:center;margin-top:20px;padding:22px;background:linear-gradient(135deg,var(--panel),var(--panel2));border-radius:14px">
+<div style="font-size:22px;font-weight:800;margin-bottom:10px;background:linear-gradient(90deg,#fff,#b9c6ff);-webkit-background-clip:text;background-clip:text;color:transparent">ご清聴ありがとうございました</div>
+<div style="font-size:14px;color:var(--muted);line-height:1.7">本スライド・Rコード・仮想データは GitHub で公開<br>
+<a href="https://github.com/mxe050/AI-DataStat" style="color:var(--accent);font-family:monospace" target="_blank">github.com/mxe050/AI-DataStat</a></div>
+</div>
+`}
+
+]; /* /SLIDES */
+
+/* ============================================================
+   ナビゲーション
+============================================================ */
+let current = 0;
+const slidesEl = document.getElementById('slides');
+const tocEl = document.getElementById('toc');
+
+// スライド要素を生成
+SLIDES.forEach((s, i) => {
+  const div = document.createElement('div');
+  div.className = 'slide';
+  div.dataset.idx = i;
+  div.innerHTML = s.html;
+  slidesEl.appendChild(div);
+});
+
+// 目次を生成
+const parts = {};
+SLIDES.forEach((s, i) => {
+  if(!parts[s.part]) parts[s.part] = [];
+  parts[s.part].push({idx:i, title:s.short});
+});
+
+for(const part in parts){
+  const wrap = document.createElement('div');
+  wrap.className = 'toc-part';
+  if(part !== '表紙' && part !== 'Overview' && !part.startsWith('Part')){
+    // default case
+  }
+  if(part !== '表紙'){
+    const title = document.createElement('div');
+    title.className = 'toc-title';
+    title.textContent = part;
+    wrap.appendChild(title);
+  }
+  parts[part].forEach(item => {
+    // セクション見出しスライドは目次から除外（━━で始まるもの）
+    if(item.title.startsWith('━━')) return;
+    const btn = document.createElement('div');
+    btn.className = 'toc-item';
+    btn.dataset.idx = item.idx;
+    btn.innerHTML = `<span class="toc-num">${String(item.idx+1).padStart(2,'0')}</span><span>${item.title}</span>`;
+    btn.onclick = () => goTo(item.idx);
+    wrap.appendChild(btn);
+  });
+  tocEl.appendChild(wrap);
+}
+
+function goTo(idx){
+  if(idx < 0 || idx >= SLIDES.length) return;
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.toc-item').forEach(t => t.classList.remove('active'));
+  const slideEl = document.querySelector(`.slide[data-idx="${idx}"]`);
+  slideEl.classList.add('active');
+  slideEl.scrollTop = 0;
+  const tocItem = document.querySelector(`.toc-item[data-idx="${idx}"]`);
+  if(tocItem){
+    tocItem.classList.add('active');
+    tocItem.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  current = idx;
+  document.getElementById('counter').textContent = `${idx+1} / ${SLIDES.length}`;
+  document.getElementById('progress-bar').style.width = `${((idx+1)/SLIDES.length)*100}%`;
+  document.getElementById('prev').disabled = idx === 0;
+  document.getElementById('next').disabled = idx === SLIDES.length-1;
+  // 初期化関数実行
+  setTimeout(() => {
+    if(SLIDES[idx].onShow) try { SLIDES[idx].onShow(); } catch(e){ console.warn(e); }
+    if(window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise([slideEl]);
+  }, 50);
+  // モバイル: メニュー閉じる
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+document.getElementById('prev').onclick = () => goTo(current - 1);
+document.getElementById('next').onclick = () => goTo(current + 1);
+document.getElementById('menu-toggle').onclick = () => {
+  document.getElementById('sidebar').classList.toggle('open');
+};
+document.addEventListener('keydown', e => {
+  if(e.target.tagName === 'INPUT') return;
+  if(e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); goTo(current+1); }
+  else if(e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(current-1); }
+  else if(e.key === 'Home') goTo(0);
+  else if(e.key === 'End') goTo(SLIDES.length-1);
+  else if(e.key === 'f' || e.key === 'F'){
+    if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+});
+
+// 初期表示
+goTo(0);
+</script>
+</body>
+</html>
