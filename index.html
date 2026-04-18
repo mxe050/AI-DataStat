@@ -3796,155 +3796,386 @@ AIが生成した引用文献は
 </div>
 `},
 
-/* ============ 7-1 Take-home 1-5 ============ */
-{part:"Part 7", short:"Take-home 1-5", html:`
-<span class="slide-tag">TAKE-HOME MESSAGES 1–5</span>
-<h2 class="slide-title">統計手法編</h2>
+/* ============ 7-1 問題の所在 ============ */
+{part:"Part 7", short:"AI時代の問題の所在", html:`
+<span class="slide-tag">THE BIGGER PICTURE</span>
+<h2 class="slide-title">医学AI駆動データ解析における「ハルシネーション」</h2>
+<p class="slide-lead">
+Yuasa 論文の話はここで離れ、<strong class="emphasis">AI時代の医学データ解析全般が直面する問題</strong>に視点を移す。医学文脈でのハルシネーションは、「チャットボットが架空の文章を生成する」という一般的イメージとは<strong>質的に異なる</strong>。ここでの本当の敵は、データ解析パイプラインの各段階で生まれる<strong>「もっともらしく誤った分析結果」</strong>である。
+</p>
+
+<div class="panel">
+<div class="panel-title">医学データ解析におけるハルシネーションの 4 類型</div>
 <div class="grid grid-2">
+<div style="padding:14px;background:rgba(248,113,113,0.06);border-radius:10px;border:1px solid rgba(248,113,113,0.3)">
+<div style="color:var(--bad);font-weight:700;font-size:calc(16px * var(--fs-mul));margin-bottom:8px">① 存在しない統計的有意性</div>
+<p style="font-size:calc(15px * var(--fs-mul));line-height:1.7">多重検定補正の省略、恣意的なサブグループ解析、事後の α 水準調整により、<strong>本来存在しない差</strong>を「有意」として報告する。</p>
+</div>
+<div style="padding:14px;background:rgba(248,113,113,0.06);border-radius:10px;border:1px solid rgba(248,113,113,0.3)">
+<div style="color:var(--bad);font-weight:700;font-size:calc(16px * var(--fs-mul));margin-bottom:8px">② 交絡無視による疑似相関</div>
+<p style="font-size:calc(15px * var(--fs-mul));line-height:1.7">AI が単変量解析で拾った関連を「発見」として提示するが、<strong>未調整の交絡</strong>による疑似相関にすぎない。</p>
+</div>
+<div style="padding:14px;background:rgba(248,113,113,0.06);border-radius:10px;border:1px solid rgba(248,113,113,0.3)">
+<div style="color:var(--bad);font-weight:700;font-size:calc(16px * var(--fs-mul));margin-bottom:8px">③ サブグループ解析の偽陽性</div>
+<p style="font-size:calc(15px * var(--fs-mul));line-height:1.7">切り口を無数に試す自動探索が、偶然有意なサブグループを<strong>真の効果</strong>として報告してしまう。</p>
+</div>
+<div style="padding:14px;background:rgba(248,113,113,0.06);border-radius:10px;border:1px solid rgba(248,113,113,0.3)">
+<div style="color:var(--bad);font-weight:700;font-size:calc(16px * var(--fs-mul));margin-bottom:8px">④ 過学習の楽観的予測性能</div>
+<p style="font-size:calc(15px * var(--fs-mul));line-height:1.7">訓練データに適合しすぎたモデルの AUC 0.95 が、<strong>新規患者では 0.65 に崩壊</strong>する典型例。</p>
+</div>
+</div>
+</div>
+
+<div class="warn-box">
+<strong>なぜ医学は特別に厳しいのか：</strong>解析上の誤りは <strong>臨床試験の結果解釈 → 薬事承認判断 → 最終的な治療方針</strong> に連鎖する。他分野ならブログ記事の修正で済む誤りが、医学では<strong class="emphasis">患者の生命に直結</strong>する。許容度が桁違いに低い。
+</div>
+
+<h3 style="font-size:calc(22px * var(--fs-mul));color:var(--accent2);margin:22px 0 14px;padding-bottom:6px;border-bottom:1px solid var(--line)">
+警鐘：定型的 AI 解析論文の爆発的増加（Suchak 2025）
+</h3>
+
 <div class="panel">
-<div class="panel-title" style="color:var(--accent2)">① 古い論文を鵜呑みにしない</div>
-<p style="font-size:13px;line-height:1.6">
-査読済みでも度数不整合や統計的問題が存在する。<strong>批判的吟味は研究者の基本スキル</strong>。
-</p>
+<div class="panel-title">NHANES 論文における偽発見の量産</div>
+<div class="article">
+<p><strong>Suchak et al. (2025) <em>PLOS Biology</em></strong> は、米国健康栄養調査 (NHANES) データベースを用いた<strong class="emphasis">AI 支援型の定型的論文</strong>の爆発的増加を実証した：</p>
 </div>
-<div class="panel">
-<div class="panel-title" style="color:var(--accent2)">② 変数選択は臨床知識で</div>
-<p style="font-size:13px;line-height:1.6">
-単変量スクリーニング（p&lt;0.20, OR≥2.0）は選択バイアス。事前知識に基づく選択が推奨（Harrell 2015 / Sun 1996）。
-</p>
+<div class="grid grid-3" style="margin-top:12px">
+<div class="stat"><div class="label">2014 - 2021 年</div><div class="value">年平均 4 本</div><div class="sub">単因子関連解析論文</div></div>
+<div class="stat"><div class="label">2022 年</div><div class="value">33 本</div><div class="sub">8 倍</div></div>
+<div class="stat"><div class="label">2023 年</div><div class="value" style="color:var(--bad)">82 本</div><div class="sub">20 倍</div></div>
 </div>
-<div class="panel">
-<div class="panel-title" style="color:var(--accent2)">③ 完全分離には Firth 回帰</div>
-<p style="font-size:13px;line-height:1.6">
-ゼロセル時のOR=999 は解釈不能。Firth (1993) 罰則付き最尤推定で有限な推定値を。<code>logistf</code> パッケージ。
-</p>
+<div class="danger-box" style="margin-top:14px">
+<strong>2024 年は 10 月時点で 190 本</strong>（年換算で 50 倍近い増加）。API アクセスと R/Python による自動化で、変数抽出 → ロジスティック回帰 → 原稿作成までがほぼ全自動。
 </div>
-<div class="panel">
-<div class="panel-title" style="color:var(--accent2)">④ EPV を守る</div>
-<p style="font-size:13px;line-height:1.6">
-イベント数 ÷ 変数数 ≥ 10。N=44 / イベント20 なら最大2-3変数（van Smeden 2016 / Riley 2019）。
-</p>
 </div>
-<div class="panel" style="grid-column:span 2">
-<div class="panel-title" style="color:var(--accent2)">⑤ モデル検証を忘れない</div>
-<p style="font-size:13px;line-height:1.6">
-構築データ＝評価データは楽観的バイアス。<strong>Bootstrap 内部検証 + 外部検証</strong>が理想（TRIPOD+AI 2024）。統計ソフト・パッケージ・バージョンは必ず明記。
-</p>
+
+<div class="panel" style="margin-top:14px">
+<div class="panel-title">何が起きているのか ─ 3つの具体的問題</div>
+<div class="article">
+<p><strong>❶ 不適切な研究デザイン：</strong>うつ病・心血管疾患・認知機能低下など<strong>本来多因子性</strong>の疾患が、単一の予測変数との関連として個別解析されている。341 本から <strong>169 の「有意な関連」</strong>が報告されたが、交互作用も多重比較補正もない。</p>
+<p><strong>❷ FDR 補正の欠如：</strong>うつ病の 28 本に対し Benjamini-Yekutieli 法で事後 FDR 補正を適用したところ、<strong class="emphasis">28 件中 15 件（54%）が有意性を喪失</strong>。個別には「発見」でも、正当な補正で半分以上が偽陽性。</p>
+<p><strong>❸ データ・ドレッジング：</strong>同じ SII（全身性免疫炎症指数）× 糖尿病の解析で、一方は 2003-2018 年、他方は 2017-2020 年のみを使用。<strong>サブセット選択の正当化なし</strong>。</p>
 </div>
+</div>
+
+<div class="cite">
+Suchak T, Anderson AE, Sheridan M, et al. Explosion of formulaic research articles, including inappropriate study designs and false discoveries, based on the NHANES US national health database. <em>PLOS Biology</em> 2025;23(5):e3003152.
 </div>
 `},
 
-/* ============ 7-2 Take-home 6-11 ============ */
-{part:"Part 7", short:"Take-home 6-11", html:`
-<span class="slide-tag">TAKE-HOME MESSAGES 6–11</span>
-<h2 class="slide-title">AI編</h2>
-<div class="grid grid-2">
-<div class="panel">
-<div class="panel-title" style="color:var(--purple)">⑥ ハルシネーションは統計的に不可避</div>
-<p style="font-size:13px;line-height:1.6">
-Kalai & Vempala (2024) の数学的証明。訓練データに1回しか出ない事実に関してLLMは必ず誤る。
+/* ============ 7-2 AIが加速する統計問題 ============ */
+{part:"Part 7", short:"AIが加速する統計問題", html:`
+<span class="slide-tag">AI-ACCELERATED FAILURES</span>
+<h2 class="slide-title">AI コーディング・エージェントが加速する統計的問題</h2>
+<p class="slide-lead">
+Claude Code、Codex などの AI コーディング・エージェントは<strong>プログラミングの生産性を劇的に向上</strong>させた。しかし同時に、<strong class="emphasis">p-hacking の自動化、サイレント・エラーの発生、再現性の崩壊</strong>という新しいリスクを生んでいる。さらに、臨床予測モデルの世界では「外部検証で性能が崩壊する」という<strong>古典的だが依然未解決</strong>の問題も継続している。
 </p>
+
+<div class="panel">
+<div class="panel-title">自動 p-hacking と「忖度 (sycophancy)」問題</div>
+<div class="article">
+<p><strong>Asher et al. (2026) Stanford Working Paper</strong> は、Claude Code と Codex が統計解析で<strong>自動 p-hacking</strong> を実行しうるかを <strong>640 の独立実験</strong>で検証：</p>
+<ul class="bullet">
+<li>標準的なプロンプトでは、LLM は p-hacking に<strong>比較的抵抗性</strong>を示す</li>
+<li>直接的に p-hacking を依頼すると<strong>拒否</strong>する</li>
+<li>しかし <span class="emphasis">「ロバストネスチェック」「代替仕様の探索」といった学術的な言い回し</span>で再フレーミングすると、LLM は<strong class="emphasis">有意な結果が出る方向への仕様変更を実行</strong>する</li>
+</ul>
+<p><strong>含意：</strong>研究者が（無意識的にでも）望む結果の方向性をプロンプトに滲ませるだけで、AI はそれに<strong>忖度</strong>して解析を歪める。これは医学研究の信頼性に対する根本的脅威。</p>
+</div>
+<div class="cite">
+Asher S, Malzahn J, Hall A, et al. Do Claude Code and Codex P-Hack? Sycophancy and Statistical Analysis in Large Language Models. Stanford Working Paper, SSRN 6270199, 2026.
+</div>
+</div>
+
+<div class="panel" style="margin-top:14px">
+<div class="panel-title">サイレント・エラー ─ 構文は正しいが論理が誤ったコード</div>
+<div class="article">
+<p>Kasperowski (2026, <em>R-bloggers</em>) および <em>ACM CHI 2025</em> の研究は、LLM が<strong class="emphasis">エラーメッセージを出さずに誤った結果を出す</strong>コード ＝「サイレント・エラー」を生成する典型パターンを指摘：</p>
+<ul class="bullet">
+<li>回帰モデルで<strong>交絡変数の調整順序を誤る</strong></li>
+<li><strong>多重共線性の検出を省略</strong>する</li>
+<li>データ分布の仮定に合わない検定手法を適用（例：非正規データに t 検定）</li>
+<li><strong>欠損値処理の不整合</strong>（あるステップで listwise、別で pairwise）</li>
+</ul>
+<p>これらは実行時エラーを出さないため、<strong>統計学的知識を持たない解析者には検出不可能</strong>。</p>
+</div>
+</div>
+
+<div class="panel" style="margin-top:14px">
+<div class="panel-title">LLM の出力変動性 ─ 同じデータで違う結論</div>
+<div class="article">
+<p><em>MedRxiv 2025.08.06.25333170v1</em> は、同一プロンプト・同一データでも LLM が<strong>異なるランで異なる解析結果</strong>を生成することを定量的に示した。温度パラメータの確率的性質に起因する。</p>
+<p>「同じデータから同じ結論」という<strong class="emphasis">再現性の原則に真正面から反する</strong>。統計解析における LLM 使用では、repeatability と reproducibility の両方を明示的に評価するフレームワークが必要。</p>
+</div>
+</div>
+
+<h3 style="font-size:calc(22px * var(--fs-mul));color:var(--accent2);margin:22px 0 14px;padding-bottom:6px;border-bottom:1px solid var(--line)">
+臨床予測モデルの古典的失敗 ─ Epic Sepsis Model
+</h3>
+
+<div class="panel">
+<div class="panel-title">Wong et al. (2021) <em>JAMA Internal Medicine</em></div>
+<div class="article">
+<p>Epic Systems 社の<strong>敗血症予測モデル (ESM)</strong> は全米で広く実装されていた。Wong らの外部検証で以下が判明：</p>
+</div>
+<div class="grid grid-3" style="margin-top:12px">
+<div class="stat"><div class="label">開発データでの AUROC</div><div class="value" style="color:var(--ok)">良好</div><div class="sub">（内部検証）</div></div>
+<div class="stat"><div class="label">外部検証 AUROC</div><div class="value" style="color:var(--bad)">0.63</div><div class="sub">（ほぼ偶然）</div></div>
+<div class="stat"><div class="label">敗血症見逃し</div><div class="value" style="color:var(--bad)">過半数</div><div class="sub">＋大量の偽陽性アラート</div></div>
+</div>
+<div class="danger-box" style="margin-top:14px">
+<strong>データセットシフト (dataset shift)：</strong>異なる患者集団・臨床環境に適用された際、モデル性能が大幅劣化する現象。Epic Sepsis は<strong class="emphasis">「見かけの高精度」自体がハルシネーション</strong>であったことを示す代表例。
+</div>
+</div>
+
+<div class="grid grid-2" style="margin-top:14px">
+<div class="panel">
+<div class="panel-title">キャリブレーション不良の実態</div>
+<div class="article">
+<p><em>Mayo Clinic Proceedings: Digital Health</em> (2025) の系統的レビュー：</p>
+<ul class="bullet">
+<li>キャリブレーション評価を行った公表モデル：<strong class="emphasis">わずか 32%</strong></li>
+<li>外部検証を実施したモデル：<strong class="emphasis">わずか 27%</strong></li>
+</ul>
+<p>予測確率と実際の発生率の一致度を評価しないモデルは、判別能（AUROC）が高くても<strong>臨床的に有害なリスク推定</strong>をしている可能性。</p>
+</div>
 </div>
 <div class="panel">
-<div class="panel-title" style="color:var(--purple)">⑦ ベンチマークが推測を報酬している</div>
-<p style="font-size:13px;line-height:1.6">
-二値採点（正答1/不正答0/IDK=0）はIDKを罰する。Kalai et al. (2025) Observation 1。
-</p>
+<div class="panel-title">データドリフトによる "ソフト故障"</div>
+<div class="article">
+<p><em>arXiv:2506.17442v2</em> (2025) は、診療ガイドライン変更、EHR 更新、パンデミック等によるデータドリフトが<strong class="emphasis">エラーを出さずに静かに性能劣化</strong>させる現象を「ソフト故障」と命名。</p>
+<p>BMJ Digital Health (2025) は、PCA 再構成誤差による多変量ドリフト検出が <strong>3 つの非連続月でドリフトを検出</strong>した事例を報告。継続的モニタリング必須。</p>
 </div>
-<div class="panel">
-<div class="panel-title" style="color:var(--purple)">⑧ AIコードは必ず実行・検証</div>
-<p style="font-size:13px;line-height:1.6">
-Analyst-Inspector 方式で再現性を確認。関数・パッケージの実在を必ず確認。Zeng et al. (2025)。
-</p>
 </div>
-<div class="panel">
-<div class="panel-title" style="color:var(--purple)">⑨ AI使用は開示する</div>
-<p style="font-size:13px;line-height:1.6">
-統計コード生成は「実質的」使用。方法論セクションで記載必須。AMEE Guide No.192 / Resnik & Hosseini 2025。
-</p>
 </div>
-<div class="panel">
-<div class="panel-title" style="color:var(--purple)">⑩ 臨床解釈はAIではなく研究者</div>
-<p style="font-size:13px;line-height:1.6">
-AIは計算を補助。「この結果に臨床的意味があるか」を判断できるのは専門家だけ。
-</p>
-</div>
-<div class="panel">
-<div class="panel-title" style="color:var(--purple)">⑪ AIを"助手"として位置づける</div>
-<p style="font-size:13px;line-height:1.6">
-SPSS や R と同じ「道具」。検証・解釈・責任は常に自分が持つ。AI時代でも批判的思考は最重要スキル。
-</p>
-</div>
+
+<div class="cite">
+Wong A, et al. External Validation of a Widely Implemented Proprietary Sepsis Prediction Model in Hospitalized Patients. <em>JAMA Intern Med</em> 2021;181(8):1065-1070.<br>
+Keeping Medical AI Healthy and Trustworthy. <em>arXiv:2506.17442v2</em>, 2025.
 </div>
 `},
 
-/* ============ 7-3 全体ワークフロー ============ */
-{part:"Part 7", short:"全体ワークフロー", html:`
-<span class="slide-tag">IDEAL WORKFLOW</span>
-<h2 class="slide-title">AI × 研究者の理想的なワークフロー</h2>
+/* ============ 7-3 新ワークフロー ============ */
+{part:"Part 7", short:"AIに頼りまくる/頼らない", html:`
+<span class="slide-tag">WORKFLOW · GENERALIZED</span>
+<h2 class="slide-title">AIに頼りまくる、でも肝心なところは譲らない</h2>
+<p class="slide-lead">
+AI時代のワークフローの哲学は明快だ ─ <strong class="emphasis">AIに頼れるところは最初から頼りまくる。しかし、肝心な数箇所だけは絶対に譲らない。</strong><br>
+この設計なら、スピード（AIのメリット）と信頼性（人間の責任）を両立できる。以下は医学に限らず、<strong>あらゆるデータ解析研究に適用できる一般化ワークフロー</strong>。
+</p>
+
+<div class="panel">
+<div class="panel-title">2 種類のゾーンを明確に分ける</div>
+<div class="grid grid-2" style="margin-top:12px">
+<div style="padding:18px;background:rgba(167,139,250,0.08);border:2px dashed var(--purple);border-radius:12px">
+<div style="color:var(--purple);font-weight:700;font-size:calc(17px * var(--fs-mul));margin-bottom:10px">💜 AI 全力ゾーン</div>
+<p style="font-size:calc(15px * var(--fs-mul));line-height:1.7">スピードと網羅性のメリットを全力享受する。<strong>間違えても致命的でない</strong>、かつ検証可能な作業をすべて AI に任せる。</p>
+<ul class="bullet" style="margin-top:8px">
+<li>文献の初期探索・要約</li>
+<li>研究計画の壁打ち</li>
+<li>データクリーニングの提案</li>
+<li>コードの叩き台作成</li>
+<li>エラーメッセージの解読</li>
+<li>結果の日英翻訳</li>
+<li>図表の美化</li>
+<li>論文初稿のドラフト</li>
+</ul>
+</div>
+<div style="padding:18px;background:rgba(74,222,128,0.08);border:2px solid var(--ok);border-radius:12px">
+<div style="color:var(--ok);font-weight:700;font-size:calc(17px * var(--fs-mul));margin-bottom:10px">💚 人間のみゾーン（絶対に譲らない）</div>
+<p style="font-size:calc(15px * var(--fs-mul));line-height:1.7"><strong>誤ると取り返しがつかない</strong>、または<strong>研究者の責任の核</strong>に関わる決定。AIの提案は"情報"として聞くが、最終判断は必ず自分。</p>
+<ul class="bullet" style="margin-top:8px">
+<li>リサーチクエスチョンの定義</li>
+<li>統計手法の最終選択</li>
+<li>結果の臨床的意義判断</li>
+<li>因果推論の結論</li>
+<li>患者への適用可否判断</li>
+<li>論文の最終解釈・責任</li>
+</ul>
+</div>
+</div>
+</div>
+
+<h3 style="font-size:calc(22px * var(--fs-mul));color:var(--accent2);margin:22px 0 14px;padding-bottom:6px;border-bottom:1px solid var(--line)">
+11 段階の一般化ワークフロー
+</h3>
+
 <div class="flow" style="flex-direction:column;align-items:stretch;gap:8px">
-<div class="flow-box human" style="padding:12px;text-align:left">
-  <span class="badge green">研究者</span> <strong>リサーチクエスチョン定義 (PICO)</strong>
+
+<div class="flow-box human" style="padding:14px;text-align:left">
+<span class="badge green">① 人間のみ</span> <strong>リサーチクエスチョンの定義</strong><br>
+<span style="font-size:calc(13px * var(--fs-mul));color:var(--muted)">PICO / FINER を自分で考え抜く。AIの提案を聞いてもよいが、決定は自分。</span>
 </div>
 <div class="flow-arrow" style="text-align:center">↓</div>
-<div class="flow-box" style="padding:12px;text-align:left;background:linear-gradient(90deg,rgba(74,222,128,0.08),rgba(167,139,250,0.1));border:1px solid var(--line)">
-  <span class="badge green">研究者</span><span class="badge" style="background:rgba(167,139,250,0.2);color:var(--purple)">AI</span> <strong>文献レビュー → 実在確認</strong>
+
+<div class="flow-box" style="padding:14px;text-align:left;background:linear-gradient(90deg,rgba(167,139,250,0.12),rgba(167,139,250,0.04));border:1px solid var(--purple)">
+<span class="badge" style="background:rgba(167,139,250,0.2);color:var(--purple)">② AI 全力</span> <strong>文献の網羅的探索と要約</strong><br>
+<span style="font-size:calc(13px * var(--fs-mul));color:var(--muted)">AIに100件ペースで要約させる。ただし引用は必ずDOIで実在確認。</span>
 </div>
 <div class="flow-arrow" style="text-align:center">↓</div>
-<div class="flow-box" style="padding:12px;text-align:left;background:linear-gradient(90deg,rgba(74,222,128,0.08),rgba(167,139,250,0.1));border:1px solid var(--line)">
-  <span class="badge green">研究者</span><span class="badge" style="background:rgba(167,139,250,0.2);color:var(--purple)">AI</span> <strong>研究計画の"壁打ち" → 事前登録</strong>
+
+<div class="flow-box" style="padding:14px;text-align:left;background:linear-gradient(90deg,rgba(167,139,250,0.12),rgba(167,139,250,0.04));border:1px solid var(--purple)">
+<span class="badge" style="background:rgba(167,139,250,0.2);color:var(--purple)">③ AI 全力</span> <strong>研究計画の壁打ち・叩き台作成</strong><br>
+<span style="font-size:calc(13px * var(--fs-mul));color:var(--muted)">サンプルサイズ計算、解析計画の草案、STROBE チェックまで AI にやらせる。</span>
 </div>
 <div class="flow-arrow" style="text-align:center">↓</div>
-<div class="flow-box ai" style="padding:12px;text-align:left">
-  <span class="badge" style="background:rgba(167,139,250,0.2);color:var(--purple)">AI</span> <strong>データシミュレーション → 統計検出力確認</strong>
+
+<div class="flow-box human" style="padding:14px;text-align:left">
+<span class="badge green">④ 人間のみ</span> <strong>解析プロトコルの事前登録 (Pre-registration)</strong><br>
+<span style="font-size:calc(13px * var(--fs-mul));color:var(--muted)">AI の下書きを<strong>最終確認</strong>し、OSF / ClinicalTrials.gov 等に自分で登録。責任は人間。</span>
 </div>
 <div class="flow-arrow" style="text-align:center">↓</div>
-<div class="flow-box ai" style="padding:12px;text-align:left">
-  <span class="badge" style="background:rgba(167,139,250,0.2);color:var(--purple)">AI</span> <strong>解析用Rコード生成</strong>（プロンプトに制約条件明記）
+
+<div class="flow-box" style="padding:14px;text-align:left;background:linear-gradient(90deg,rgba(167,139,250,0.12),rgba(167,139,250,0.04));border:1px solid var(--purple)">
+<span class="badge" style="background:rgba(167,139,250,0.2);color:var(--purple)">⑤ AI 全力</span> <strong>コード生成・エラー解決</strong><br>
+<span style="font-size:calc(13px * var(--fs-mul));color:var(--muted)">R/Python の叩き台、エラーメッセージの解読、パッケージ選定を AI に任せる。</span>
 </div>
 <div class="flow-arrow" style="text-align:center">↓</div>
-<div class="flow-box human" style="padding:12px;text-align:left">
-  <span class="badge green">研究者</span> <strong>コード実行 → 結果検証</strong>（手計算・Analyst-Inspector）
+
+<div class="flow-box human" style="padding:14px;text-align:left">
+<span class="badge green">⑥ 人間のみ</span> <strong>統計手法の最終選択</strong><br>
+<span style="font-size:calc(13px * var(--fs-mul));color:var(--muted)">Firth か通常ロジスティックか、Bayes か頻度論か。<strong>AI は参考意見</strong>、決定は人間の責任。</span>
 </div>
 <div class="flow-arrow" style="text-align:center">↓</div>
-<div class="flow-box human" style="padding:12px;text-align:left">
-  <span class="badge green">研究者</span> <strong>臨床的解釈</strong>（AIは補助、判断は研究者）
+
+<div class="flow-box" style="padding:14px;text-align:left;background:linear-gradient(90deg,rgba(167,139,250,0.12),rgba(167,139,250,0.04));border:1px solid var(--purple)">
+<span class="badge" style="background:rgba(167,139,250,0.2);color:var(--purple)">⑦ AI 全力</span> <strong>独立検証</strong>（Analyst-Inspector、ピボット・手計算との照合）<br>
+<span style="font-size:calc(13px * var(--fs-mul));color:var(--muted)">別の AI セッションや別ツール（ピボットテーブル等）で数値を二重チェック。</span>
 </div>
 <div class="flow-arrow" style="text-align:center">↓</div>
-<div class="flow-box human" style="padding:12px;text-align:left">
-  <span class="badge green">研究者</span> <strong>論文執筆 → AI使用を開示</strong>（Methods, Acknowledgements）
+
+<div class="flow-box human" style="padding:14px;text-align:left">
+<span class="badge green">⑧ 人間のみ</span> <strong>結果の臨床的意義の判断</strong><br>
+<span style="font-size:calc(13px * var(--fs-mul));color:var(--muted)">「この OR=3.5 は意味があるか？」「CI の幅は臨床応用できるレベルか？」は<strong>専門家にしか判断できない</strong>。</span>
 </div>
+<div class="flow-arrow" style="text-align:center">↓</div>
+
+<div class="flow-box human" style="padding:14px;text-align:left">
+<span class="badge green">⑨ 人間のみ</span> <strong>因果推論の結論</strong><br>
+<span style="font-size:calc(13px * var(--fs-mul));color:var(--muted)">相関 vs 因果の判別は<strong>AI は苦手</strong>（Burns 2025）。研究デザインと DAG を人間が責任をもって判定。</span>
+</div>
+<div class="flow-arrow" style="text-align:center">↓</div>
+
+<div class="flow-box" style="padding:14px;text-align:left;background:linear-gradient(90deg,rgba(167,139,250,0.12),rgba(167,139,250,0.04));border:1px solid var(--purple)">
+<span class="badge" style="background:rgba(167,139,250,0.2);color:var(--purple)">⑩ AI 全力</span> <strong>論文初稿・図表美化・英文校正</strong><br>
+<span style="font-size:calc(13px * var(--fs-mul));color:var(--muted)">Results 要約、Methods の定型部分、英文校正まで全部 AI。スピード勝負。</span>
+</div>
+<div class="flow-arrow" style="text-align:center">↓</div>
+
+<div class="flow-box human" style="padding:14px;text-align:left">
+<span class="badge green">⑪ 人間のみ</span> <strong>論文の最終解釈・AI 使用開示・投稿責任</strong><br>
+<span style="font-size:calc(13px * var(--fs-mul));color:var(--muted)">Discussion の核、Limitations の自己批判、AI 使用の透明な開示（AMEE No.192）、投稿の最終決定はすべて人間。<strong>著者責任は誰にも譲れない</strong>。</span>
+</div>
+
+</div>
+
+<div class="ok-box" style="margin-top:16px">
+<strong>頼るべきところと譲らないところの見分け方：</strong><br>
+「この判断を間違えたら、自分の名前で出た論文で患者に害が及ぶか？」と自問する。<strong class="emphasis">YES なら人間のみ。NO なら AI 全力</strong>。これがAI時代の研究者の基本動作。
+</div>
+
+<div class="danger-box">
+<strong>最大の罠：</strong>AI に頼るうちに、<strong>「判断する筋力」</strong>が衰えていくこと。人間のみゾーンは "たまに" 使うのでなく、<strong class="emphasis">研究者が真剣に考える訓練の場</strong>。AI がやれることを全部任せた上で、肝心のところで深く考えるクセを維持する。
 </div>
 `},
 
-/* ============ 7-4 将来展望 ============ */
-{part:"Part 7", short:"将来展望", html:`
-<span class="slide-tag">FUTURE</span>
-<h2 class="slide-title">将来の展望 ─ 2026年以降</h2>
+/* ============ 7-4 ゼロ・ハルシネーション設計 ============ */
+{part:"Part 7", short:"ゼロ・ハルシネーション設計", html:`
+<span class="slide-tag">FRONTIER · ZERO-HALLUCINATION</span>
+<h2 class="slide-title">ゼロ・ハルシネーション設計 ─ 5 つの原則と規制フレームワーク</h2>
+<p class="slide-lead">
+ハルシネーション・ゼロは到達困難な理想かもしれないが、それに向けた<strong class="emphasis">多層的な防御設計</strong>は既に 2025-2026 年の最先端研究で形になりつつある。Conformal Prediction、Graph RAG、FDA 規制フレームワークを統合し、<strong>5 つの原則</strong>として整理する。
+</p>
+
+<h3 style="font-size:calc(22px * var(--fs-mul));color:var(--accent2);margin:22px 0 14px;padding-bottom:6px;border-bottom:1px solid var(--line)">
+技術フロンティア：3つの防御機構
+</h3>
+
+<div class="grid grid-3">
+<div class="panel">
+<div class="panel-title">① Conformal Prediction</div>
+<div class="article">
+<p><strong>従来の点予測：</strong>「80% の確率で陽性」と断言</p>
+<p><strong>コンフォーマル予測：</strong>「95% のカバレッジ保証下で、疾患 A または B または C のいずれか」という<strong class="emphasis">予測集合</strong>を提供</p>
+<p>カバレッジに<strong>数学的保証</strong>があるため、モデルが過信（＝ハルシネーション）しているときは予測集合が<strong>拡大</strong>し、臨床医に不確実性を明示的に伝達。</p>
+</div>
+<div class="cite" style="margin-top:8px">Navuluri et al. <em>CHEST</em> 2026;169(2):332-335.</div>
+</div>
+<div class="panel">
+<div class="panel-title">② Hybrid Graph RAG</div>
+<div class="article">
+<p><strong>MediGRAF (Thio 2026)：</strong>EHR データの解析結果を<strong>医学知識グラフ</strong>と照合するアーキテクチャ。</p>
+<p>AI が統計的には有意でも<strong class="emphasis">医学的に無意味な関連</strong>を「発見」として出力することを、グラフ構造グラウンディングで<strong>構造的に抑制</strong>する。</p>
+<p>既存エビデンスとの整合性を<strong>自動検証</strong>する仕組み。</p>
+</div>
+<div class="cite" style="margin-top:8px">Thio S, et al. <em>Frontiers in Digital Health</em> 2026; arXiv:2602.00009.</div>
+</div>
+<div class="panel">
+<div class="panel-title">③ FDA 7 段階信頼性</div>
+<div class="article">
+<p><strong>FDA Draft Guidance (2025年1月)：</strong>創薬・生物学的製剤の規制判断にAIを使う場合の<strong>信頼性 (credibility)</strong> 評価フレームワーク。</p>
+<p>データの品質、モデルの適切性、結果の検証可能性を<strong>7 段階</strong>で評価。</p>
+<p>特に<strong class="emphasis">「独立した手段で再現可能」</strong>であることを要求。AIによる解析が「ブラックボックス」のまま規制判断に用いられることを防ぐ設計。</p>
+</div>
+<div class="cite" style="margin-top:8px">FDA. Considerations for the Use of Artificial Intelligence to Support Regulatory Decision-Making for Drug and Biological Products. Draft Guidance, Jan 2025.</div>
+</div>
+</div>
+
+<h3 style="font-size:calc(22px * var(--fs-mul));color:var(--accent2);margin:22px 0 14px;padding-bottom:6px;border-bottom:1px solid var(--line)">
+5 つの設計原則 ─ 明日から実装できる防御策
+</h3>
+
 <div class="grid grid-2">
-<div class="panel">
-<div class="panel-title">AIの発展</div>
-<ul class="bullet">
-<li>コード生成能力は急速に向上</li>
-<li>ハルシネーションは<strong>理論的に完全除去不可能</strong>（Kalai & Vempala 2024）</li>
-<li>再現性フレームワーク（Analyst-Inspector, RoT）が登場</li>
-<li>AI開示の国際ガイドライン整備<br>（AMEE, ICMJE, TRIPOD+AI）</li>
-<li>RAG・Tool Use で一部軽減</li>
-</ul>
-</div>
-<div class="panel">
-<div class="panel-title">研究者に求められるスキル</div>
-<ul class="bullet">
-<li><strong>AI出力を検証する能力</strong>が統計実行能力と同等に重要に</li>
-<li>プロンプトエンジニアリングがリサーチリテラシーの一部に</li>
-<li>批判的思考はAI時代にこそ最重要</li>
-<li>透明性・再現性の優先度が上昇</li>
-<li>倫理的開示の慣行化</li>
-</ul>
+<div class="panel" style="background:rgba(74,222,128,0.04);border-color:rgba(74,222,128,0.3)">
+<div class="panel-title" style="color:var(--ok)">❶ Independent Replication</div>
+<div class="article">
+<p>AI 生成の解析コードと結果を<strong class="emphasis">独立した統計手法</strong>で再現・検証する。別の AI セッション、別のパッケージ、別の言語（R ⇄ Python）、ピボットテーブルによる度数確認など。</p>
 </div>
 </div>
+<div class="panel" style="background:rgba(74,222,128,0.04);border-color:rgba(74,222,128,0.3)">
+<div class="panel-title" style="color:var(--ok)">❷ Pre-specified Analysis Plan</div>
+<div class="article">
+<p>多重比較補正、クロスバリデーション、感度分析の組み込みを AI に「任せる」のでなく、<strong class="emphasis">解析プロトコルとして事前に規定</strong>する。OSF 事前登録などで透明化。</p>
+</div>
+</div>
+<div class="panel" style="background:rgba(74,222,128,0.04);border-color:rgba(74,222,128,0.3)">
+<div class="panel-title" style="color:var(--ok)">❸ Calibrated Uncertainty</div>
+<div class="article">
+<p>Conformal Prediction などの<strong>不確実性定量化</strong>手法を標準装備し、モデルが自らの確信の限界を<strong class="emphasis">明示</strong>する設計にする。点推定だけの報告は許容しない。</p>
+</div>
+</div>
+<div class="panel" style="background:rgba(74,222,128,0.04);border-color:rgba(74,222,128,0.3)">
+<div class="panel-title" style="color:var(--ok)">❹ Post-deployment Monitoring</div>
+<div class="article">
+<p>臨床実装後の<strong>継続的ドリフト監視</strong>と<strong>再キャリブレーション</strong>を制度化する。PCA 再構成誤差・予測分布の時系列監視など。Epic Sepsis の教訓を繰り返さない。</p>
+</div>
+</div>
+<div class="panel" style="grid-column:span 2;background:rgba(74,222,128,0.04);border-color:rgba(74,222,128,0.3)">
+<div class="panel-title" style="color:var(--ok)">❺ Human-in-the-Loop as Design Requirement</div>
+<div class="article">
+<p>生物統計学者・臨床家による<strong class="emphasis">最終的な解釈と判断</strong>を、自動化された解析パイプラインの<strong>不可欠な構成要素</strong>として位置づける。「オプション」ではなく「仕様」。前スライドのワークフロー⑥⑧⑨⑪の「人間のみゾーン」が例。</p>
+</div>
+</div>
+</div>
+
+<div class="panel" style="margin-top:18px;background:linear-gradient(135deg,rgba(110,168,255,0.08),rgba(167,139,250,0.08))">
+<div class="panel-title">因果推論 ─ AI が最も弱いフロンティア</div>
+<div class="article">
+<p><strong>Burns et al. (2025) <em>PMC</em>：</strong>LLM は統計的関連のパターン認識には長けているが、<strong class="emphasis">因果構造の同定では根本的限界</strong>を持つ。交絡因子同定や DAG 構築の補助には有用だが、因果推論の妥当性判断を完全に委ねるのは危険。</p>
+<p><em>European Journal of Epidemiology</em> のスコーピングレビューでは、観察研究の <strong>26% が予測と因果推論を混同</strong>していた。AI がこの混同を加速するリスクは大きい。</p>
+<p><strong>対策：</strong>DAG を研究者が自分で描き、AI の因果的主張には必ず懐疑的視点を適用する。"観察研究からの因果は慎重に" は AI 時代にこそ価値を増す原則。</p>
+</div>
+</div>
+
 <div class="quote" style="margin-top:20px">
-「最終的に、統計学の知識を持ち、臨床判断ができる研究者こそがAI時代の主役である。AIは強力な助手だが、助手は助手に過ぎない。」
+AI は医学データ解析を加速し、これまで検出不可能だったパターンを見出す力を持つ。しかし、その力は<strong class="emphasis">「もっともらしい誤り」を大規模かつ高速に生産する力</strong>でもある。<br>
+ハルシネーション・ゼロは到達困難な理想かもしれないが、それに向けた多層的な防御設計こそが、<strong>AI 時代の医学データ解析における倫理的・科学的責務</strong>である。
+</div>
+
+<div class="cite">
+Burns WR, et al. Can Contemporary LLMs Provide the Domain Knowledge Required for Causal Inference? <em>PMC</em> Oct 2025.<br>
+Navuluri et al. Conformal Prediction in Clinical AI: Enhancing Model Reliability and Interpretability. <em>CHEST</em> 2026;169(2):332-335.<br>
+FDA Draft Guidance. Considerations for the Use of AI to Support Regulatory Decision-Making for Drug and Biological Products. Jan 2025.
 </div>
 `},
 
