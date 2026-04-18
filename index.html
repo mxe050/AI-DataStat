@@ -1029,6 +1029,100 @@ PubMed 検索の基本から Advanced Search、MeSH、Clinical Queries まで<br
 <tr><td>Horizontal Pos (Bc+Ce+Li+NoObs)</td><td class="center">3+12+0+5 = <strong>20</strong></td><td class="center">20</td><td class="center">0</td><td class="ok">✓ 一致</td></tr>
 </tbody>
 </table>
+
+<h3 style="font-size:calc(22px * var(--fs-mul));color:var(--accent2);margin:26px 0 14px;padding-bottom:6px;border-bottom:1px solid var(--line)">
+ところで ─ このような表をAIに作ってもらった場合、どう確認する？
+</h3>
+
+<div class="panel" style="background:rgba(167,139,250,0.04);border-color:var(--purple)">
+<div class="panel-title" style="color:var(--purple)">思考実験：AI に集計表を作らせたら？</div>
+<div class="article">
+<p>AI（ChatGPT / Claude / Gemini など）に生データを渡して「Table 3 のような度数表を作って」と頼むと、<strong>一見きれいな表</strong>が数秒で返ってくる。しかし、その数値が<strong class="emphasis">本当に正しい</strong>かどうか、どう確認するのか？</p>
+<p><strong>まさか電卓で 44 症例 × 9 変数を手計算で数える？</strong></p>
+<p>それは現実的でなく、かつ数え間違いのリスクも高い。AI が出した表をそのまま信じるのは論外だが、手計算で検算するのも<strong>持続可能な解決策ではない</strong>。</p>
+</div>
+</div>
+
+<div class="grid grid-2" style="margin-top:16px">
+<div class="panel" style="border-color:rgba(248,113,113,0.3);background:rgba(248,113,113,0.04)">
+<div class="panel-title" style="color:var(--bad)">❌ 推奨できない検算方法</div>
+<ul class="bullet">
+<li><strong>電卓で手計算</strong>：時間がかかり、数え間違いが起こる</li>
+<li><strong>AI に「合ってる？」と聞く</strong>：AI 自身がハルシネーションを起こす</li>
+<li><strong>Excel Copilot に表を作らせる</strong>：AI 支援機能なので間違える可能性あり</li>
+<li><strong>Google スプレッドシートの Gemini</strong>：同様にAIベースで誤る可能性</li>
+<li><strong>目視で列を数える</strong>：現実的でなく信頼性なし</li>
+</ul>
+</div>
+<div class="panel" style="border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.04)">
+<div class="panel-title" style="color:var(--ok)">✓ 確実な検算方法</div>
+<ul class="bullet">
+<li><strong>Excel のピボットテーブル</strong> ← <span class="hi">本命</span></li>
+<li><strong>R の <code>table()</code> 関数</strong></li>
+<li><strong>VBA マクロでカウント</strong></li>
+<li><strong>Google Apps Script (GAS)</strong></li>
+<li><strong>Python の pandas <code>crosstab()</code></strong></li>
+</ul>
+<div class="ok-box" style="font-size:calc(14px * var(--fs-mul));margin-top:10px">
+これらは <strong class="emphasis">決定論的アルゴリズム</strong>。同じデータ・同じ操作から必ず同じ結果が出る。ハルシネーションの余地なし。
+</div>
+</div>
+</div>
+
+<div class="panel" style="margin-top:16px">
+<div class="panel-title">推奨：Excel のピボットテーブル ─ 一度覚えれば一生使える</div>
+<div class="article">
+<p><strong>なぜピボットテーブルが最強か：</strong></p>
+<ul class="bullet">
+<li><strong>決定論的</strong>：データと条件が同じなら結果も必ず同じ</li>
+<li><strong>GUI で誰でも操作可能</strong>：コードが書けなくても使える</li>
+<li><strong>再集計が瞬時</strong>：変数を入れ替えて別角度から検証できる</li>
+<li><strong>Excel/Google スプレッドシート両方で使える</strong>：環境を選ばない</li>
+<li><strong>論文作成で頻用する技術</strong>：一度習得すれば他の研究にも応用</li>
+</ul>
+<p><strong>ピボットテーブルの基本手順（Excel の場合）：</strong></p>
+<pre><span class="com">① データを Excel に貼り付け（1 行目がヘッダ）</span>
+② データ範囲を選択（Ctrl+A）
+③ メニュー「挿入」→「ピボットテーブル」
+④ ダイアログで「新しいワークシート」→ OK
+⑤ 右側のフィールドリストで：
+   <span class="hi">行</span>  ← 確認したい変数 (例：Depth)
+   <span class="hi">列</span>  ← Group（Difficult/Control）
+   <span class="hi">値</span>  ← ID（集計方法：「個数」）
+⑥ 瞬時に度数表が完成 → 論文の Table 3 と照合</pre>
+<p><strong>結果：</strong>Yuasa 2002 の Table 3 を数秒で再生成可能。数値が一致すれば「論文の集計は正しい」と確定、不一致なら論文側のミスが判明。</p>
+</div>
+</div>
+
+<div class="panel" style="margin-top:14px">
+<div class="panel-title">なぜマクロや GAS より ピボット推奨か？</div>
+<div class="article">
+<p>VBA マクロや Google Apps Script (GAS) でも正確な度数集計はできる。しかし：</p>
+<ul class="bullet">
+<li>コードを書く<strong>学習コスト</strong>が必要</li>
+<li>コードに<strong>バグを混入</strong>させる可能性あり（自分のミス）</li>
+<li>結果の<strong>検証手段</strong>としては過剰（オーバーエンジニアリング）</li>
+</ul>
+<p>一方、ピボットテーブルは：</p>
+<ul class="bullet">
+<li><strong>1 日で習得可能</strong>（YouTube や公式チュートリアルで）</li>
+<li><strong>バグが混入しない</strong>（アルゴリズムは Microsoft/Google が保証）</li>
+<li><strong>AI 時代でもスキルが陳腐化しない</strong>（むしろ AI 出力の検証手段として価値上昇）</li>
+</ul>
+<div class="ok-box" style="margin-top:10px">
+<strong>結論：</strong>「AI で複雑な集計ができるようになった」時代だからこそ、<strong class="emphasis">それを検証する確実な手段</strong>としてピボットテーブルの価値が上がっている。一度技を習得すれば、確実で正しい結果が、簡単に出る。
+</div>
+</div>
+</div>
+
+<div class="warn-box">
+<strong>AI 時代の研究者のスキルセット：</strong>AI に任せる能力 + <strong class="emphasis">AI の結果を検証する能力</strong>。後者のためにピボットテーブル・R の <code>table()</code>・Fisher 検定などの<strong>古典的な手動検証手段</strong>を身につけておく必要がある。「AI 出力を別の（AI でない）道具で確認する」という発想が重要。
+</div>
+
+<div class="cite">
+ピボットテーブル公式チュートリアル：<a href="https://support.microsoft.com/ja-jp/office/ピボットテーブルを作成してワークシート-データを分析する-a9a84538-bfe9-40a9-a8e9-f99134456576" style="color:var(--accent)" target="_blank">Microsoft サポート</a><br>
+Google スプレッドシート版：<a href="https://support.google.com/docs/answer/1272900" style="color:var(--accent)" target="_blank">Google ドキュメントエディタヘルプ</a>
+</div>
 `},
 
 /* ============ 2-6 Table 4+5+6 ============ */
