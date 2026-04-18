@@ -1531,6 +1531,329 @@ ROC解析には <span class="str">pROC v1.18.5</span>
 <div class="ok-box"><strong>Rule of Thumb：</strong>「ソフト名・バージョン・パッケージ・パッケージバージョン・乱数シード・コード公開URL」の6点セットを必ず記載。</div>
 `},
 
+/* ============ 3-6a STROBE 声明 紹介 ============ */
+{part:"Part 3", short:"⑥ STROBE声明とは", html:`
+<span class="slide-tag">⑥ REPORTING GUIDELINE</span>
+<h2 class="slide-title">STROBE 声明 ─ 観察研究の報告標準を学ぶ</h2>
+<p class="slide-lead">
+前スライドまでの 5 つの問題（変数選択・EPV・完全分離・同一データ評価・ソフト不記載）は、いずれも<strong>個別の統計学的問題</strong>だった。ここでは視点を変え、<strong class="emphasis">観察研究の"報告"全体を体系的に評価する国際基準「STROBE 声明」</strong>で Yuasa 2002 をチェックする。
+</p>
+
+<div class="panel">
+<div class="panel-title">STROBE 声明とは何か？</div>
+<div class="article">
+<p><strong>STROBE</strong> = <em>STrengthening the Reporting of OBservational studies in Epidemiology</em>（疫学における観察研究の報告の強化）</p>
+<p><strong>2007 年</strong>に初版が公開され、<strong>Lancet</strong>, <strong>BMJ</strong>, <strong>PLOS Medicine</strong>, <strong>Annals of Internal Medicine</strong> など世界の主要医学誌に同時掲載された。以降、<strong class="emphasis">観察研究の報告基準として国際的な標準</strong>となっている。</p>
+<p>対象となる観察研究：</p>
+<ul class="bullet">
+<li>コホート研究（cohort study）</li>
+<li><strong>症例対照研究（case-control study）</strong> ← Yuasa 2002 はこれ</li>
+<li>横断研究（cross-sectional study）</li>
+</ul>
+<p><strong>22 項目のチェックリスト</strong>：うち <strong>18 項目は 3 デザイン共通</strong>、<strong>4 項目（Items 6, 12, 14, 15）はデザインごとに変動</strong>。</p>
+</div>
+</div>
+
+<div class="grid grid-2" style="margin-top:16px">
+<div class="panel">
+<div class="panel-title">なぜ STROBE で評価するのか？</div>
+<ul class="bullet">
+<li>報告の<strong>網羅性</strong>を客観的に検証できる</li>
+<li>主要医学誌では<strong>投稿時に STROBE チェックリストの添付が必須</strong>になりつつある</li>
+<li>読者が「何が書かれて、何が書かれていないか」を即座に判断</li>
+<li>システマティックレビュー時、研究の質の一次スクリーニングに使われる</li>
+<li>自分の論文を書く際の<strong class="emphasis">チェックリスト</strong>として最強</li>
+</ul>
+</div>
+<div class="panel">
+<div class="panel-title">STROBE 声明の公式リソース</div>
+<ul class="bullet">
+<li><strong>公式サイト：</strong><a href="https://www.strobe-statement.org/" style="color:var(--accent)" target="_blank">strobe-statement.org</a></li>
+<li><strong>原典論文：</strong>von Elm et al. <em>Lancet</em> 2007; 370:1453-1457</li>
+<li><strong>Explanation & Elaboration：</strong>Vandenbroucke et al. <em>PLoS Med</em> 2007; 4:e297</li>
+<li><strong>解説論文：</strong>Cuschieri S. The STROBE guidelines. <em>Saudi J Anaesth</em> 2019;13(Suppl 1):S31-S34. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6398292/" style="color:var(--accent)" target="_blank">PMC6398292</a></li>
+<li><strong>日本語版：</strong><a href="https://www.equator-network.org/wp-content/uploads/2015/10/STROBE-Japanese.pdf" style="color:var(--accent)" target="_blank">EQUATOR Network Japanese PDF</a></li>
+</ul>
+</div>
+</div>
+
+<div class="panel" style="margin-top:16px">
+<div class="panel-title">22 項目の全体構成</div>
+<div class="svg-wrap mobile-hide" style="padding:14px">
+<svg viewBox="0 0 820 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:820px">
+<g font-family="'Helvetica Neue',sans-serif">
+<rect x="10" y="20" width="150" height="160" rx="10" fill="rgba(110,168,255,0.08)" stroke="#6ea8ff" stroke-width="2"/>
+<text x="85" y="45" text-anchor="middle" font-size="13" font-weight="700" fill="#6ea8ff">Title & Abstract</text>
+<text x="85" y="70" text-anchor="middle" font-size="11" fill="#c5d2ff">Item 1</text>
+<text x="85" y="100" text-anchor="middle" font-size="11" fill="#9aa3c7">(研究デザインの</text>
+<text x="85" y="118" text-anchor="middle" font-size="11" fill="#9aa3c7">明示と要約)</text>
+
+<rect x="170" y="20" width="150" height="160" rx="10" fill="rgba(74,222,128,0.08)" stroke="#4ade80" stroke-width="2"/>
+<text x="245" y="45" text-anchor="middle" font-size="13" font-weight="700" fill="#4ade80">Introduction</text>
+<text x="245" y="70" text-anchor="middle" font-size="11" fill="#c5d2ff">Items 2 - 3</text>
+<text x="245" y="100" text-anchor="middle" font-size="11" fill="#9aa3c7">背景・根拠</text>
+<text x="245" y="118" text-anchor="middle" font-size="11" fill="#9aa3c7">目的・仮説</text>
+
+<rect x="330" y="20" width="150" height="160" rx="10" fill="rgba(167,139,250,0.08)" stroke="#a78bfa" stroke-width="2"/>
+<text x="405" y="45" text-anchor="middle" font-size="13" font-weight="700" fill="#a78bfa">Methods</text>
+<text x="405" y="70" text-anchor="middle" font-size="11" fill="#c5d2ff">Items 4 - 12</text>
+<text x="405" y="100" text-anchor="middle" font-size="11" fill="#9aa3c7">デザイン・設定</text>
+<text x="405" y="118" text-anchor="middle" font-size="11" fill="#9aa3c7">参加者・変数</text>
+<text x="405" y="136" text-anchor="middle" font-size="11" fill="#9aa3c7">バイアス・統計</text>
+
+<rect x="490" y="20" width="150" height="160" rx="10" fill="rgba(251,191,36,0.08)" stroke="#fbbf24" stroke-width="2"/>
+<text x="565" y="45" text-anchor="middle" font-size="13" font-weight="700" fill="#fbbf24">Results</text>
+<text x="565" y="70" text-anchor="middle" font-size="11" fill="#c5d2ff">Items 13 - 17</text>
+<text x="565" y="100" text-anchor="middle" font-size="11" fill="#9aa3c7">参加者フロー</text>
+<text x="565" y="118" text-anchor="middle" font-size="11" fill="#9aa3c7">記述・主要結果</text>
+<text x="565" y="136" text-anchor="middle" font-size="11" fill="#9aa3c7">その他の分析</text>
+
+<rect x="650" y="20" width="160" height="160" rx="10" fill="rgba(248,113,113,0.08)" stroke="#f87171" stroke-width="2"/>
+<text x="730" y="45" text-anchor="middle" font-size="13" font-weight="700" fill="#f87171">Discussion + Other</text>
+<text x="730" y="70" text-anchor="middle" font-size="11" fill="#c5d2ff">Items 18 - 22</text>
+<text x="730" y="100" text-anchor="middle" font-size="11" fill="#9aa3c7">要約・限界</text>
+<text x="730" y="118" text-anchor="middle" font-size="11" fill="#9aa3c7">解釈・一般化</text>
+<text x="730" y="136" text-anchor="middle" font-size="11" fill="#9aa3c7">資金源</text>
+</g>
+</svg>
+</div>
+</div>
+
+<div class="warn-box">
+<strong>注意：</strong>STROBE は「論文の<strong class="emphasis">質</strong>」の評価ツールではなく、「<strong class="emphasis">報告</strong>の網羅性」のチェックリスト。統計手法そのものの妥当性は別途評価する必要がある（それが Part 3 ①〜⑤ で行ったこと）。
+</div>
+
+<div class="cite">
+von Elm E, Altman DG, Egger M, et al. The Strengthening the Reporting of Observational Studies in Epidemiology (STROBE) statement. <em>Lancet</em> 2007;370(9596):1453-1457.<br>
+Vandenbroucke JP, von Elm E, Altman DG, et al. STROBE Explanation and Elaboration. <em>PLoS Med</em> 2007;4(10):e297.<br>
+Cuschieri S. The STROBE guidelines. <em>Saudi J Anaesth</em> 2019;13(Suppl 1):S31-S34.
+</div>
+`},
+
+/* ============ 3-6b STROBE で Yuasa 2002 を評価 ============ */
+{part:"Part 3", short:"⑥ YuasaをSTROBEでチェック", html:`
+<span class="slide-tag">STROBE CHECK · Yuasa 2002</span>
+<h2 class="slide-title">Yuasa 2002 を STROBE 22 項目でチェック</h2>
+<p class="slide-lead">
+STROBE 声明は <strong>2007 年</strong>の発表なので、<strong class="emphasis">2002 年出版の Yuasa 論文が STROBE に準拠していないのは歴史的に当然</strong>である。しかし 2026 年時点で「もし同じ論文を投稿したら」何項目がクリアされるかを検証することは、自分の研究の<strong>報告ギャップ</strong>を可視化する絶好の教材になる。
+</p>
+
+<div class="panel">
+<div class="panel-title">チェックの凡例</div>
+<div class="grid grid-3">
+<div style="text-align:center;padding:10px;background:rgba(74,222,128,0.1);border-radius:8px;border:1px solid var(--ok)">
+<div style="font-size:calc(24px * var(--fs-mul))">✓</div>
+<div style="font-weight:700;color:var(--ok)">充足</div>
+<div style="font-size:calc(12px * var(--fs-mul));color:var(--muted)">明確に記載あり</div>
+</div>
+<div style="text-align:center;padding:10px;background:rgba(251,191,36,0.1);border-radius:8px;border:1px solid var(--warn)">
+<div style="font-size:calc(24px * var(--fs-mul))">△</div>
+<div style="font-weight:700;color:var(--warn)">部分充足</div>
+<div style="font-size:calc(12px * var(--fs-mul));color:var(--muted)">触れているが不足</div>
+</div>
+<div style="text-align:center;padding:10px;background:rgba(248,113,113,0.1);border-radius:8px;border:1px solid var(--bad)">
+<div style="font-size:calc(24px * var(--fs-mul))">✗</div>
+<div style="font-weight:700;color:var(--bad)">未充足</div>
+<div style="font-size:calc(12px * var(--fs-mul));color:var(--muted)">記載なし</div>
+</div>
+</div>
+</div>
+
+<div class="grid grid-2">
+<div class="panel">
+<div class="panel-title">Title & Abstract / Introduction</div>
+<table>
+<thead><tr><th>#</th><th>項目</th><th class="center">判定</th></tr></thead>
+<tbody>
+<tr><td>1a</td><td>題目・抄録に研究デザイン明記</td><td class="center warn">△</td></tr>
+<tr><td>1b</td><td>実施内容の要約 (structured abstract)</td><td class="center warn">△</td></tr>
+<tr><td>2</td><td>科学的背景・根拠</td><td class="center ok">✓</td></tr>
+<tr><td>3</td><td>具体的な目的・仮説</td><td class="center ok">✓</td></tr>
+</tbody>
+</table>
+<div class="note-box" style="font-size:calc(13px * var(--fs-mul))">
+題目に "case-control study" が明示されていない。抄録も構造化されておらず、Methods/Results の区切りが不明確。
+</div>
+</div>
+<div class="panel">
+<div class="panel-title">Methods (Design & Setting)</div>
+<table>
+<thead><tr><th>#</th><th>項目</th><th class="center">判定</th></tr></thead>
+<tbody>
+<tr><td>4</td><td>研究デザインの主要要素</td><td class="center warn">△</td></tr>
+<tr><td>5</td><td>設定・場所・期間</td><td class="center ok">✓</td></tr>
+<tr><td>6a</td><td>適格基準・参加者の選択方法</td><td class="center warn">△</td></tr>
+<tr><td>6b</td><td>マッチング（本研究はN/A）</td><td class="center">–</td></tr>
+</tbody>
+</table>
+<div class="note-box" style="font-size:calc(13px * var(--fs-mul))">
+愛知学院大学・1997年4-10月と明記 (✓)。しかし症例の発見方法、対照群の選択理由（無作為？ consecutive？）が不明確。
+</div>
+</div>
+</div>
+
+<div class="grid grid-2" style="margin-top:14px">
+<div class="panel">
+<div class="panel-title">Methods (Variables & Stats)</div>
+<table>
+<thead><tr><th>#</th><th>項目</th><th class="center">判定</th></tr></thead>
+<tbody>
+<tr><td>7</td><td>すべての変数を明確定義</td><td class="center ok">✓</td></tr>
+<tr><td>8</td><td>データ源・測定方法</td><td class="center warn">△</td></tr>
+<tr><td>9</td><td>バイアス対策</td><td class="center bad">✗</td></tr>
+<tr><td>10</td><td>サンプルサイズ計算</td><td class="center warn">△</td></tr>
+<tr><td>11</td><td>量的変数の扱い方・分類根拠</td><td class="center ok">✓</td></tr>
+<tr><td>12a</td><td>統計手法・交絡の制御</td><td class="center bad">✗</td></tr>
+<tr><td>12b</td><td>部分群・相互作用の検討</td><td class="center bad">✗</td></tr>
+<tr><td>12c</td><td>欠損データの扱い</td><td class="center bad">✗</td></tr>
+<tr><td>12d</td><td>マッチングへの対処</td><td class="center">–</td></tr>
+<tr><td>12e</td><td>感度分析</td><td class="center bad">✗</td></tr>
+</tbody>
+</table>
+<div class="note-box" style="font-size:calc(13px * var(--fs-mul))">
+EpiCalc2000 でサンプル計算は部分的 (△)。バイアス・交絡・欠損・感度分析はすべて未記載 (✗)。
+</div>
+</div>
+<div class="panel">
+<div class="panel-title">Results</div>
+<table>
+<thead><tr><th>#</th><th>項目</th><th class="center">判定</th></tr></thead>
+<tbody>
+<tr><td>13a</td><td>各段階の参加者数</td><td class="center warn">△</td></tr>
+<tr><td>13b</td><td>非参加理由</td><td class="center bad">✗</td></tr>
+<tr><td>13c</td><td>フローダイアグラム</td><td class="center bad">✗</td></tr>
+<tr><td>14a</td><td>参加者特性・欠損データ数</td><td class="center warn">△</td></tr>
+<tr><td>14b</td><td>欠損データ数の提示</td><td class="center bad">✗</td></tr>
+<tr><td>15</td><td>症例数・曝露カテゴリ（症例対照）</td><td class="center ok">✓</td></tr>
+<tr><td>16a</td><td>調整前後の推定値と 95% CI</td><td class="center warn">△</td></tr>
+<tr><td>16b</td><td>連続変数のカテゴリ化境界</td><td class="center ok">✓</td></tr>
+<tr><td>17</td><td>部分群・感度分析</td><td class="center bad">✗</td></tr>
+</tbody>
+</table>
+<div class="note-box" style="font-size:calc(13px * var(--fs-mul))">
+Table 3 の曝露別集計は充足 (✓)。しかしフロー図なし・欠損データ未記載・調整変数不明 (✗)。
+</div>
+</div>
+</div>
+
+<div class="panel" style="margin-top:14px">
+<div class="panel-title">Discussion & Other Information</div>
+<div class="grid grid-2">
+<table>
+<thead><tr><th>#</th><th>項目</th><th class="center">判定</th></tr></thead>
+<tbody>
+<tr><td>18</td><td>主要結果の要約</td><td class="center ok">✓</td></tr>
+<tr><td>19</td><td>限界・潜在的バイアス</td><td class="center warn">△</td></tr>
+<tr><td>20</td><td>結果の慎重な解釈</td><td class="center warn">△</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th>#</th><th>項目</th><th class="center">判定</th></tr></thead>
+<tbody>
+<tr><td>21</td><td>一般化可能性</td><td class="center warn">△</td></tr>
+<tr><td>22</td><td>資金源・利益相反</td><td class="center ok">✓</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note-box" style="font-size:calc(13px * var(--fs-mul))">
+"The sample size may seem small" と限界には触れている (△) が、<strong>完全分離・EPV 不足・過適合</strong>の可能性は論じていない。一般化可能性も単施設・単国コホートで議論不十分。
+</div>
+</div>
+
+<div class="grid grid-3" style="margin-top:16px">
+<div class="stat">
+<div class="label">充足 (✓)</div>
+<div class="value" style="color:var(--ok)">8</div>
+<div class="sub">/ 22 項目</div>
+</div>
+<div class="stat">
+<div class="label">部分充足 (△)</div>
+<div class="value" style="color:var(--warn)">8</div>
+<div class="sub">/ 22 項目</div>
+</div>
+<div class="stat">
+<div class="label">未充足 (✗)</div>
+<div class="value" style="color:var(--bad)">9</div>
+<div class="sub">/ 22 項目</div>
+</div>
+</div>
+
+<div class="warn-box">
+<strong>総合評価：</strong>STROBE 充足度 36% (8/22)。1997-2001 年執筆当時は STROBE がまだ存在しないため責められないが、<strong class="emphasis">同じ論文を 2026 年に投稿すれば、多くの雑誌で reject または major revision</strong>の可能性が高い。
+</div>
+`},
+
+/* ============ 3-6c STROBE 2026年版へのアクションプラン ============ */
+{part:"Part 3", short:"⑥ 2026年版への改訂案", html:`
+<span class="slide-tag">ACTION PLAN · 2026</span>
+<h2 class="slide-title">"もし今この論文を書き直すなら" ─ STROBE 充足のための具体策</h2>
+<p class="slide-lead">
+未充足 9 項目・部分充足 8 項目の合計 <strong>17 項目</strong>をどう補うか。実務的には、<strong class="emphasis">新しく書き足す数ページ</strong>で STROBE 充足度を大きく上げられる。以下は著者自身が 2026 年時点で実施する場合の改訂案。
+</p>
+
+<div class="panel">
+<div class="panel-title">改訂案 ① Title & Abstract を STROBE 準拠に</div>
+<div class="article">
+<p><strong>現状：</strong>"Classification of surgical difficulty in extracting impacted third molars"</p>
+<p><strong>改訂案：</strong>"Preoperative prediction of surgical difficulty in impacted mandibular third molar extraction: <strong class="emphasis">a case-control study</strong> with critical reassessment using Firth penalized logistic regression"</p>
+<p><strong>変更点：</strong>(1) 研究デザイン明記 (2) 介入ではなく予測モデル構築であることを明確化 (3) Firth 法適用を明示</p>
+<p>抄録は <strong>Background / Methods / Results / Conclusions</strong> の structured 形式に変更。</p>
+</div>
+</div>
+
+<div class="panel" style="margin-top:14px">
+<div class="panel-title">改訂案 ② Methods を徹底強化</div>
+<div class="article">
+<h4 style="color:var(--accent)">Item 6a：参加者選択の詳細記述</h4>
+<p>「愛知学院大学第二口腔外科で 1997 年 4-10 月に抜歯された<strong class="emphasis">連続患者（consecutive patients）</strong>のうち、以下の適格基準を満たした者を登録した。困難群と対照群は<strong>抜歯中の術者判定</strong>または<strong>手術時間</strong>で事後的に分類した。症例 / 対照の区別は事後的であり、<strong>伝統的な症例対照デザインとは異なる</strong>（後ろ向き症例-非症例比較）」などと追記。</p>
+
+<h4 style="color:var(--accent)">Item 9：バイアス対策を新設</h4>
+<p>「Selection bias 対策：症例・対照群とも同一施設内で連続的に登録。Information bias 対策：パノラマX線評価は<strong class="emphasis">手術結果を知らない放射線科医1名</strong>が独立に実施（盲検）。術者と放射線科医は相互に接触禁止とした」</p>
+
+<h4 style="color:var(--accent)">Item 12a-e：統計手法のフル記述</h4>
+<p>「分析は R 4.4.x で実施。完全分離への対処として <strong>Firth 罰則付き最尤推定法 (logistf v1.26.0)</strong> を使用した（Firth, Biometrika 1993; Heinze & Schemper, Stat Med 2002）。変数選択はアンケート結果（Table 2）と臨床知識に基づく<strong>事前選択</strong>とした（Harrell, RMS 2015）。欠損データは完全ケース解析で扱い（欠損率は各変数で X%）、感度分析として多重代入も実施した。内部検証として Bootstrap (B=1000) で optimism-adjusted AUC を算出」</p>
+</div>
+</div>
+
+<div class="panel" style="margin-top:14px">
+<div class="panel-title">改訂案 ③ Results にフロー図と欠損データを</div>
+<div class="article">
+<h4 style="color:var(--accent)">Item 13：参加者フロー図</h4>
+<p>CONSORT 様式のフロー図を追加：「期間中の連続抜歯症例 X 名 → 適格基準満たす Y 名 → 分類不能で除外 Z 名 → 最終解析対象 44 名（困難 20 / 対照 24）」</p>
+<h4 style="color:var(--accent)">Item 14b：Table 1 に欠損データ数を列記</h4>
+<p>各変数について「Spatial: 6 missing (13.6%)、Horizontal Position: 7 missing (15.9%)」等と明示する新列を追加。</p>
+<h4 style="color:var(--accent)">Item 16a：未調整と調整済み推定値の併記</h4>
+<p>Table 3（単変量 crude OR）は Supplementary に移し、本文 Table は<strong class="emphasis">多変量 Firth 回帰のみ</strong>に。adjusted OR と profile-likelihood CI、LR test p 値を明示。</p>
+</div>
+</div>
+
+<div class="panel" style="margin-top:14px">
+<div class="panel-title">改訂案 ④ Discussion と Data/Code 公開</div>
+<div class="article">
+<h4 style="color:var(--accent)">Item 19：限界の徹底記述</h4>
+<p>「本研究の主要な限界：(1) サンプルサイズ N=44 で EPV=2.2 は予測モデル構築の推奨閾値を大きく下回る (Riley et al., Stat Med 2019)。(2) Depth Level C で完全分離が発生したため Firth 法でも CI が極端に広い。(3) 単施設・単民族コホートで外部妥当性は不明。(4) データ収集から 25 年以上経過しており、現代の抜歯技術・機器とは差異がある」</p>
+<h4 style="color:var(--accent)">Item 21：一般化可能性の慎重な議論</h4>
+<p>「本結果は Aichi-Gakuin University の<strong class="emphasis">1997 年時点の</strong>技術・患者集団を反映する。外部検証を経ない限り、他施設・他民族・現代の症例への適用は推奨できない」</p>
+<h4 style="color:var(--accent)">追加：データ・コード公開宣言</h4>
+<p>「解析コード（R）と仮想データは <code>github.com/mxe050/AI-DataStat</code> で公開。生データは紛失のため公開不可」</p>
+</div>
+</div>
+
+<div class="ok-box">
+<strong>教訓：</strong>STROBE は<strong class="emphasis">研究を良くする</strong>ツールではなく、<strong>研究を読者に正しく伝える</strong>ツール。質の高い研究も、報告が不十分だと評価されない。投稿前に必ず 22 項目を自己チェックする習慣を。
+</div>
+
+<div class="danger-box">
+<strong>著者より：</strong>STROBE で自分の論文をチェックすると、<strong class="emphasis">「書き忘れていた重要事項」が必ず見つかる</strong>。これは恥ずかしいことではなく、<strong>次の論文を良くする</strong>機会。本スライド作成中にも、Yuasa 2002 の報告の弱点を著者自ら多数再発見した。
+</div>
+
+<div class="cite">
+公式チェックリスト：<a href="https://www.strobe-statement.org/checklists/" style="color:var(--accent)" target="_blank">strobe-statement.org/checklists/</a><br>
+日本語版：<a href="https://www.equator-network.org/wp-content/uploads/2015/10/STROBE-Japanese.pdf" style="color:var(--accent)" target="_blank">EQUATOR Network (日本語 PDF)</a><br>
+EQUATOR Network（全報告ガイドラインの総合サイト）：<a href="https://www.equator-network.org/" style="color:var(--accent)" target="_blank">equator-network.org</a>
+</div>
+`},
+
 /* ============ 3-7 2002 vs 2026 比較 ============ */
 {part:"Part 3", short:"2002 vs 2026", html:`
 <span class="slide-tag">BEFORE / AFTER</span>
@@ -2302,6 +2625,132 @@ Yuasa2002_Reanalysis/
 
 <div class="note-box">
 <strong>ゼロセルの発見：</strong>上記 <code>table()</code> で <strong>Control × Depth=C が 0 名</strong>であることがこの時点で分かる。これは Part 3 で議論した<strong>完全分離</strong>の兆候。次以降のステップで Firth 回帰を使う判断材料になる。
+</div>
+`},
+
+/* ============ 5-4b 段階的プロンプト指導 ============ */
+{part:"Part 5", short:"プロンプトをAIに考えさせる", html:`
+<span class="slide-tag">STEP 3 PRE · PROMPTING THE PROMPT</span>
+<h2 class="slide-title">そもそも、統計手法の相談プロンプトを自分で書けるのか？</h2>
+<p class="slide-lead">
+正直に言おう。「EPV が 2.2 で完全分離があるから Firth 法を使うべき？」のような<strong class="emphasis">方法論の議論ができる高度なプロンプトは、最初から自分で書くのは無理</strong>。そもそも方法論を知らないから AI に相談するのに、方法論を知らないと相談プロンプトが書けない、という循環問題がある。<br>
+<strong>解決策：AI に「相談プロンプトそのものを作ってもらう」</strong>。ごく簡単な最初の一言から始めればよい。
+</p>
+
+<div class="panel">
+<div class="panel-title">プロンプトを育てる 4 段階アプローチ</div>
+<div class="article">
+<p><strong>Level 1：超シンプルな「質問」</strong>で始める</p>
+<p><strong>Level 2：AI に「私のデータで気をつけるべきことは？」と聞く</strong></p>
+<p><strong>Level 3：AI に「では、その相談用のプロンプトを書いて」と頼む</strong></p>
+<p><strong>Level 4：AI が生成した高度プロンプトを（別のセッションで）使って本格的に相談する</strong></p>
+</div>
+</div>
+
+<h3 style="font-size:calc(22px * var(--fs-mul));color:var(--accent2);margin:22px 0 14px;padding-bottom:6px;border-bottom:1px solid var(--line)">
+Level 1 ─ 超シンプルで OK（誰でも書ける）
+</h3>
+
+<div class="panel">
+<div class="panel-title">最初の一言（これで十分）</div>
+<pre>私は<span class="hi">下顎埋伏智歯の抜歯困難度を予測する研究</span>をしたい。
+症例対照研究で、<span class="hi">困難群 20 人、対照群 24 人、計 44 人</span>。
+候補の予測因子は 9 個。
+
+このデータで<span class="hi">どの統計手法を使うべき？</span>
+初心者向けに教えて。</pre>
+</div>
+
+<div class="note-box">
+<strong>コツ：</strong>「初心者向けに教えて」と書くだけで、AI はかみ砕いた説明をしてくれる。難しい専門用語が出てきたら「もっとやさしく」と追加で頼めばよい。<strong class="emphasis">最初から完璧なプロンプトを書く必要はない</strong>。
+</div>
+
+<h3 style="font-size:calc(22px * var(--fs-mul));color:var(--accent2);margin:22px 0 14px;padding-bottom:6px;border-bottom:1px solid var(--line)">
+Level 2 ─ AI から学びながら質問を深める
+</h3>
+
+<div class="panel">
+<div class="panel-title">AI の回答を読んで、次のように追加質問する</div>
+<pre>ありがとう。説明の中で<span class="hi">「EPV」「完全分離」</span>という言葉が出てきたけど、
+これは何？私のデータでは問題になる？
+
+それから、<span class="hi">この研究デザインで起こりがちな落とし穴</span>を
+初心者が見落としがちな順で 5 つ教えて。
+
+それぞれについて、<span class="hi">信頼できる査読雑誌の文献</span>を引用して。</pre>
+</div>
+
+<div class="article">
+<p>→ この段階で、AI は「EPV 不足」「完全分離」「変数選択の問題」などを<strong>あなたの代わりに</strong>整理してくれる。<strong class="emphasis">あなたは方法論を一から勉強する必要はない</strong>。AI が整理した要点を読みながら理解すればよい。</p>
+</div>
+
+<h3 style="font-size:calc(22px * var(--fs-mul));color:var(--accent2);margin:22px 0 14px;padding-bottom:6px;border-bottom:1px solid var(--line)">
+Level 3 ─ AI に「相談プロンプト自体」を書いてもらう 💡
+</h3>
+
+<div class="panel" style="background:rgba(167,139,250,0.06);border-color:var(--purple)">
+<div class="panel-title" style="color:var(--purple)">プロンプトを育てる決定的な一手</div>
+<pre>ここまでで、<span class="hi">私のデータの問題点</span>は分かってきた。
+
+次に、<span class="hi">別の AI セッション</span>で、統計方法論の専門家として
+もっと詳しく相談したい。
+
+そこで、<span class="hi">「最強の相談プロンプト」を君が書いて</span>ほしい。
+以下を含めて：
+- 役割設定（専門家としての前提）
+- 私のデータの詳細（N, イベント数, 完全分離の有無など）
+- 具体的な質問（EPV, 変数選択, 完全分離対処など）
+- <span class="hi">文献引用を必須とする制約</span>
+   （Statistics in Medicine, JCE, BMJ, BMC Med Res Methodol を参照）
+- ハルシネーション抑制のための注意書き
+
+<span class="hi">そのプロンプトを次の行からコピペで使える形</span>で提示して。</pre>
+</div>
+
+<div class="ok-box">
+<strong>ここが重要：</strong>この「プロンプトを作らせるプロンプト」は、誰でも書ける簡単な日本語の依頼。しかし AI が出力するのは、統計学の専門家が書いたような<strong class="emphasis">高度な方法論相談プロンプト</strong>。<strong>メタプロンプティング</strong>と呼ばれるテクニックで、専門知識を持たない研究者でも高品質な AI 対話を行える。
+</div>
+
+<h3 style="font-size:calc(22px * var(--fs-mul));color:var(--accent2);margin:22px 0 14px;padding-bottom:6px;border-bottom:1px solid var(--line)">
+Level 4 ─ 生成されたプロンプトを別セッションで使う
+</h3>
+
+<div class="article">
+<p>Level 3 で生成された高度プロンプトを<strong>新しい AI セッション</strong>で使う。次のスライド（Step 3 · CONSULT）で示すような<strong class="emphasis">詳細な方法論相談</strong>が、あなたの手で実行できる。</p>
+<p><strong>なぜ別セッションか：</strong>同じセッションで続けると、前の会話の影響で AI が「その場しのぎ」の回答をしがち。<strong>フレッシュな視点</strong>で深く議論してもらうために、セッションを分ける。</p>
+</div>
+
+<div class="panel" style="margin-top:16px;background:rgba(251,191,36,0.05)">
+<div class="panel-title" style="color:var(--warn)">⚠ 忘れてはいけない ─ R エラーは"そのまま"AI に貼る</div>
+<div class="article">
+<p>Step 5 · EXECUTE でも述べたが、プロンプト作成の話と並行して、もう一つ徹底すべきことがある：</p>
+<p><strong>R でエラーが出たら、エラーメッセージを<span class="emphasis">全文そのままコピペ</span>して AI に貼る。</strong></p>
+<ul class="bullet">
+<li>要約したり、自分の言葉で書き直さない</li>
+<li><code>Error in ...</code> から始まる赤字を<strong>全行コピー</strong></li>
+<li>直前に実行したコードも一緒に貼る</li>
+<li>「このエラーを解決して」と一言添える</li>
+</ul>
+<p>AIはエラーメッセージの<strong>構造</strong>（関数名、引数名、オブジェクト名）を解析して原因を特定する。<strong class="emphasis">要約や意訳は AI の診断能力を削ぐ</strong>。</p>
+<pre><span class="com"># 良い例 ─ 全文コピペ</span>
+R で以下のエラーが出ました。
+コードとエラーを貼ります。解決策を文献付きで説明してください。
+
+[コード]
+library(logistf)
+fit &lt;- logistf(Outcome ~ Depth_C + Ramus_3 + Root_Bulb, data = df)
+
+[エラー全文]
+Error in logistf(Outcome ~ Depth_C + Ramus_3 + Root_Bulb, data = df) :
+  object 'Outcome' not found
+
+<span class="com"># 悪い例 ─ 意訳・要約</span>
+「Outcome がないってエラーになった」 ← 情報不足で診断できない</pre>
+</div>
+</div>
+
+<div class="danger-box">
+<strong>"プロンプト職人"を目指す必要はない：</strong>AI 時代の研究者は<strong class="emphasis">「AI にプロンプトを作らせる」能力</strong>が最も重要。初心者は Level 1 から始め、AI と対話しながら Level 4 へ進む。最初から完璧を目指さない。
 </div>
 `},
 
