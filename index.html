@@ -4114,24 +4114,27 @@ AI の解釈をそのまま採用してはいけない。「<strong class="empha
 <div class="panel">
 <div class="panel-title">チェック ① 手計算で OR の値を検算</div>
 <div class="article">
-<p><strong>Depth_C の単変量 OR を手計算で検算してみる：</strong></p>
-<pre><span class="com"># 仮想データの 2×2 表（Part 4-4 の table() 出力から）</span>
+<p><strong>Depth_C の単変量 OR を手計算で検算してみる：</strong>（これは R で実行するコードではなく、紙と電卓でできる<strong>解説</strong>です）</p>
+<pre class="output">＜仮想データの 2×2 表（スライド 40 Step E の table() 出力から）＞
+
             Control  Difficult
 Depth = C       0        5
 Depth = A/B    24       15
 
-<span class="com"># OR の公式: OR = (a × d) / (b × c)</span>
-a = 5 (Difficult かつ Depth=C)
-b = 15 (Difficult かつ Depth=A/B)
-c = 0 (Control かつ Depth=C)
-d = 24 (Control かつ Depth=A/B)
+＜OR の公式： OR = (a × d) / (b × c)＞
 
-OR = (5 × 24) / (15 × 0) = <span class="kw">∞ （ゼロ除算）</span>
+a = 5    Difficult かつ Depth = C
+b = 15   Difficult かつ Depth = A/B
+c = 0    Control   かつ Depth = C
+d = 24   Control   かつ Depth = A/B
 
-<span class="com"># Haldane 補正で 0.5 を加えた場合</span>
-OR = ((5+.5) × (24+.5)) / ((15+.5) × (0+.5))
+OR = (5 × 24) / (15 × 0) = ∞ （ゼロ除算で計算不能）
+
+＜Haldane 補正で全セルに 0.5 を足した場合＞
+
+OR = ((5 + 0.5) × (24 + 0.5)) / ((15 + 0.5) × (0 + 0.5))
    = 134.75 / 7.75
-   = <span class="kw">17.4</span></pre>
+   ≈ 17.4</pre>
 <p>→ 手計算と R の出力が <strong>ほぼ一致</strong> することを確認。もし大きく違えば、R コードか手計算のどちらかに誤りがある。</p>
 </div>
 </div>
