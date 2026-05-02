@@ -491,30 +491,93 @@ body.reading-mode .slide-anchor{
   box-shadow:var(--shadow-sm)
 }
 
+/* ============================================================
+   Sidebar settings panel (mobile では特に重要)
+============================================================ */
+.sidebar-settings{
+  padding:14px 22px 16px;border-bottom:1px solid var(--line);margin-bottom:6px;
+  display:none /* default: PC では controls に出るので非表示 */
+}
+.sidebar-settings-title{
+  font-size:11px;color:var(--ink-muted);text-transform:uppercase;
+  letter-spacing:.12em;margin-bottom:10px;font-weight:700
+}
+.sidebar-settings .fs-control{display:flex;gap:6px;margin-bottom:10px;border:none;padding:0}
+.sidebar-settings .fs-btn{flex:1;height:38px;font-size:14px}
+.sidebar-settings .mode-toggle{width:100%;justify-content:center;padding:9px 12px;font-size:13px}
+
 /* Mobile */
 @media (max-width:900px){
-  :root{--fs-mul:.92}
-  html,body{font-size:15px}
+  :root{--fs-mul:1}
+  html,body{font-size:16px}
   #app{grid-template-columns:1fr}
   #sidebar{position:fixed;left:0;top:0;bottom:0;width:280px;z-index:32;transform:translateX(-100%)}
   #sidebar.open{transform:translateX(0)}
   #menu-toggle{display:block}
   #progress{left:0}
-  .slide{padding:60px 18px 100px}
-  body.reading-mode #slides{padding:24px 14px 100px}
-  h2.slide-title{font-size:24px !important}
-  .slide-sub{font-size:14px !important}
-  .slide-lead{font-size:14px !important;padding:12px 16px}
-  .title-slide h1{font-size:36px}
-  .title-slide .lead{font-size:15px}
-  .section-slide h2{font-size:34px}
+  .sidebar-settings{display:block} /* モバイルではサイドバーに表示 */
+
+  /* スライドの下部余白を controls の高さ＋安全領域分しっかり確保 */
+  .slide{padding:64px 18px 180px}
+  body.reading-mode #slides{padding:24px 14px 180px}
+
+  /* 文字サイズ：モバイルでも読みやすく */
+  h2.slide-title{font-size:24px !important;line-height:1.3}
+  .slide-sub{font-size:15px !important;line-height:1.7}
+  .slide-lead{font-size:15px !important;padding:14px 16px;line-height:1.8}
+  .title-slide h1{font-size:38px}
+  .title-slide .lead{font-size:16px}
+  .section-slide h2{font-size:32px}
   .section-slide .part-num{font-size:80px;margin-bottom:-26px}
   .section-slide .section-desc{font-size:15px}
   .panel{padding:14px 16px}
-  .panel p,ul.bullet li,ol.num li{font-size:14px !important}
-  table{font-size:12px}
-  th,td{padding:7px 9px}
+  .panel p,ul.bullet li,ol.num li,.article{font-size:15px !important;line-height:1.8}
+  .panel-title{font-size:12px !important}
+  table{font-size:13px}
+  th,td{padding:8px 10px}
+  th{font-size:11px !important}
   pre,code{font-size:12px !important}
+  .note-box,.warn-box,.danger-box,.ok-box,.info-box{font-size:14px !important;padding:12px 16px}
+
+  /* コントロールバー：左下に「次へ」を大きく、左親指で届く位置に */
+  #controls{
+    bottom:max(14px, env(safe-area-inset-bottom));
+    left:12px;right:12px;transform:none;
+    padding:8px;border-radius:18px;
+    justify-content:space-between;gap:6px;
+    box-shadow:0 8px 24px rgba(15,23,42,.18)
+  }
+  #controls .fs-control,#controls #modeToggle,#controls .divider{display:none}
+  #controls #next{
+    order:-1;flex:1;min-width:0;
+    height:64px;font-size:18px;font-weight:800;
+    border-radius:14px;padding:0 18px;letter-spacing:.04em
+  }
+  #controls #prev{
+    width:56px;height:56px;font-size:22px;
+    border:1px solid var(--line);border-radius:50%;
+    background:var(--surface)
+  }
+  #controls .counter{
+    min-width:auto;font-size:12px;padding:0 6px;
+    color:var(--ink-muted);font-weight:600
+  }
+
+  /* メニューボタンを少し大きく、視認性を上げる */
+  #menu-toggle{padding:10px 14px;font-size:15px;font-weight:700;border-radius:10px}
+
+  /* インタラクティブ要素・コードブロックの余白調整 */
+  .grid{gap:12px}
+  .chart-wrap{height:200px}
+  .chart-wrap.tall{height:260px}
+  .data-scroll{max-height:240px}
+}
+
+/* 小さなスマホ */
+@media (max-width:380px){
+  #controls #next{height:60px;font-size:17px}
+  #controls #prev{width:50px;height:50px}
+  .slide{padding:60px 14px 170px}
 }
 
 /* Print */
@@ -539,6 +602,15 @@ body.reading-mode .slide-anchor{
       <h1>AI時代のデータ解析</h1>
       <p>Yuasa 2002 を題材に、再現性ある統計解析を学ぶ</p>
       <a class="gh" href="https://github.com/mxe050/AI-DataStat" target="_blank" rel="noopener">github.com/mxe050/AI-DataStat</a>
+    </div>
+    <div class="sidebar-settings">
+      <div class="sidebar-settings-title">表示設定</div>
+      <div class="fs-control">
+        <button class="fs-btn" id="sbFsMinus" title="文字を小さく">A−</button>
+        <button class="fs-btn" id="sbFsReset" title="標準サイズに戻す">A</button>
+        <button class="fs-btn" id="sbFsPlus" title="文字を大きく">A+</button>
+      </div>
+      <button class="mode-toggle" id="sbModeToggle" title="読み物モードに切替">📖 読み物モード</button>
     </div>
     <nav class="toc" id="toc"></nav>
   </aside>
@@ -5180,8 +5252,11 @@ function setActive(idx){
 function setReadingMode(on){
   readingMode = on;
   document.body.classList.toggle('reading-mode', on);
-  document.getElementById('modeToggle').classList.toggle('on', on);
-  document.getElementById('modeToggle').textContent = on ? '🎞 スライドモード' : '📖 読み物モード';
+  const lbl = on ? '🎞 スライドモード' : '📖 読み物モード';
+  ['modeToggle','sbModeToggle'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el){ el.classList.toggle('on', on); el.textContent = lbl; }
+  });
   buildSlides();
   if(on){
     // 全スライドを一度可視化（Chart.js 等を発火）
@@ -5218,6 +5293,10 @@ document.getElementById('prev').onclick = () => goTo(current - 1);
 document.getElementById('next').onclick = () => goTo(current + 1);
 document.getElementById('modeToggle').onclick = () => setReadingMode(!readingMode);
 
+/* サイドバー側の同等ボタン（モバイル時に主に使用） */
+const sbModeBtn = document.getElementById('sbModeToggle');
+if(sbModeBtn) sbModeBtn.onclick = () => setReadingMode(!readingMode);
+
 /* ============================================================
    フォントサイズ制御
 ============================================================ */
@@ -5228,9 +5307,16 @@ function applyFs(){
   document.documentElement.style.setProperty('--fs-mul', FS_LEVELS[fsIdx]);
   localStorage.setItem('fsIdx', fsIdx);
 }
-document.getElementById('fsMinus').onclick = () => { fsIdx--; applyFs(); };
-document.getElementById('fsPlus').onclick = () => { fsIdx++; applyFs(); };
-document.getElementById('fsReset').onclick = () => { fsIdx = 2; applyFs(); };
+function bindFs(minusId, resetId, plusId){
+  const m = document.getElementById(minusId);
+  const r = document.getElementById(resetId);
+  const p = document.getElementById(plusId);
+  if(m) m.onclick = () => { fsIdx--; applyFs(); };
+  if(p) p.onclick = () => { fsIdx++; applyFs(); };
+  if(r) r.onclick = () => { fsIdx = 2; applyFs(); };
+}
+bindFs('fsMinus','fsReset','fsPlus');
+bindFs('sbFsMinus','sbFsReset','sbFsPlus');
 applyFs();
 
 /* ============================================================
