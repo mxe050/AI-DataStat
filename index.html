@@ -1626,6 +1626,31 @@ Jaroń A, Trybek G. The Pattern of Mandibular Third Molar Impaction and Assessme
 <div class="slide-inner">
 <span class="slide-tag">STUDY DESIGN</span>
 <h2 class="slide-title">Yuasa 2002 の 2 段階アプローチ</h2>
+
+<div class="panel" style="background:#eff6ff;border-color:var(--blue);margin-bottom:14px">
+<div class="panel-title">📚 はじめに（統計が初めての方へ）：単変量・多変量・ロジスティック回帰とは</div>
+<div class="article">
+<p>本研究では「<strong>単変量解析</strong>」「<strong>多変量解析</strong>」「<strong>ロジスティック回帰</strong>」という言葉が出てきます。聞いたことがない方のために、料理のたとえで先に整理しておきます。</p>
+
+<h4>単変量解析と多変量解析の違い</h4>
+<p>たとえば「カレーが辛くなる原因は？」を調べたいとき：</p>
+<ul class="bullet">
+  <li><strong>単変量解析</strong>：「<strong class="emphasis">唐辛子の量だけ</strong>」と「辛さ」の関係を 1 対 1 で見る。「胡椒」「玉ねぎ」など他の調味料を <strong>無視</strong>する</li>
+  <li><strong>多変量解析</strong>：「唐辛子・胡椒・玉ねぎ・カレー粉…」を <strong class="emphasis">全部いっぺんに考慮</strong>して、それぞれが辛さにどれだけ寄与しているかを <strong>同時</strong>に推定する</li>
+</ul>
+<p>本研究の場合：抜歯困難の原因として「歯の深さ」「歯根の形」「下顎枝との関係」など複数の要因が同時に効いているはず。それぞれの効果を <strong>切り分けて</strong> 評価したいので、多変量解析が必要になります。</p>
+
+<h4>ロジスティック回帰でなぜ要因を探せるか</h4>
+<p><strong>ロジスティック回帰</strong>は「アウトカムが Yes/No（=2 値）」のときに使う多変量解析手法です。本研究では「抜歯が <strong>困難</strong>になったか／<strong>普通だった</strong>か」の 2 値判定なのでこれを使います。</p>
+<p>ロジスティック回帰は、各要因について「<strong class="emphasis">この要因があると、困難になる "オッズ" が何倍になるか</strong>」（＝オッズ比 OR）を <strong>同時に</strong> 計算してくれる手法。これにより「歯の深さは強い影響、歯根の形はそこそこ、下顎枝関係は弱い」のように <strong>各要因の重要度を比較</strong>できます。</p>
+<p>つまり：<strong>「複数要因の中でどれが本当に効いているかを順位づけたい」</strong>とき、Yuasa 2002 を含め、医学研究の多くで多変量ロジスティック回帰が使われます。</p>
+
+<div class="ok-box" style="font-size:14px;margin-top:10px">
+本章ではまずこの「単変量・多変量・ロジスティック回帰」の世界観を頭に入れたうえで、<strong>2002 年に Yuasa がどのようにこの解析を設計したか</strong>を見ていきます。
+</div>
+</div>
+</div>
+
 <p class="slide-sub">専門医の暗黙知を Stage 1 で集約し、Stage 2 で症例データから統計的に検証する設計。</p>
 
 <div class="grid grid-2">
@@ -2727,136 +2752,74 @@ EQUATOR Network（全報告ガイドラインの総合サイト）：<a href="ht
 </div>
 `},
 
-/* ============ 3-10 2002 vs 2026 ============ */
-{part:"Part 3", short:"2002 vs 2026 比較", html:`
+/* ============ 3-10 統計用語ミニ辞典 ============ */
+{part:"Part 3", short:"統計用語ミニ辞典（超初心者向け）", html:`
 <div class="slide-inner">
-<span class="slide-tag">BEFORE / AFTER</span>
-<h2 class="slide-title">2002 と 2026 の手法比較 ─ 24 年間の進歩</h2>
-<p class="slide-sub">これは「2002 年が間違っていた」ではなく、「統計学の進歩により改善が可能になった」と理解すべき。</p>
+<span class="slide-tag">GLOSSARY</span>
+<h2 class="slide-title">統計用語ミニ辞典 ─ 超初心者向けの整理</h2>
+<p class="slide-lead">
+ここまでで <strong>EPV、完全分離、ロジスティック回帰、Firth 法</strong> など聞き慣れない言葉が次々と出てきました。Part 4 で実際に R を動かす前に、これらを <strong class="emphasis">日常的なたとえ</strong> でいったん整理しておきます。読み流しでも、Part 4 で詰まったら戻ってくるリファレンスとしても使えます。
+</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>項目</th>
-      <th style="background:#fee2e2;color:var(--red)">2002 · Yuasa 論文</th>
-      <th style="background:#dcfce7;color:var(--green)">2026 · 推奨手法</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>変数選択</strong><br><small style="color:var(--ink-muted)">どの予測因子を解析に入れるか</small></td>
-      <td>単変量 OR ≥ 2.0 で機械的選択<br><small style="color:var(--ink-muted)">＝データを見てから選ぶ</small></td>
-      <td>臨床知識（Table 2 等）で事前決定<br><small style="color:var(--ink-muted)">＝データを見る前に決める</small></td>
-    </tr>
-    <tr>
-      <td><strong>EPV</strong><br><small style="color:var(--ink-muted)">サンプル数に対して何個まで変数を入れていいかの目安</small></td>
-      <td>考慮なし（EPV = 4）<br><small style="color:var(--ink-muted)">＝足りないのに気づかず実行</small></td>
-      <td>EPV ≥ 10〜20、または Riley 2019 で計算<br><small style="color:var(--ink-muted)">＝足りなければ罰則付き手法へ</small></td>
-    </tr>
-    <tr>
-      <td><strong>完全分離</strong><br><small style="color:var(--ink-muted)">ある条件で結果が完全に分かれてしまう問題</small></td>
-      <td>対処なし（OR = 999 をそのまま報告）<br><small style="color:var(--ink-muted)">＝事実上「無限大」を載せていた</small></td>
-      <td>Firth 罰則付き回帰 / Bayesian<br><small style="color:var(--ink-muted)">＝有限の解釈可能な値に</small></td>
-    </tr>
-    <tr>
-      <td><strong>モデル検証</strong><br><small style="color:var(--ink-muted)">作ったモデルがどれだけ当たるかの確認方法</small></td>
-      <td>構築データ ＝ 評価データ<br><small style="color:var(--ink-muted)">＝同じデータで作って同じデータで採点</small></td>
-      <td>Bootstrap 内部検証 + 外部検証<br><small style="color:var(--ink-muted)">＝別データでも本当に当たるか確認</small></td>
-    </tr>
-    <tr>
-      <td><strong>報告基準</strong><br><small style="color:var(--ink-muted)">論文に何をどう書くべきかの国際ルール</small></td>
-      <td>なし</td>
-      <td>TRIPOD+AI (2024) 27 項目チェック<br><small style="color:var(--ink-muted)">＝チェックリストを通してから投稿</small></td>
-    </tr>
-    <tr>
-      <td><strong>統計ソフト</strong><br><small style="color:var(--ink-muted)">使ったソフトの記載</small></td>
-      <td>"SAS 6.12" のみ<br><small style="color:var(--ink-muted)">＝再現不可能</small></td>
-      <td>ソフト・パッケージ・バージョン・シード<br><small style="color:var(--ink-muted)">＝誰でも同じ結果を再現可能</small></td>
-    </tr>
-    <tr>
-      <td><strong>コード公開</strong><br><small style="color:var(--ink-muted)">解析手順そのものの公開</small></td>
-      <td>なし</td>
-      <td>GitHub / Zenodo で公開必須<br><small style="color:var(--ink-muted)">＝誰でもコードを見て再実行できる</small></td>
-    </tr>
-    <tr>
-      <td><strong>AI 使用</strong><br><small style="color:var(--ink-muted)">解析に AI を使った旨の開示</small></td>
-      <td>─</td>
-      <td>AMEE Guide No.192 で開示必須<br><small style="color:var(--ink-muted)">＝SPSS と同じく「使った道具」として明記</small></td>
-    </tr>
-    <tr>
-      <td><strong>データ公開</strong><br><small style="color:var(--ink-muted)">生データそのものの公開</small></td>
-      <td>なし</td>
-      <td>可能な範囲で公開（匿名化後）<br><small style="color:var(--ink-muted)">＝個人情報を消したうえで</small></td>
-    </tr>
-  </tbody>
-</table>
+<div class="grid grid-2">
+  <div class="panel">
+    <div class="panel-title">① ロジスティック回帰（Logistic Regression）</div>
+    <div class="article">
+      <p><strong>「Yes/No のどちらに当てはまるか」を、複数の要因から予測する手法</strong>。本研究では「抜歯が <strong>困難</strong>か <strong>普通</strong>か」を、年齢・歯の深さ・歯根の形などから予測する。</p>
+      <p><strong>たとえ：</strong>天気（晴れ／雨）を、気温・湿度・気圧など複数の指標から判定するイメージ。要因ごとに「どれだけ Yes に傾けるか」の重みを推定してくれる。</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">② GLM（Generalized Linear Model）</div>
+    <div class="article">
+      <p>R や SAS で <strong>ロジスティック回帰を実行する関数の親玉</strong>。R では <code>glm(..., family=binomial)</code> と書くとロジスティック回帰になる。</p>
+      <p><strong>たとえ：</strong>「電動工具のドリル」のような汎用機。ビット（family）を変えると別の解析にも使える ─ ロジスティック以外も、線形回帰・ポアソン回帰など幅広く対応。</p>
+    </div>
+  </div>
+
+  <div class="panel red">
+    <div class="panel-title">③ 完全分離（Complete Separation）</div>
+    <div class="article">
+      <p><strong>ある条件で結果が "100% 分かれてしまう" 状態</strong>。例：「Depth = C のとき、44 人中 困難群が全員、対照群が 0 人」。</p>
+      <p>このとき通常 GLM は OR を <strong style="color:var(--red)">無限大</strong> に飛ばしてしまい、意味のある数字が出ない（Yuasa 2002 の OR=999 の正体）。</p>
+      <p><strong>たとえ：</strong>料理コンテストで全審査員が満点をつけたら、その料理の "本当の実力" は 90 点か 95 点か、データからは決められない。</p>
+    </div>
+  </div>
+
+  <div class="panel green">
+    <div class="panel-title">④ Firth 法（Firth's Penalized Logistic Regression）</div>
+    <div class="article">
+      <p><strong>完全分離が起きた時の特効薬</strong>。1993 年に David Firth が考案。通常 GLM に「係数が無限大に飛ばないようにブレーキをかける」罰則項を加えた手法。</p>
+      <p><strong>たとえ：</strong>暴走しがちな自転車にブレーキを取り付けたもの。スピード（OR の大きさ）は出にくいが、<strong>安全に乗れる（解釈可能な値が出る）</strong>。</p>
+      <p>R では <code>logistf::logistf()</code> 1 行で使える。Part 4 で実演。</p>
+    </div>
+  </div>
+
+  <div class="panel amber">
+    <div class="panel-title">⑤ EPV（Events Per Variable）</div>
+    <div class="article">
+      <p><strong>「珍しい方のアウトカムの人数 ÷ モデルに入れる変数の数」</strong>。本研究では 20 ÷ 5 = 4。推奨は <strong>10 以上</strong>。</p>
+      <p><strong>たとえ：</strong>20 枚の写真から 5 つの特徴を見分ける AI を訓練するようなもの。<strong>1 枚 1 枚を丸暗記してしまい、新しい写真では使えない</strong>モデルになる（過学習）。</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">⑥ OR・CI・p 値の読み方</div>
+    <div class="article">
+      <p><strong>OR（Odds Ratio・オッズ比）</strong>：その要因があると「困難になりやすさ」が何倍になるか。1 = 影響なし、>1 = 困難になりやすい、<1 = 困難になりにくい。</p>
+      <p><strong>95% CI（信頼区間）</strong>：「真の OR はこの範囲のどこかに 95% の確率で入る」幅。<strong>1 をまたぐと「効果あり/なしを断言できない」</strong>。狭いほど信頼できる。</p>
+      <p><strong>p 値</strong>：「もし要因に効果がなかったとして、こんな結果が偶然出る確率」。0.05 未満で「有意」と言うが、<strong>有意性 ≠ 効果の大きさ</strong>。</p>
+    </div>
+  </div>
+</div>
+
+<div class="ok-box">
+<strong>使い方：</strong>Part 4 を読み進めて分からない用語が出てきたら、左サイドバー目次から <strong>本章（統計用語ミニ辞典）に戻って</strong>確認してください。Part 3 で学んだ問題点（変数選択・EPV・完全分離）と、Part 4 で実演する解決策（事前選択・Firth 法・ROC）が、ここの用語で繋がります。
+</div>
 
 <div class="note-box">
-自身の研究も、将来はこう批判される可能性がある。<strong>「今の標準」は永遠ではない</strong> ─ それを覚悟したうえで、現時点の最善を尽くす。
-</div>
-</div>
-`},
-
-/* ============ 3-11 現代推奨フロー ============ */
-{part:"Part 3", short:"現代推奨フロー（6 ステップ）", html:`
-<div class="slide-inner">
-<span class="slide-tag">MODERN WORKFLOW</span>
-<h2 class="slide-title">現代推奨の解析フロー ─ 6 ステップ</h2>
-<p class="slide-sub">Part 4 で実際にこのフローを R + AI で実行する。各ステップに「ひとことで言うと何をするのか」を添えた。</p>
-
-<div class="flow col">
-  <div class="flow-box human" style="text-align:left;padding:16px">
-    <strong>Step 1 · 臨床知識 + 先行研究で候補変数を事前選択</strong>
-    <div style="font-size:14px;color:var(--ink-strong);margin-top:6px;font-weight:600">
-      📍 ひとことで：<strong>データを見る前に、解析に入れる予測因子を決めておく</strong>
-    </div>
-    <small style="color:var(--ink-muted)">本データでは Table 2 のアンケート結果が根拠（Depth / Root / Ramus が上位）</small>
-  </div>
-  <div class="flow-arrow">↓</div>
-
-  <div class="flow-box human" style="text-align:left;padding:16px">
-    <strong>Step 2 · EPV 計算 → 投入変数数を決定</strong>
-    <div style="font-size:14px;color:var(--ink-strong);margin-top:6px;font-weight:600">
-      📍 ひとことで：<strong>「何人のデータに対して、何個まで変数を入れていいか」を電卓で確認</strong>
-    </div>
-    <small style="color:var(--ink-muted)">20 ÷ 10 = 最大 2 変数（厳密） / 20 ÷ 7 ≈ 3 変数（緩い基準）</small>
-  </div>
-  <div class="flow-arrow">↓</div>
-
-  <div class="flow-box human" style="text-align:left;padding:16px">
-    <strong>Step 3 · 記述統計を報告（群間比較は参考値）</strong>
-    <div style="font-size:14px;color:var(--ink-strong);margin-top:6px;font-weight:600">
-      📍 ひとことで：<strong>「両群のプロフィール」を整然と並べて見せる（OR の表は載せない）</strong>
-    </div>
-    <small style="color:var(--ink-muted)">単変量 p 値はスクリーニングに使わない。Table 1 形式で記述</small>
-  </div>
-  <div class="flow-arrow">↓</div>
-
-  <div class="flow-box human" style="text-align:left;padding:16px">
-    <strong>Step 4 · 全候補変数を多変量回帰へ → 完全分離は Firth で対処</strong>
-    <div style="font-size:14px;color:var(--ink-strong);margin-top:6px;font-weight:600">
-      📍 ひとことで：<strong>事前に決めた変数を全部入れて回帰。OR = ∞ になりそうなら Firth 法に切り替え</strong>
-    </div>
-    <small style="color:var(--ink-muted)">通常の GLM で収束しない場合は logistf パッケージを使用</small>
-  </div>
-  <div class="flow-arrow">↓</div>
-
-  <div class="flow-box human" style="text-align:left;padding:16px">
-    <strong>Step 5 · AUC・感度・特異度を Bootstrap 内部検証で評価</strong>
-    <div style="font-size:14px;color:var(--ink-strong);margin-top:6px;font-weight:600">
-      📍 ひとことで：<strong>同じデータで自画自賛しないで、再抽出してモデルの本当の実力を測る</strong>
-    </div>
-    <small style="color:var(--ink-muted)">pROC + boot パッケージ / 可能なら外部データで検証</small>
-  </div>
-  <div class="flow-arrow">↓</div>
-
-  <div class="flow-box human" style="text-align:left;padding:16px">
-    <strong>Step 6 · TRIPOD+AI 準拠で報告 + コード・データ公開</strong>
-    <div style="font-size:14px;color:var(--ink-strong);margin-top:6px;font-weight:600">
-      📍 ひとことで：<strong>世界共通のチェックリストで漏れを潰し、コードを GitHub に置いて誰でも検証可能にする</strong>
-    </div>
-    <small style="color:var(--ink-muted)">GitHub / Zenodo / OSF いずれかにアップロード</small>
-  </div>
+これまでの「2002 vs 2026 比較表」は <strong>Part 4 のシミュレーション位置づけ章（章 37）</strong>に対応マップとして集約しました。新旧の流れの違いはそちらで一望できます。
 </div>
 </div>
 `},
@@ -2891,7 +2854,8 @@ EQUATOR Network（全報告ガイドラインの総合サイト）：<a href="ht
 </div>
 
 <div class="info-box">
-<strong>次の Part 4 では</strong>、ここで挙げた問題を実際に <strong>R + AI で再解析</strong> する。R/RStudio の準備から始め、AI に統計手法を「先に」相談し、コード生成プロンプトを設計し、Firth 回帰を実行し、ROC/AUC を計算する。<strong>「AI に頼るところ」と「絶対に譲らないところ」を体験的に学ぶ</strong>。
+<strong>次の Part 4 では</strong>、ここで挙げた問題を実際に <strong>R + AI で再解析</strong> する。R/RStudio の準備から始め、AI に統計手法を「先に」相談し、コード生成プロンプトを設計し、Firth 回帰を実行し、ROC/AUC を計算する。<strong>「AI に頼るところ」と「絶対に譲らないところ」を体験的に学ぶ</strong>。<br><br>
+<strong>📍 Part 4 の冒頭（章 37）に「2002 vs 2026 対応マップ」</strong> を置いてあります。「Part 3 で見た問題が、Part 4 のどの章でどう解決されるか」が一目で分かるので、次に進む前にぜひ眺めてください。<strong>用語が分からなくなったら章 33（統計用語ミニ辞典）に戻る</strong> と整理が続きます。
 </div>
 </div>
 `}
@@ -2918,6 +2882,10 @@ EQUATOR Network（全報告ガイドラインの総合サイト）：<a href="ht
 <p class="slide-lead">
 本 Part 4 の目的は、<strong class="emphasis">Yuasa 2002 論文を、2026 年の統計学の基本と AI 活用でどう再解析すべきか</strong> をシミュレーションすること。まず下の対応マップで、<strong>2002 年（章 24）の流れと、これから Part 4 で実演する新しい流れの違い</strong> を一望してから本編に入ります。
 </p>
+
+<div class="info-box" style="font-size:14px">
+<strong>用語のおさらい：</strong>本章以降に出てくる <strong>GLM・ロジスティック回帰・Firth 法・EPV・完全分離・OR/CI/p 値</strong> など、統計用語が分からなくなったら、左サイドバーの <strong>章 33「統計用語ミニ辞典（超初心者向け）」</strong>にいつでも戻れます。Part 4 を読みながら詰まったら参照してください。
+</div>
 
 <h3 class="section-head">📍 一目でわかる：2002 年（章 24）と 2026 年（本 Part 4）の対比</h3>
 
