@@ -1628,25 +1628,47 @@ Jaroń A, Trybek G. The Pattern of Mandibular Third Molar Impaction and Assessme
 <h2 class="slide-title">Yuasa 2002 の 2 段階アプローチ</h2>
 
 <div class="panel" style="background:#eff6ff;border-color:var(--blue);margin-bottom:14px">
-<div class="panel-title">📚 はじめに（統計が初めての方へ）：単変量・多変量・ロジスティック回帰とは</div>
+<div class="panel-title">📚 はじめに：「探索的研究」とロジスティック回帰の世界観（統計が初めての方へ）</div>
 <div class="article">
-<p>本研究では「<strong>単変量解析</strong>」「<strong>多変量解析</strong>」「<strong>ロジスティック回帰</strong>」という言葉が出てきます。聞いたことがない方のために、料理のたとえで先に整理しておきます。</p>
+<p>Yuasa 2002 のような研究は <strong class="emphasis">「探索的研究（exploratory study）」</strong> と呼ばれます。「答えがすでに決まっている検証」ではなく、<strong>「結果（抜歯が困難になるか）に影響する要因はどれだろう？」を、複数の候補から探していく</strong> 研究です。</p>
+<p>このような研究で 2002 年から今に至るまで、医学では <strong>ロジスティック回帰分析</strong> という手法が標準的に使われてきました。聞き慣れない用語が次々出てくるので、身近なたとえで一気に整理します。</p>
 
-<h4>単変量解析と多変量解析の違い</h4>
-<p>たとえば「カレーが辛くなる原因は？」を調べたいとき：</p>
+<h4>1️⃣ 「単変量解析」と「多変量解析」── まず違いを理解</h4>
+<p>たとえば「<strong>カレーが辛くなる原因</strong>」を知りたい料理研究家がいるとします。</p>
 <ul class="bullet">
-  <li><strong>単変量解析</strong>：「<strong class="emphasis">唐辛子の量だけ</strong>」と「辛さ」の関係を 1 対 1 で見る。「胡椒」「玉ねぎ」など他の調味料を <strong>無視</strong>する</li>
-  <li><strong>多変量解析</strong>：「唐辛子・胡椒・玉ねぎ・カレー粉…」を <strong class="emphasis">全部いっぺんに考慮</strong>して、それぞれが辛さにどれだけ寄与しているかを <strong>同時</strong>に推定する</li>
+  <li><strong>単変量解析</strong>：唐辛子の量だけ／胡椒の量だけ／玉ねぎの量だけ ── と、<strong class="emphasis">1 つずつ別々に</strong>「辛さ」との関係を見る。シンプルだが、「胡椒は唐辛子と一緒に入っているから胡椒のせいに見えるだけ」のような <strong>勘違い（交絡）</strong> が起きやすい。</li>
+  <li><strong>多変量解析</strong>：唐辛子・胡椒・玉ねぎ・カレー粉を <strong class="emphasis">全部同時に</strong> 考慮して、「他の要因を一定にしたとき、各要因が辛さにどれだけ独立に寄与するか」を計算する。<strong>勘違いを切り分ける力</strong> がある。</li>
 </ul>
-<p>本研究の場合：抜歯困難の原因として「歯の深さ」「歯根の形」「下顎枝との関係」など複数の要因が同時に効いているはず。それぞれの効果を <strong>切り分けて</strong> 評価したいので、多変量解析が必要になります。</p>
+<p>本研究の場合：抜歯困難の原因として「歯の深さ」「歯根の形」「下顎枝との関係」「歯根の数」など複数候補があり、これらは互いに関係し合っています（例：深い歯ほど歯根が複雑なことが多い）。<strong>各因子の本当の独立効果を切り分けるには多変量解析が必要</strong>。</p>
 
-<h4>ロジスティック回帰でなぜ要因を探せるか</h4>
-<p><strong>ロジスティック回帰</strong>は「アウトカムが Yes/No（=2 値）」のときに使う多変量解析手法です。本研究では「抜歯が <strong>困難</strong>になったか／<strong>普通だった</strong>か」の 2 値判定なのでこれを使います。</p>
-<p>ロジスティック回帰は、各要因について「<strong class="emphasis">この要因があると、困難になる "オッズ" が何倍になるか</strong>」（＝オッズ比 OR）を <strong>同時に</strong> 計算してくれる手法。これにより「歯の深さは強い影響、歯根の形はそこそこ、下顎枝関係は弱い」のように <strong>各要因の重要度を比較</strong>できます。</p>
-<p>つまり：<strong>「複数要因の中でどれが本当に効いているかを順位づけたい」</strong>とき、Yuasa 2002 を含め、医学研究の多くで多変量ロジスティック回帰が使われます。</p>
+<h4>2️⃣ なぜ「ロジスティック回帰」を使うのか</h4>
+<p><strong>「結果」がどんな形か</strong> によって、使うべき多変量解析の種類は変わります。</p>
+<ul class="bullet">
+  <li>結果が <strong>連続値</strong>（例：身長、血圧、手術時間の分単位）→ <strong>線形回帰</strong>を使う</li>
+  <li>結果が <strong>Yes/No（2 値）</strong>（例：困難 / 普通、生存 / 死亡、再発あり / なし）→ <strong>ロジスティック回帰</strong>を使う</li>
+  <li>結果が <strong>イベントまでの時間</strong>（例：再発までの日数）→ <strong>Cox 回帰</strong>を使う</li>
+</ul>
+<p>本研究は「抜歯が <strong>困難</strong>か <strong>普通</strong>か」の 2 値判定なので、<strong class="emphasis">ロジスティック回帰</strong>を選びます。</p>
+
+<h4>3️⃣ ロジスティック回帰で「何が分かる」のか</h4>
+<p>各候補因子について、ロジスティック回帰は次の数字を <strong>同時に</strong> 計算してくれます：</p>
+<ul class="bullet">
+  <li><strong>オッズ比（OR）</strong>：その因子があると、結果（困難）になるオッズが何倍になるか<br>（例：「歯根が球状なら 6.5 倍困難になりやすい」）</li>
+  <li><strong>95% 信頼区間（CI）</strong>：その OR の "確からしさ" の幅</li>
+  <li><strong>p 値</strong>：偶然にこんな結果が出る確率</li>
+</ul>
+<p>これらを並べると <strong>「どの因子が一番効いているか」「順位づけ」</strong> ができます。これが探索的研究で <strong class="emphasis">「要因を探す」</strong> ことの正体です。</p>
+
+<h4>4️⃣ 2002 年当時の "標準的なやり方"</h4>
+<p>2002 年頃の医学研究では、ロジスティック回帰を次の <strong>2 段階</strong> で使うのが定番でした（Yuasa 2002 もこの流れ）：</p>
+<ol class="num">
+  <li><strong>Stage 1：単変量解析</strong> ─ 各候補因子について 1 つずつ「結果との関係」を見る</li>
+  <li><strong>Stage 2：多変量解析</strong> ─ Stage 1 で「強い関係」が見られた因子だけを集めて、まとめてロジスティック回帰に投入</li>
+</ol>
+<p>このやり方は当時の標準でしたが、<strong style="color:var(--red)">現代では「やってはいけない方法」とされています</strong>（理由は Part 3 で詳しく学びます）。</p>
 
 <div class="ok-box" style="font-size:14px;margin-top:10px">
-本章ではまずこの「単変量・多変量・ロジスティック回帰」の世界観を頭に入れたうえで、<strong>2002 年に Yuasa がどのようにこの解析を設計したか</strong>を見ていきます。
+本章では <strong>「2002 年の標準的な探索的研究のやり方」</strong> を素直に学びます。問題点の指摘は Part 3 でまとめて行うので、今は「当時はこう考えられていた」を理解してください。
 </div>
 </div>
 </div>
@@ -2683,143 +2705,149 @@ STROBE 声明は <strong>2007 年</strong> の発表なので、<strong class="e
 {part:"Part 3", short:"もし今書き直すなら", html:`
 <div class="slide-inner">
 <span class="slide-tag">ACTION PLAN · 2026</span>
-<h2 class="slide-title">"もし今この論文を書き直すなら" ─ STROBE 充足のための具体策</h2>
+<h2 class="slide-title">"もし今この論文を書き直すなら" ─ ざっくり 4 つの追加</h2>
 <p class="slide-lead">
-未充足 9 項目・部分充足 8 項目の合計 <strong>17 項目</strong> をどう補うか。実務的には、<strong class="emphasis">新しく書き足す数ページ</strong> で STROBE 充足度を大きく上げられる。以下は著者自身が 2026 年時点で実施する場合の改訂案。
-</p>
-
-<div class="panel">
-<div class="panel-title">改訂案 ① Title &amp; Abstract を STROBE 準拠に</div>
-<div class="article">
-<p><strong>現状：</strong>"Classification of surgical difficulty in extracting impacted third molars"</p>
-<p><strong>改訂案：</strong>"Preoperative prediction of surgical difficulty in impacted mandibular third molar extraction: <strong class="emphasis">a case-control study</strong> with critical reassessment using Firth penalized logistic regression"</p>
-<p><strong>変更点：</strong>(1) 研究デザイン明記 (2) 介入ではなく予測モデル構築であることを明確化 (3) Firth 法適用を明示</p>
-<p>抄録は <strong>Background / Methods / Results / Conclusions</strong> の structured 形式に変更。</p>
-</div>
-</div>
-
-<div class="panel">
-<div class="panel-title">改訂案 ② Methods を徹底強化</div>
-<div class="article">
-<h4>Item 6a：参加者選択の詳細記述</h4>
-<p>「愛知学院大学第二口腔外科で 1997 年 4-10 月に抜歯された <strong class="emphasis">連続患者（consecutive patients）</strong> のうち、以下の適格基準を満たした者を登録した。困難群と対照群は <strong>抜歯中の術者判定</strong> または <strong>手術時間</strong> で事後的に分類した。症例 / 対照の区別は事後的であり、<strong>伝統的な症例対照デザインとは異なる</strong>（後ろ向き症例-非症例比較）」などと追記。</p>
-
-<h4>Item 9：バイアス対策を新設</h4>
-<p>「Selection bias 対策：症例・対照群とも同一施設内で連続的に登録。Information bias 対策：パノラマ X 線評価は <strong class="emphasis">手術結果を知らない放射線科医 1 名</strong> が独立に実施（盲検）。術者と放射線科医は相互に接触禁止とした」</p>
-
-<h4>Item 12a-e：統計手法のフル記述</h4>
-<p>「分析は R 4.4.x で実施。完全分離への対処として <strong>Firth 罰則付き最尤推定法 (logistf v1.26.0)</strong> を使用した（Firth, Biometrika 1993; Heinze &amp; Schemper, Stat Med 2002）。変数選択はアンケート結果（Table 2）と臨床知識に基づく <strong>事前選択</strong> とした（Harrell, RMS 2015）。欠損データは完全ケース解析で扱い（欠損率は各変数で X%）、感度分析として多重代入も実施した。内部検証として Bootstrap (B=1000) で optimism-adjusted AUC を算出」</p>
-</div>
-</div>
-
-<div class="panel">
-<div class="panel-title">改訂案 ③ Results にフロー図と欠損データを</div>
-<div class="article">
-<h4>Item 13：参加者フロー図</h4>
-<p>CONSORT 様式のフロー図を追加：「期間中の連続抜歯症例 X 名 → 適格基準満たす Y 名 → 分類不能で除外 Z 名 → 最終解析対象 44 名（困難 20 / 対照 24）」</p>
-<h4>Item 14b：Table 1 に欠損データ数を列記</h4>
-<p>各変数について「Spatial: 6 missing (13.6%)、Horizontal Position: 7 missing (15.9%)」等と明示する新列を追加。</p>
-<h4>Item 16a：未調整と調整済み推定値の併記</h4>
-<p>Table 3（単変量 crude OR）は Supplementary に移し、本文 Table は <strong class="emphasis">多変量 Firth 回帰のみ</strong> に。adjusted OR と profile-likelihood CI、LR test p 値を明示。</p>
-</div>
-</div>
-
-<div class="panel">
-<div class="panel-title">改訂案 ④ Discussion とデータ・コード公開</div>
-<div class="article">
-<h4>Item 19：限界の徹底記述</h4>
-<p>「本研究の主要な限界：(1) サンプルサイズ N=44 で EPV=2.2 は予測モデル構築の推奨閾値を大きく下回る (Riley et al., Stat Med 2019)。(2) Depth Level C で完全分離が発生したため Firth 法でも CI が極端に広い。(3) 単施設・単民族コホートで外部妥当性は不明。(4) データ収集から 25 年以上経過しており、現代の抜歯技術・機器とは差異がある」</p>
-<h4>Item 21：一般化可能性の慎重な議論</h4>
-<p>「本結果は Aichi-Gakuin University の <strong class="emphasis">1997 年時点の</strong> 技術・患者集団を反映する。外部検証を経ない限り、他施設・他民族・現代の症例への適用は推奨できない」</p>
-<h4>追加：データ・コード公開宣言</h4>
-<p>「解析コード（R）と仮想データは <code>github.com/mxe050/AI-DataStat</code> で公開。生データは紛失のため公開不可」</p>
-</div>
-</div>
-
-<div class="ok-box">
-<strong>教訓：</strong>STROBE は <strong class="emphasis">研究を良くする</strong> ツールではなく、<strong>研究を読者に正しく伝える</strong> ツール。質の高い研究も、報告が不十分だと評価されない。投稿前に必ず 22 項目を自己チェックする習慣を。
-</div>
-
-<div class="danger-box">
-<strong>著者より：</strong>STROBE で自分の論文をチェックすると、<strong class="emphasis">「書き忘れていた重要事項」が必ず見つかる</strong>。これは恥ずかしいことではなく、<strong>次の論文を良くする</strong> 機会。本スライド作成中にも、Yuasa 2002 の報告の弱点を著者自ら多数再発見した。
-</div>
-
-<div class="cite">
-公式チェックリスト：<a href="https://www.strobe-statement.org/checklists/" target="_blank">strobe-statement.org/checklists/</a><br>
-日本語版：<a href="https://www.equator-network.org/wp-content/uploads/2015/10/STROBE-Japanese.pdf" target="_blank">EQUATOR Network (日本語 PDF)</a><br>
-EQUATOR Network（全報告ガイドラインの総合サイト）：<a href="https://www.equator-network.org/" target="_blank">equator-network.org</a>
-</div>
-</div>
-`},
-
-/* ============ 3-10 統計用語ミニ辞典 ============ */
-{part:"Part 3", short:"統計用語ミニ辞典（超初心者向け）", html:`
-<div class="slide-inner">
-<span class="slide-tag">GLOSSARY</span>
-<h2 class="slide-title">統計用語ミニ辞典 ─ 超初心者向けの整理</h2>
-<p class="slide-lead">
-ここまでで <strong>EPV、完全分離、ロジスティック回帰、Firth 法</strong> など聞き慣れない言葉が次々と出てきました。Part 4 で実際に R を動かす前に、これらを <strong class="emphasis">日常的なたとえ</strong> でいったん整理しておきます。読み流しでも、Part 4 で詰まったら戻ってくるリファレンスとしても使えます。
+STROBE で見つかった抜けは合計 17 項目。でも難しい話ではなく、要は <strong class="emphasis">「論文に 4 つのことを書き足すだけ」</strong> でほぼ整います。専門用語を使わず、箇条書きで整理しました。
 </p>
 
 <div class="grid grid-2">
   <div class="panel">
-    <div class="panel-title">① ロジスティック回帰（Logistic Regression）</div>
-    <div class="article">
-      <p><strong>「Yes/No のどちらに当てはまるか」を、複数の要因から予測する手法</strong>。本研究では「抜歯が <strong>困難</strong>か <strong>普通</strong>か」を、年齢・歯の深さ・歯根の形などから予測する。</p>
-      <p><strong>たとえ：</strong>天気（晴れ／雨）を、気温・湿度・気圧など複数の指標から判定するイメージ。要因ごとに「どれだけ Yes に傾けるか」の重みを推定してくれる。</p>
+    <div class="panel-title">① タイトルと抄録を「分かりやすく」</div>
+    <ul class="bullet">
+      <li>タイトルに <strong>「症例対照研究」</strong> と研究デザインを明記する</li>
+      <li>抄録を <strong>背景／方法／結果／結論</strong> の 4 ブロックに揃える（読み手が探しやすい）</li>
+    </ul>
+    <div class="note-box" style="font-size:13px;margin-top:8px">
+      "Preoperative prediction ... <strong>a case-control study</strong>" のように 1 行追加するだけで OK。
     </div>
   </div>
 
   <div class="panel">
-    <div class="panel-title">② GLM（Generalized Linear Model）</div>
-    <div class="article">
-      <p>R や SAS で <strong>ロジスティック回帰を実行する関数の親玉</strong>。R では <code>glm(..., family=binomial)</code> と書くとロジスティック回帰になる。</p>
-      <p><strong>たとえ：</strong>「電動工具のドリル」のような汎用機。ビット（family）を変えると別の解析にも使える ─ ロジスティック以外も、線形回帰・ポアソン回帰など幅広く対応。</p>
-    </div>
-  </div>
-
-  <div class="panel red">
-    <div class="panel-title">③ 完全分離（Complete Separation）</div>
-    <div class="article">
-      <p><strong>ある条件で結果が "100% 分かれてしまう" 状態</strong>。例：「Depth = C のとき、44 人中 困難群が全員、対照群が 0 人」。</p>
-      <p>このとき通常 GLM は OR を <strong style="color:var(--red)">無限大</strong> に飛ばしてしまい、意味のある数字が出ない（Yuasa 2002 の OR=999 の正体）。</p>
-      <p><strong>たとえ：</strong>料理コンテストで全審査員が満点をつけたら、その料理の "本当の実力" は 90 点か 95 点か、データからは決められない。</p>
-    </div>
-  </div>
-
-  <div class="panel green">
-    <div class="panel-title">④ Firth 法（Firth's Penalized Logistic Regression）</div>
-    <div class="article">
-      <p><strong>完全分離が起きた時の特効薬</strong>。1993 年に David Firth が考案。通常 GLM に「係数が無限大に飛ばないようにブレーキをかける」罰則項を加えた手法。</p>
-      <p><strong>たとえ：</strong>暴走しがちな自転車にブレーキを取り付けたもの。スピード（OR の大きさ）は出にくいが、<strong>安全に乗れる（解釈可能な値が出る）</strong>。</p>
-      <p>R では <code>logistf::logistf()</code> 1 行で使える。Part 4 で実演。</p>
-    </div>
-  </div>
-
-  <div class="panel amber">
-    <div class="panel-title">⑤ EPV（Events Per Variable）</div>
-    <div class="article">
-      <p><strong>「珍しい方のアウトカムの人数 ÷ モデルに入れる変数の数」</strong>。本研究では 20 ÷ 5 = 4。推奨は <strong>10 以上</strong>。</p>
-      <p><strong>たとえ：</strong>20 枚の写真から 5 つの特徴を見分ける AI を訓練するようなもの。<strong>1 枚 1 枚を丸暗記してしまい、新しい写真では使えない</strong>モデルになる（過学習）。</p>
-    </div>
+    <div class="panel-title">② 方法（Methods）を 1 ページ書き足す</div>
+    <ul class="bullet">
+      <li><strong>誰を選んだか</strong>：「1997 年 4-10 月に来た連続患者」と明確に書く</li>
+      <li><strong>バイアス対策</strong>：「X 線評価者は手術結果を知らなかった（盲検）」を 1 文追記</li>
+      <li><strong>統計手法</strong>：「<strong>Firth 法</strong>を使った（理由：完全分離があったから）」を明記</li>
+      <li><strong>変数の選び方</strong>：「データを見て選んだ」ではなく「Table 2 のアンケート結果で事前に決めた」と書く</li>
+    </ul>
   </div>
 
   <div class="panel">
-    <div class="panel-title">⑥ OR・CI・p 値の読み方</div>
-    <div class="article">
-      <p><strong>OR（Odds Ratio・オッズ比）</strong>：その要因があると「困難になりやすさ」が何倍になるか。1 = 影響なし、>1 = 困難になりやすい、<1 = 困難になりにくい。</p>
-      <p><strong>95% CI（信頼区間）</strong>：「真の OR はこの範囲のどこかに 95% の確率で入る」幅。<strong>1 をまたぐと「効果あり/なしを断言できない」</strong>。狭いほど信頼できる。</p>
-      <p><strong>p 値</strong>：「もし要因に効果がなかったとして、こんな結果が偶然出る確率」。0.05 未満で「有意」と言うが、<strong>有意性 ≠ 効果の大きさ</strong>。</p>
-    </div>
+    <div class="panel-title">③ 結果に「フロー図」と「欠損データ」を</div>
+    <ul class="bullet">
+      <li><strong>フロー図</strong>：「期間中の患者 X 名 → 条件を満たした Y 名 → 分類不能で除外 Z 名 → 最終 44 名」を図で見せる</li>
+      <li><strong>欠損データ</strong>：「歯の空間位置の評価ができなかった人が 6 名いた（13.6%）」のように、表の余白に欠損数を書く</li>
+      <li>単変量 OR の表は本文から外して付録（Supplementary）に</li>
+    </ul>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">④ 限界を正直に書き、コードを公開する</div>
+    <ul class="bullet">
+      <li><strong>限界</strong>：「サンプルが少ない」「単施設」「データが古い」を素直に書く</li>
+      <li><strong>一般化可能性</strong>：「他の病院や時代に当てはまるかは未確認」と但し書き</li>
+      <li><strong>コード公開</strong>：R コードと仮想データを GitHub に置く（再現性が一気に上がる）</li>
+    </ul>
   </div>
 </div>
 
 <div class="ok-box">
-<strong>使い方：</strong>Part 4 を読み進めて分からない用語が出てきたら、左サイドバー目次から <strong>本章（統計用語ミニ辞典）に戻って</strong>確認してください。Part 3 で学んだ問題点（変数選択・EPV・完全分離）と、Part 4 で実演する解決策（事前選択・Firth 法・ROC）が、ここの用語で繋がります。
+<strong>覚えておくこと：</strong>STROBE は <strong>「研究を良くする」</strong> ツールではなく <strong class="emphasis">「研究を読者に正しく伝える」</strong> チェックリスト。質の高い研究でも、書き方が不十分だと評価されない。投稿前に 22 項目を自分でチェックする習慣を。
 </div>
 
-<div class="note-box">
-これまでの「2002 vs 2026 比較表」は <strong>Part 4 のシミュレーション位置づけ章（章 37）</strong>に対応マップとして集約しました。新旧の流れの違いはそちらで一望できます。
+<div class="info-box" style="font-size:14px">
+<strong>次の章へつなぐ：</strong>上の「②」と「④」で <strong>Firth 法</strong> という新しい統計手法が出てきました。「Firth 法って何？」「<strong>2002 年と 2026 年で何が違うの？</strong>」を、次の章 33 で <strong>Part 4 で実演する新しい統計手法のプレビュー</strong> として整理します。
+</div>
+
+<div class="cite">
+公式チェックリスト：<a href="https://www.strobe-statement.org/checklists/" target="_blank">strobe-statement.org/checklists/</a><br>
+日本語版：<a href="https://www.equator-network.org/wp-content/uploads/2015/10/STROBE-Japanese.pdf" target="_blank">EQUATOR Network (日本語 PDF)</a>
+</div>
+</div>
+`},
+
+/* ============ 3-10 Part 4 で使う新統計手法プレビュー ============ */
+{part:"Part 3", short:"Part 4 で使う新しい統計手法プレビュー", html:`
+<div class="slide-inner">
+<span class="slide-tag">PREVIEW · TOWARD PART 4</span>
+<h2 class="slide-title">Part 4 で使う「新しい統計手法」のプレビュー</h2>
+<p class="slide-lead">
+前章で <strong>Firth 法</strong> という言葉が出てきました。「Firth 法って何？」「2002 年と何が違うの？」── これを Part 4 の実演に進む前に整理しておきます。<strong class="emphasis">ロジスティック回帰の基本</strong>はすでに <strong>章 17</strong> で学んだので、ここでは <strong>「Part 4 で具体的に何の手法を、何のために使うのか」</strong> を予告編として一覧します。
+</p>
+
+<div class="panel" style="background:#eff6ff;border-color:var(--blue)">
+<div class="panel-title">Part 4 で実際に動かす 3 つの手法（順番）</div>
+<div class="article">
+<p>Part 4（章 36-54）で R を動かしながら使う統計手法は、大きく <strong>3 つだけ</strong>。それぞれ何のためにあるのかを 1 文で：</p>
+</div>
+
+<div class="grid grid-3" style="margin-top:12px">
+  <div class="panel" style="margin:0;background:#fef3c7;border-color:var(--amber)">
+    <div style="font-size:11px;font-weight:800;color:var(--amber);letter-spacing:.1em;margin-bottom:6px">Part 4 章 47 で登場</div>
+    <div style="font-size:18px;font-weight:800;color:var(--ink-strong);margin-bottom:6px">① 通常 GLM</div>
+    <p style="font-size:14px;line-height:1.7">2002 年と同じ「普通のロジスティック回帰」を <strong>あえて実行</strong>。係数が暴れる様子（完全分離の症状）を <strong>体感する診断ステップ</strong>。R では <code>glm(..., family=binomial)</code> 1 行。</p>
+    <div style="font-size:12px;color:var(--ink-muted);margin-top:6px"><strong>料理のたとえ：</strong>失敗料理を作って「なぜ失敗したか」を体で覚える</div>
+  </div>
+
+  <div class="panel" style="margin:0;background:#dcfce7;border-color:var(--green)">
+    <div style="font-size:11px;font-weight:800;color:var(--green);letter-spacing:.1em;margin-bottom:6px">Part 4 章 48 で登場</div>
+    <div style="font-size:18px;font-weight:800;color:var(--ink-strong);margin-bottom:6px">② Firth 法</div>
+    <p style="font-size:14px;line-height:1.7">完全分離があっても <strong>OR が無限大に飛ばないブレーキ</strong> を加えたロジスティック回帰。Firth (1993) が提案。<strong class="emphasis">これが新しい部分の本丸</strong>。R では <code>logistf::logistf()</code> 1 行。</p>
+    <div style="font-size:12px;color:var(--ink-muted);margin-top:6px"><strong>料理のたとえ：</strong>暴走自転車にブレーキを取り付けて、安全に走れるようにする</div>
+  </div>
+
+  <div class="panel" style="margin:0;background:#cffafe;border-color:var(--teal)">
+    <div style="font-size:11px;font-weight:800;color:var(--teal);letter-spacing:.1em;margin-bottom:6px">Part 4 章 51 で登場</div>
+    <div style="font-size:18px;font-weight:800;color:var(--ink-strong);margin-bottom:6px">③ ROC 曲線・AUC</div>
+    <p style="font-size:14px;line-height:1.7">作ったモデルが「困難 vs 対照」を <strong>どれだけ見分けられるか</strong> を 1 つの数字（AUC）にまとめる。2002 年は感度・特異度しか出していなかった。R では <code>pROC::roc()</code> 1 行。</p>
+    <div style="font-size:12px;color:var(--ink-muted);margin-top:6px"><strong>料理のたとえ：</strong>料理の総合点を 100 点満点で出す</div>
+  </div>
+</div>
+</div>
+
+<h3 class="section-head">2002 年 → 2026 年で何が変わるか（要点だけ）</h3>
+
+<div class="panel">
+<table style="font-size:13px">
+  <thead>
+    <tr>
+      <th>場面</th>
+      <th style="background:#fee2e2;color:var(--red);width:34%">2002 年（Yuasa 論文）</th>
+      <th style="background:#dcfce7;color:var(--green);width:34%">2026 年（Part 4 で実演）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>変数の選び方</strong></td>
+      <td>単変量 OR ≥ 2.0 で機械的に選んだ</td>
+      <td>事前に臨床知識（Table 2 のアンケート）で固定</td>
+    </tr>
+    <tr>
+      <td><strong>多変量回帰</strong></td>
+      <td>普通の GLM のみ → OR=999 が出ても気づかず</td>
+      <td>普通の GLM で症状を見る → <strong>Firth 法</strong>に切替</td>
+    </tr>
+    <tr>
+      <td><strong>性能の評価</strong></td>
+      <td>感度 0.85・特異度 0.92 のみ（同一データ）</td>
+      <td><strong>AUC（CI 付き）</strong>でも評価。本来は内部検証も</td>
+    </tr>
+    <tr>
+      <td><strong>結果の解釈</strong></td>
+      <td>数字を出して論文に書くだけ</td>
+      <td>AI に解釈を相談 → 自分で検証 → 原論文と比較</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="info-box">
+<strong>次に何が起こるか：</strong>続く Part 3 まとめ（章 34）→ Part 4 開始（章 35）→ <strong class="emphasis">Part 4 シミュレーション位置づけ（章 36）</strong>では、上の 3 手法と「2002 vs 2026 対応マップ」を <strong>もう一段詳しい全体図</strong> として再掲します。<br>
+本章は「Firth って何？」「2002 と何が違う？」だけ頭に入れていただければ十分です。
+</div>
+
+<div class="ok-box">
+<strong>言葉だけは覚えておく：</strong>① 通常 GLM＝練習用、② <strong>Firth 法＝今回の主役</strong>、③ ROC/AUC＝モデルの総合点。この 3 つが分かっていれば、Part 4 でつまずきにくくなります。
 </div>
 </div>
 `},
@@ -2855,7 +2883,7 @@ EQUATOR Network（全報告ガイドラインの総合サイト）：<a href="ht
 
 <div class="info-box">
 <strong>次の Part 4 では</strong>、ここで挙げた問題を実際に <strong>R + AI で再解析</strong> する。R/RStudio の準備から始め、AI に統計手法を「先に」相談し、コード生成プロンプトを設計し、Firth 回帰を実行し、ROC/AUC を計算する。<strong>「AI に頼るところ」と「絶対に譲らないところ」を体験的に学ぶ</strong>。<br><br>
-<strong>📍 Part 4 の冒頭（章 37）に「2002 vs 2026 対応マップ」</strong> を置いてあります。「Part 3 で見た問題が、Part 4 のどの章でどう解決されるか」が一目で分かるので、次に進む前にぜひ眺めてください。<strong>用語が分からなくなったら章 33（統計用語ミニ辞典）に戻る</strong> と整理が続きます。
+<strong>📍 Part 4 の冒頭（章 36）に「2002 vs 2026 対応マップ」</strong> を置いてあります。「Part 3 で見た問題が、Part 4 のどの章でどう解決されるか」が一目で分かるので、次に進む前にぜひ眺めてください。<strong>新しい統計手法（GLM・Firth 法・ROC）の予告は章 33</strong> にまとめてあります。
 </div>
 </div>
 `}
@@ -2884,7 +2912,8 @@ EQUATOR Network（全報告ガイドラインの総合サイト）：<a href="ht
 </p>
 
 <div class="info-box" style="font-size:14px">
-<strong>用語のおさらい：</strong>本章以降に出てくる <strong>GLM・ロジスティック回帰・Firth 法・EPV・完全分離・OR/CI/p 値</strong> など、統計用語が分からなくなったら、左サイドバーの <strong>章 33「統計用語ミニ辞典（超初心者向け）」</strong>にいつでも戻れます。Part 4 を読みながら詰まったら参照してください。
+<strong>📖 予告編は章 33 にあります：</strong>本章以降に出てくる <strong>① 通常 GLM ② Firth 法 ③ ROC 曲線・AUC</strong> の 3 手法は、<strong>章 33「Part 4 で使う新しい統計手法プレビュー」</strong> でたとえ話を交えて紹介済みです。<br>
+基礎の <strong>ロジスティック回帰・単変量／多変量・OR/CI/p 値</strong> は <strong>章 17（研究デザイン）</strong> で。途中で詰まったらそれぞれの章に戻ってください。
 </div>
 
 <h3 class="section-head">📍 一目でわかる：2002 年（章 24）と 2026 年（本 Part 4）の対比</h3>
