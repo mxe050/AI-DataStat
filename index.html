@@ -534,6 +534,47 @@ pre.output::before{
 pre.output .copy-btn{display:none !important}
 
 /* ============================================================
+   章導入コラム（青系・初心者向け解説の統一スタイル）
+============================================================ */
+.intro-block{
+  background:#eff6ff;border:1px solid var(--blue);
+  border-radius:12px;padding:18px 22px;margin-bottom:16px;
+  box-shadow:var(--shadow-sm)
+}
+.intro-block .intro-label{
+  display:inline-block;font-size:11px;font-weight:800;color:var(--blue);
+  letter-spacing:.12em;text-transform:uppercase;
+  background:white;padding:3px 10px;border-radius:999px;
+  border:1px solid var(--blue);margin-bottom:10px
+}
+.intro-block .intro-title{
+  font-size:calc(16px * var(--fs-mul));font-weight:800;
+  color:var(--ink-strong);margin-bottom:10px;line-height:1.5
+}
+.intro-block .intro-body{
+  font-size:calc(15px * var(--fs-mul));line-height:1.85;color:var(--ink)
+}
+.intro-block .intro-body p{margin-bottom:10px}
+.intro-block .intro-body p:last-child{margin-bottom:0}
+.intro-block .intro-body strong{color:var(--ink-strong)}
+
+/* ステップラベル（緑系・新ワークフローの位置づけ用） */
+.step-label{
+  background:#dcfce7;border:1px solid var(--green);
+  border-radius:10px;padding:10px 16px;margin-bottom:14px;
+  display:flex;align-items:center;gap:10px
+}
+.step-label .step-tag{
+  flex-shrink:0;font-size:11px;font-weight:800;color:var(--green);
+  letter-spacing:.1em;background:white;padding:3px 9px;
+  border-radius:999px;border:1px solid var(--green)
+}
+.step-label .step-text{
+  font-size:calc(14px * var(--fs-mul));line-height:1.65;color:var(--ink)
+}
+.step-label .step-text strong{color:var(--ink-strong)}
+
+/* ============================================================
    Screenshot placeholder（後日スクショ追加用枠）
 ============================================================ */
 .screenshot{margin:14px 0}
@@ -1630,47 +1671,56 @@ Jaroń A, Trybek G. The Pattern of Mandibular Third Molar Impaction and Assessme
 <div class="panel" style="background:#eff6ff;border-color:var(--blue);margin-bottom:14px">
 <div class="panel-title">📚 はじめに：「探索的研究」とロジスティック回帰の世界観（統計が初めての方へ）</div>
 <div class="article">
-<p>Yuasa 2002 のような研究は <strong class="emphasis">「探索的研究（exploratory study）」</strong> と呼ばれます。「答えがすでに決まっている検証」ではなく、<strong>「結果（抜歯が困難になるか）に影響する要因はどれだろう？」を、複数の候補から探していく</strong> 研究です。</p>
-<p>このような研究で 2002 年から今に至るまで、医学では <strong>ロジスティック回帰分析</strong> という手法が標準的に使われてきました。聞き慣れない用語が次々出てくるので、身近なたとえで一気に整理します。</p>
-
-<h4>1️⃣ 「単変量解析」と「多変量解析」── まず違いを理解</h4>
-<p>たとえば「<strong>カレーが辛くなる原因</strong>」を知りたい料理研究家がいるとします。</p>
-<ul class="bullet">
-  <li><strong>単変量解析</strong>：唐辛子の量だけ／胡椒の量だけ／玉ねぎの量だけ ── と、<strong class="emphasis">1 つずつ別々に</strong>「辛さ」との関係を見る。シンプルだが、「胡椒は唐辛子と一緒に入っているから胡椒のせいに見えるだけ」のような <strong>勘違い（交絡）</strong> が起きやすい。</li>
-  <li><strong>多変量解析</strong>：唐辛子・胡椒・玉ねぎ・カレー粉を <strong class="emphasis">全部同時に</strong> 考慮して、「他の要因を一定にしたとき、各要因が辛さにどれだけ独立に寄与するか」を計算する。<strong>勘違いを切り分ける力</strong> がある。</li>
-</ul>
-<p>本研究の場合：抜歯困難の原因として「歯の深さ」「歯根の形」「下顎枝との関係」「歯根の数」など複数候補があり、これらは互いに関係し合っています（例：深い歯ほど歯根が複雑なことが多い）。<strong>各因子の本当の独立効果を切り分けるには多変量解析が必要</strong>。</p>
-
-<h4>2️⃣ なぜ「ロジスティック回帰」を使うのか</h4>
-<p><strong>「結果」がどんな形か</strong> によって、使うべき多変量解析の種類は変わります。</p>
-<ul class="bullet">
-  <li>結果が <strong>連続値</strong>（例：身長、血圧、手術時間の分単位）→ <strong>線形回帰</strong>を使う</li>
-  <li>結果が <strong>Yes/No（2 値）</strong>（例：困難 / 普通、生存 / 死亡、再発あり / なし）→ <strong>ロジスティック回帰</strong>を使う</li>
-  <li>結果が <strong>イベントまでの時間</strong>（例：再発までの日数）→ <strong>Cox 回帰</strong>を使う</li>
-</ul>
-<p>本研究は「抜歯が <strong>困難</strong>か <strong>普通</strong>か」の 2 値判定なので、<strong class="emphasis">ロジスティック回帰</strong>を選びます。</p>
-
-<h4>3️⃣ ロジスティック回帰で「何が分かる」のか</h4>
-<p>各候補因子について、ロジスティック回帰は次の数字を <strong>同時に</strong> 計算してくれます：</p>
-<ul class="bullet">
-  <li><strong>オッズ比（OR）</strong>：その因子があると、結果（困難）になるオッズが何倍になるか<br>（例：「歯根が球状なら 6.5 倍困難になりやすい」）</li>
-  <li><strong>95% 信頼区間（CI）</strong>：その OR の "確からしさ" の幅</li>
-  <li><strong>p 値</strong>：偶然にこんな結果が出る確率</li>
-</ul>
-<p>これらを並べると <strong>「どの因子が一番効いているか」「順位づけ」</strong> ができます。これが探索的研究で <strong class="emphasis">「要因を探す」</strong> ことの正体です。</p>
-
-<h4>4️⃣ 2002 年当時の "標準的なやり方"</h4>
-<p>2002 年頃の医学研究では、ロジスティック回帰を次の <strong>2 段階</strong> で使うのが定番でした（Yuasa 2002 もこの流れ）：</p>
-<ol class="num">
-  <li><strong>Stage 1：単変量解析</strong> ─ 各候補因子について 1 つずつ「結果との関係」を見る</li>
-  <li><strong>Stage 2：多変量解析</strong> ─ Stage 1 で「強い関係」が見られた因子だけを集めて、まとめてロジスティック回帰に投入</li>
-</ol>
-<p>このやり方は当時の標準でしたが、<strong style="color:var(--red)">現代では「やってはいけない方法」とされています</strong>（理由は Part 3 で詳しく学びます）。</p>
-
-<div class="ok-box" style="font-size:14px;margin-top:10px">
-本章では <strong>「2002 年の標準的な探索的研究のやり方」</strong> を素直に学びます。問題点の指摘は Part 3 でまとめて行うので、今は「当時はこう考えられていた」を理解してください。
+<p>Yuasa 2002 のような研究は <strong class="emphasis">「探索的研究（exploratory study）」</strong> と呼ばれます。「結果（抜歯が困難になるか）に影響する要因はどれだろう？」を、複数の候補から探していく研究です。<strong>2002 年から今に至るまで、医学では「ロジスティック回帰分析」が標準的</strong> に使われてきました。聞き慣れない用語が次々出てくるので、下の 4 枚のカードで身近なたとえで整理します。</p>
 </div>
 </div>
+
+<div class="grid grid-2" style="margin-bottom:14px">
+  <div class="panel">
+    <div class="panel-title">1. 単変量 vs 多変量 ─ カレーのたとえ</div>
+    <p style="font-size:calc(15px * var(--fs-mul));line-height:1.85">「<strong>カレーが辛くなる原因</strong>」を調べたい料理研究家がいるとします。</p>
+    <ul class="bullet">
+      <li><strong>単変量解析</strong>：唐辛子だけ／胡椒だけ／玉ねぎだけ ─ <strong class="emphasis">1 つずつ別々に</strong> 関係を見る。<strong>勘違い（交絡）</strong> が起きやすい</li>
+      <li><strong>多変量解析</strong>：すべての調味料を <strong class="emphasis">同時に</strong> 考慮して、それぞれの独立効果を切り分ける</li>
+    </ul>
+    <p style="font-size:calc(14px * var(--fs-mul));line-height:1.75;color:var(--ink-muted);margin-top:8px">本研究：歯の深さ・歯根の形・下顎枝との関係などが互いに関係するため、<strong>各因子の独立効果を切り分けるには多変量解析が必要</strong>。</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">2. なぜ「ロジスティック回帰」？</div>
+    <p style="font-size:calc(15px * var(--fs-mul));line-height:1.85"><strong>結果の "形"</strong> によって、使う多変量解析が変わります。</p>
+    <ul class="bullet">
+      <li>結果が <strong>連続値</strong>（身長・血圧）→ 線形回帰</li>
+      <li>結果が <strong>Yes/No</strong>（困難/普通、生存/死亡）→ <strong class="emphasis">ロジスティック回帰</strong></li>
+      <li>結果が <strong>時間</strong>（再発までの日数）→ Cox 回帰</li>
+    </ul>
+    <p style="font-size:calc(14px * var(--fs-mul));line-height:1.75;color:var(--ink-muted);margin-top:8px">本研究は「困難 / 普通」の 2 値判定なので <strong>ロジスティック回帰</strong> を選びます。</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">3. ロジスティック回帰で何が分かる？</div>
+    <p style="font-size:calc(15px * var(--fs-mul));line-height:1.85">各候補因子について、次の数字を <strong>同時に</strong> 計算してくれます：</p>
+    <ul class="bullet">
+      <li><strong>オッズ比 (OR)</strong>：その因子があると困難になるオッズが何倍か（例：歯根が球状なら 6.5 倍）</li>
+      <li><strong>95% 信頼区間 (CI)</strong>：OR の "確からしさ" の幅</li>
+      <li><strong>p 値</strong>：偶然にこんな結果が出る確率</li>
+    </ul>
+    <p style="font-size:calc(14px * var(--fs-mul));line-height:1.75;color:var(--ink-muted);margin-top:8px">これらを並べると <strong>「どの因子が一番効いているか」順位づけ</strong> ができる ─ これが探索的研究で「要因を探す」の正体。</p>
+  </div>
+
+  <div class="panel amber">
+    <div class="panel-title">4. 2002 年当時の "標準的なやり方"</div>
+    <p style="font-size:calc(15px * var(--fs-mul));line-height:1.85">2002 年頃の医学では、ロジスティック回帰を <strong>2 段階</strong> で使うのが定番でした（Yuasa 2002 もこの流れ）：</p>
+    <ol class="num">
+      <li><strong>Stage 1 単変量解析</strong>：各因子を 1 つずつ結果と比べる</li>
+      <li><strong>Stage 2 多変量解析</strong>：Stage 1 で関係が強かった因子だけ集めて回帰へ</li>
+    </ol>
+    <p style="font-size:calc(14px * var(--fs-mul));line-height:1.75;color:var(--red);margin-top:8px"><strong>現代では「やってはいけない方法」とされています</strong>（理由は Part 3 で詳しく）。</p>
+  </div>
+</div>
+
+<div class="ok-box">
+本章ではまず <strong>「2002 年の標準的な探索的研究のやり方」</strong> を素直に学びます。問題点の指摘は Part 3 でまとめて扱うので、今は「当時はこう考えられていた」を理解してください。
 </div>
 
 <p class="slide-sub">専門医の暗黙知を Stage 1 で集約し、Stage 2 で症例データから統計的に検証する設計。</p>
